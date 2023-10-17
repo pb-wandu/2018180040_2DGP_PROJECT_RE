@@ -3,6 +3,9 @@
 from pico2d            import * # pico2d 모듈
 from state_and_objects import * # 상태 및 동작들을 담은 모듈
 
+### [1주차 할 일]
+### 박자표 구현 및 게임 흐름
+
 # ----- world 전체 관련 -----
 
 def handle_events():

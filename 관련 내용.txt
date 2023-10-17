@@ -2,3 +2,16 @@
 > 1차 발표 : https://www.youtube.com/watch?v=bVz1sboArlQ
 > 2차 발표 : (# 예정)
 > 최종 발표 : (# 예정)
+
+----- 게임 상세 -----
+
+흐름
+# Ready        : 준비 상태
+# Standoff     : 대치 상태
+# Action       : 동작
+# ActionResult : 동작 결과
+# Finish       : 대결 완료
+
+Ready 상태에서 스페이스바를 눌러 시작
+Standoff ~ ActionResult 단계 반복
+적의 HP가 0 이하가 되면 Finish 단계로 진입

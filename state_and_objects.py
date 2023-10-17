@@ -5,44 +5,53 @@ from state  import * # 상태를 담은 모듈
 
 # ----- 이벤트 확인 함수들 -----
 
-# 키 입력
-def keyinput(e, info, type, key):
-    return e[0] == info and e[1].type == type and e[1].key == key
+# 키 입력시
+def keyinput(e, info, type_in, key_in):
+    return e[0] == info and e[1].type == type_in and e[1].key == key_in
 
-# a키 눌림
+# a키 눌림 - 이건 임시로 둔 것
 def a_down(e):
     keyinput(e, "INPUT", SDL_KEYDOWN, SDLK_a)
 
-# ----- 플레이어 상태 머신 -----
+def temp(e):
+    return False
+
+# ----- 상태 머신 -----
 
 class StateMachine:
 
-    # 초기 상태로
+    # 초기 상태 설정
     def __init__(self, player):
-        self.player = player
-        self.cur_state = Idle
+        self.player = player   # 플레이어 지정
+        self.cur_state = Ready # 초기 상태 : Ready 상태
 
-        # '플레이어' 동작 전환
+        # 동작 전환
         self.transitions = {
-            Idle: {a_down: Idle}
+            Ready: {temp: Ready}
         }
 
+    # 상태 머신 시작
     def start(self):
         self.cur_state.enter(self.player, ('NONE', 0))
 
+    # 상태 머신 event 관리
     def handle_event(self, e):
+        # event를 확인하고 현재 상태를 next_state로 지정한다
         for check_event, next_state in self.transitions[self.cur_state].items():
+            # self.transitions{ }에 저장되어 있는대로
             if check_event(e):
-                self.cur_state.exit(self.boy, e)
-                self.cur_state = next_state
-                self.cur_state.enter(self.boy, e)
+                self.cur_state.exit(self.player, e)  # 현재 상태에서 exit
+                self.cur_state = next_state          # 새로운 state 지정
+                self.cur_state.enter(self.player, e) # 새로운 상태로 enter
                 return True
         return False
 
     def update(self):
+        # 각 오브젝트별 현재 상태에서의 do
         self.cur_state.do(self.player)
 
     def draw(self):
+        # 각 오브젝트별 현재 상태에서의 draw
         self.cur_state.draw(self.player)
 
 # ----- 플레이어 클래스 -----
