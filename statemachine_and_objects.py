@@ -1,20 +1,9 @@
-# ----------<상태와 오브젝트>----------
+# ----------<상태 머신 및 오브젝트>----------
+
+# 상태 머신 및 오브젝트들을 기록한 파일
 
 from pico2d import * # pico2d 모듈
-from state  import * # 상태를 담은 모듈
-
-# ----- 이벤트 확인 함수들 -----
-
-# 키 입력시
-def keyinput(e, info, type_in, key_in):
-    return e[0] == info and e[1].type == type_in and e[1].key == key_in
-
-# a키 눌림 - 이건 임시로 둔 것
-def a_down(e):
-    keyinput(e, "INPUT", SDL_KEYDOWN, SDLK_a)
-
-def temp(e):
-    return False
+from state import * # 상태를 담은 모듈
 
 # ----- 상태 머신 -----
 
@@ -23,11 +12,13 @@ class StateMachine:
     # 초기 상태 설정
     def __init__(self, player):
         self.player = player   # 플레이어 지정
-        self.cur_state = Ready # 초기 상태 : Ready 상태
+        # self.cur_state = Ready # 초기 상태 : Ready 상태
+        self.cur_state = Standoff  ### (임시) Standoff (대치) 상태로 지정
 
         # 동작 전환
         self.transitions = {
-            Ready: {temp: Ready}
+            Ready: {temp: Ready},
+            Standoff: {temp: Standoff}
         }
 
     # 상태 머신 시작
