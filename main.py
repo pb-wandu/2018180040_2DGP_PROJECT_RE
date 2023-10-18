@@ -4,7 +4,7 @@
 
 from pico2d import * # pico2d 모듈
 
-import world # world 전체 관련 내용을 담은 모듈
+import game_world # world 전체 관련 내용을 담은 모듈
 
 # ----- 실제 게임 실행 부분 -----
 
@@ -12,14 +12,14 @@ import world # world 전체 관련 내용을 담은 모듈
 open_canvas()
 
 # 초기 설정
-world.init_world()
+game_world.init_world()
 
 # 게임 진행
-while world.gameplaying:
+while game_world.gameplaying:
 
-    world.handle_events() # event를 입력받는다
-    world.update_world()  # world를 업데이트한다
-    world.render_world()  # world를 그린다
+    game_world.handle_events()    # event를 입력받는다
+    game_world.update_allobject() # world 안 오브젝트 전체를 업데이트한다
+    game_world.render_allobject() # world 안 오브젝트 전체를 그린다
 
     # delay(0.01) # 동작 사이 지연 시간
 
