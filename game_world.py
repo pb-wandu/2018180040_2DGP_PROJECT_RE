@@ -39,7 +39,6 @@ def init_world():
     # world 안에 오브젝트 추가
     # (해당 실물 오브젝트는 objects.py 끝부분에 있음)
     # 배경은 depth 0 (배경)에, 나머지는 depth 1(전면)에
-
     add_object(player, 1)    # 플레이어
     add_object(beattimer, 1) # 박자표
 

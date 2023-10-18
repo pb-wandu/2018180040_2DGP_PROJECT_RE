@@ -61,7 +61,7 @@ class Player:
         state_machine.handle_event(('INPUT', event))
 
     # update와 draw는 state_machine의 현재 상태에서
-    # 그 오브젝트에 대한 동작을 수행한다
+    # 그 클래스에 대한 실제 오브젝트의 동작을 수행한다
 
     @staticmethod
     def update():
@@ -76,14 +76,14 @@ class Player:
 # ----- 박자표 클래스 -----
 
 class BeatTimer:
-    def __init__(self):
+    def __init__(self, bnum, ctime):
         ### (테스트) 기본적으로 4/4박자를 기준으로 한다
         # 박자표에서의 현재 틱수를 0으로 초기화
-        self.beatnum = 4                                # 박자수 (큰 박자 나오는 주기)
-        self.cycle_time = 1.0                           # 큰 박자 사이의 실제 시간
+        self.beatnum = bnum                             # 박자수 (큰 박자 나오는 주기)
+        self.cycle_time = ctime                         # 큰 박자 사이의 '실제 시간'
         self.nowtick = 0                                # 현재 틱수
         self.maxtick = 100 * self.beatnum               # 최대 틱수 (1박당 100틱)
-        self.beat1time = self.cycle_time / self.beatnum # 한 박자당 실제 시간
+        self.beat1time = self.cycle_time / self.beatnum # 한 박자당 시간
         self.tick1time = self.beat1time / 100           # 1틱당 시간
 
         pass
@@ -93,7 +93,7 @@ class BeatTimer:
         pass
 
     # update와 draw는 state_machine의 현재 상태에서
-    # 그 오브젝트에 대한 동작을 수행한다
+    # 그 클래스에 대한 실제 오브젝트의 동작을 수행한다
 
     @staticmethod
     def update():
@@ -105,11 +105,27 @@ class BeatTimer:
         state_machine.cur_state.do(beattimer)
         pass
 
-# ----- 클래스별 오브젝트 -----
+# ----- 클래스별 실제 오브젝트 -----
 
 # 상태 머신 (world에 실물이 없는 가상 머신이다)
 state_machine = StateMachine() # 상태 머신 오브젝트
 
 # 오브젝트 (world(게임 화면)에 실물이 있는 것들이다)
-player        = Player()       # 플레이어 오브젝트
-beattimer     = BeatTimer()    # 박자표 오브젝트
+
+# 플레이어 오브젝트 : 플레이어는 고정된 하나의 오브젝트임이 명확하다.
+player = Player()
+
+# 하지만 박자표는? 박자표는 등장 적에 따라 바뀌는 오브젝트이다.
+# 박자표 오브젝트의 초기화 원본은 'def __init__(self, bnum, ctime):' 이다
+# bnum은 박자 수를, ctime은 박자가 1바퀴 돌 때의 실제 소요 시간을 말한다.
+# basicBeatTimer (기본 박자표)를 첫 박자표로 지정해준다.
+
+# 박자표 종류
+basicBeatTimer = BeatTimer(4, 1.0) # 박자표 (1초에 4박자) <기본>
+### secondBeatTimer = BeatTimer(5, 1.4) # 박자표 (1.4초에 5박자) <- 예시입니다
+
+# 첫 박자표는 기본 박자표 (1초에 4박자)로 지정한다.
+beattimer = basicBeatTimer
+
+### 추후 Finish 상태에서 exit했을 때 game_world.remove_object(o)를 이용하여 기존에 있는 박자표 오브젝트를 삭제하고
+### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.
