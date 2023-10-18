@@ -78,12 +78,14 @@ class Player:
 class BeatTimer:
     def __init__(self):
         ### (테스트) 기본적으로 4/4박자를 기준으로 한다
-        # 박자표에서의 현재 시간을 0으로 초기화
-        self.nowtime = 0   # 현재 시간
-        self.maxtime = 400 # 최대 시간
+        # 박자표에서의 현재 틱수를 0으로 초기화
+        self.beatnum = 4                                # 박자수 (큰 박자 나오는 주기)
+        self.cycle_time = 1.0                           # 큰 박자 사이의 실제 시간
+        self.nowtick = 0                                # 현재 틱수
+        self.maxtick = 100 * self.beatnum               # 최대 틱수 (1박당 100틱)
+        self.beat1time = self.cycle_time / self.beatnum # 한 박자당 실제 시간
+        self.tick1time = self.beat1time / 100           # 1틱당 시간
 
-        # 100틱당 1박자
-        self.ticktime = 0.25 / 100 # 1틱당 시간
         pass
 
     def handle_event(self, event):
