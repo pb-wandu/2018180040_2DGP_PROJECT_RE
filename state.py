@@ -28,7 +28,19 @@ def temp(e):
 def space_down(e):
     return e[0] == "INPUT" and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
 
-# 박자표 시간 업데이트
+# 플레이어 - 펀치 실행
+def punch_activated(e):
+    """
+    if 키보드 왼쪽 5줄 중 하나를 눌렀다면:
+        player.nowpunchhand = "left"
+    elif 키보드 오른쪽 5줄 중 하나를 눌렀다면:
+        player.nowpunchhand = "left"
+    else: # 다른 키를 눌렀다면
+        player.nowpunchhand = None
+    """
+    return False ### 임시
+
+# 박자표 - 시간 업데이트
 def timeupdate(obj):
     # nowtime 1틱씩 진행
     obj.nowtick += 1
@@ -96,6 +108,12 @@ class Standoff:
     # 상태 종료
     @staticmethod
     def exit():
+
+        # 펀치로 인한 상태 종료시
+        if punch_activated(e):
+            # 플레이어의 펀치 동작 수행
+            player.punch_action()
+
         print("Standoff (대치 상태) exit")
         pass
 

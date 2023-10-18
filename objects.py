@@ -52,6 +52,7 @@ class Player:
         # self.x, self.y = 400, 90
         # self.sizex, self.sizey = 100, 100
         # self.image = load_image('image.png')
+        self.nowpunchhand = None # 현재 주먹을 지른 손
         pass
 
     @staticmethod
@@ -72,6 +73,24 @@ class Player:
     def draw():
         state_machine.cur_state.do(player)
         pass
+
+    # 플레이어 - 펀치 날리기
+    def punch_action(self):
+        ### (예정) 펀치 이미지 추가
+        ### punch = Punch(x위치, y위치)
+        ### game_world.add_object(punch, 1)
+
+        # 현재 펀치 날리는 손에 따른 구분
+        if self.nowpunchhand == "left":
+            # print("punch_action (left)")
+            ### (예정) 실제 동작
+            pass
+        elif self.nowpunchhand == "right":
+            # print("punch_action (right)")
+            ### (예정) 실제 동작
+            pass
+        else:
+            pass
 
 # ----- 박자표 클래스 -----
 
@@ -103,6 +122,32 @@ class BeatTimer:
     @staticmethod
     def draw():
         state_machine.cur_state.do(beattimer)
+        pass
+
+# 펀치 클래스
+class Punch:
+    image = None
+
+    ### (예정) 실제 제작할 때 내용 채워넣기
+
+    def __init__(self, posx, posy):
+        # if Punch.image_l == None:
+        #    Punch.image_l = load_image('펀치이미지왼쪽.png')
+        # if Punch.image_r == None:
+        #    Punch.image_r = load_image('펀치이미지오른쪽.png')
+	    # 입력값에 따른 위치 지정
+        self.x, self.y = posx, posy
+
+    def draw(self):
+	    # 펀치 이미지 그리기
+        # self.image.draw(self.x, self.y)
+        pass
+
+    def update(self):
+	    # 업데이트시 할 동작
+        # if 조건:
+            # 일정 시간이 지나면 펀치 오브젝트 삭제
+        #    game_world.remove_object(self)
         pass
 
 # ----- 클래스별 실제 오브젝트 -----

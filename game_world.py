@@ -38,13 +38,19 @@ def init_world():
 
     # world 안에 오브젝트 추가
     # (해당 실물 오브젝트는 objects.py 끝부분에 있음)
-    # 배경은 depth 0 (배경)에, 나머지는 depth 1(전면)에
+
+    # 배경은 depth 0 (배경)에
+    ### add_object(background, 0) # 배경
+
+    # 나머지는 depth 1 (전면)에
     add_object(player, 1)    # 플레이어
     add_object(beattimer, 1) # 박자표
 
+    ### 플레이어가 적보다 우선하는 등 추가 레이어 필요시 추가 예정
+
     pass
 
-# --<이 아래에 있는 코드는 건드릴 필요 없음>--
+# -----<이 아래에 있는 코드는 건드릴 필요 없음>-----
 
 # 단일 오브젝트 추가
 def add_object(obj, depth):
@@ -59,11 +65,11 @@ def remove_object(o):
     # objects에 있는 레이어에 대하여
     for layer in objects:
         # 레이어 안에 오브젝트가 있다면
-        if o in layer:
-            print("removed : " + str(type(o)))
-            layer.remove(o)
+        if obj in layer:
+            print("지운 오브젝트 : " + str(type(obj)))
+            # 해당 오브젝트를 지운다
+            layer.remove(obj)
             return
-
     # 오류 발생시 오류 메시지 출력
     raise ValueError('존재하지 않는 object는 지울 수 없습니다')
 
