@@ -99,14 +99,12 @@ class BeatTimer:
     # 박자표 이미지 list
     beat_image_list = [None, None, None, None, None, None]
 
-    def __init__(self, bnum, ctime):
+    def __init__(self, bnum, ticknum):
 
-        self.beatnum = bnum                             # 박자 수 (큰 박자 나오는 주기)
-        self.cycle_time = ctime                         # 큰 박자 사이의 '실제 시간'
-        self.nowtick = 0                                # 현재 틱수
-        self.maxtick = 100 * self.beatnum               # 최대 틱수 (1박당 100틱)
-        self.beat1time = self.cycle_time / self.beatnum # 한 박자당 시간
-        self.tick1time = self.beat1time / 100           # 1틱당 시간
+        self.beatnum = bnum                   # 박자 수 (큰 박자 나오는 주기)
+        self.nowtick = 0                      # 현재 틱수
+        self.ticknum = ticknum                # 1박자당 틱수
+        self.maxtick = ticknum * self.beatnum # 최대 틱수 (1박자당 ticknum틱)
 
         # '박자 수 - 1'개의 작은 박자와, 1개의 큰 박자를 넣는다
         for n in range(0, self.beatnum - 1):
@@ -114,6 +112,7 @@ class BeatTimer:
         self.beat_image_list[self.beatnum-1] = "big"
 
         pass
+
 
     def handle_event(self, event):
         # 처리받을 입력이 없음
@@ -166,20 +165,20 @@ state_machine = StateMachine() # 상태 머신 오브젝트
 
 # 오브젝트 (world(게임 화면)에 실물이 있는 것들이다)
 
-# 플레이어 오브젝트 : 플레이어는 고정된 하나의 오브젝트임이 명확하다.
+# 플레이어 오브젝트 : 플레이어(양쪽 글러브)는 단일 오브젝트임이 명확하다.
 player = Player()
 
 # 하지만 박자표는? 박자표는 등장 적에 따라 바뀌는 오브젝트이다.
-# 박자표 오브젝트의 초기화 원본은 'def __init__(self, bnum, ctime):' 이다
-# bnum은 박자 수를, ctime은 박자가 1바퀴 돌 때의 실제 소요 시간을 말한다.
-# basicBeatTimer (기본 박자표)를 첫 박자표로 지정해준다.
-
 # 박자표 종류
-basicBeatTimer = BeatTimer(5, 1.0) # 박자표 (1초에 4박자) <기본>
-### secondBeatTimer = BeatTimer(5, 1.4) # 박자표 (1.4초에 5박자) <- 예시입니다
+basicBeatTimer = BeatTimer(4, 100) # (4박자, 1박자당 100틱) 박자표 <기본>
 
-# 첫 박자표는 기본 박자표 (1초에 4박자)로 지정한다.
-beattimer = basicBeatTimer
+# basicBeatTimer (기본 박자표)를 첫 박자표로 지정한다.
+# beattimer = basicBeatTimer
+
+### 테스트용
+beattimer = BeatTimer(5, 100)
+
+
 
 ### 추후 Finish 상태에서 exit했을 때 game_world.remove_object(o)를 이용하여 기존에 있는 박자표 오브젝트를 삭제하고
 ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.

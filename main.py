@@ -21,8 +21,6 @@ while game_world.gameplaying:
     game_world.update_allobject() # world 안 오브젝트 전체를 업데이트한다
     game_world.render_allobject() # world 안 오브젝트 전체를 그린다
 
-    # delay(0.01) # 동작 사이 지연 시간
-
 # 게임 종료
 print("게임 종료 (world.gameplaying == False)")
 close_canvas()

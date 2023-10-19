@@ -43,27 +43,24 @@ def punch_activated(e):
     """
     return False ### 임시
 
-# 박자표 - 시간 업데이트
+# 박자표 - 시간 업데이트 (1틱 간격)
 def timeupdate(obj):
+
     # nowtime 1틱씩 진행
     obj.nowtick += 1
+
     # maxtime 초과시 0틱으로 초기화
     if obj.nowtick > obj.maxtick:
         obj.nowtick = 0
 
-
-
     ### 테스트용 - 박자 표시
-    if obj.nowtick % 100 == 0 and obj.nowtick != 0:
+    if obj.nowtick % obj.ticknum == 0 and obj.nowtick != 0:
         ### 테스트용 - 큰박자
         if obj.nowtick == obj.maxtick:
             print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
         ### 테스트용 - 그 외
         else:
-            print(f"박자표 [{int(obj.nowtick / 100)} / {obj.beatnum}] 박자")
-
-    # nowtime 1틱만큼의 지연 시간
-    delay(obj.tick1time)
+            print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
 
 # 박자표 그리기
 def draw_beattimer(obj):
