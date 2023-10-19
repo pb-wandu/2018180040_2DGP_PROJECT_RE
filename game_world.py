@@ -1,8 +1,8 @@
 # ----------<world 전체 관련 코드>----------
 
-# world 전체 관련 코드를 기록한 파일
+# world 전체 관련 내용을 기록한 파일
 
-from objects import * # 상태 머신 및 동작들을 담은 모듈
+from objects import * # 상태 머신 및 오브젝트 모듈 import
 
 # ----- world 전체 관련 코드 -----
 

@@ -2,8 +2,9 @@
 
 # 상태 머신 및 오브젝트들을 기록한 파일
 
-from pico2d import * # pico2d 모듈
-from state import * # 상태를 담은 모듈
+from pico2d import *    # pico2d 모듈 import
+from state import *     # 상태를 담은 모듈 import
+from functions import * # 이벤트 및 오브젝트별 동작 모듈 import
 
 # ----- 상태 머신 클래스 -----
 
@@ -173,10 +174,10 @@ player = Player()
 basicBeatTimer = BeatTimer(4, 100) # (4박자, 1박자당 100틱) 박자표 <기본>
 
 # basicBeatTimer (기본 박자표)를 첫 박자표로 지정한다.
-# beattimer = basicBeatTimer
+beattimer = basicBeatTimer
 
 ### 테스트용
-beattimer = BeatTimer(5, 100)
+beattimer = BeatTimer(5, 140)
 
 
 
