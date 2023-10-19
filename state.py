@@ -70,8 +70,19 @@ def draw_beattimer(obj):
     img_beat_small = load_image('img_beat_small.png')
     img_beat_big = load_image('img_beat_big.png')
 
+    beatnum = obj.beatnum # 박자 수
+
+    ### 박자표 중심은 '400, 400' (임시)
+    SIZEX, SIZEY     = 100, 100 # 이미지 크기
+    CENTERX, CENTERY = 400, 500 # 박자표 중심
+
     # 박자표 이미지 list에서 - index는 list에서의 위치, beat는 실제 값
     for index, beat in enumerate(obj.beat_image_list):
+
+        # 이미지 그리기 시작하는 위치
+        startx = (CENTERX - (beatnum-1) * SIZEX / 2) + (index * SIZEX)
+        starty = CENTERY
+
         # 해당 박자가 없으면 - 그리기 종료
         if beat == None:
             img = None
@@ -79,11 +90,11 @@ def draw_beattimer(obj):
 
         # 해당 박자가 작은 박자이면 - 작은 박자 이미지 그리기
         elif beat == "small":
-            img_beat_small.draw(250 + index * 100, 400)
+            img_beat_small.draw(startx, starty, SIZEX, SIZEY)
 
         # 해당 박자가 큰 박자이면 - 큰 박자 이미지 그리기
         elif beat == "big":
-            img_beat_big.draw(250 + index * 100, 400)
+            img_beat_big.draw(startx, starty, SIZEX, SIZEY)
 
 # ----- world 각 상태별 동작 상세 -----
 

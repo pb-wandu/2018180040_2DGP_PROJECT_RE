@@ -9,7 +9,7 @@ import game_world # world 전체 관련 내용을 담은 모듈
 # ----- 실제 게임 실행 부분 -----
 
 # 화면 실행
-open_canvas()
+open_canvas(800, 600)
 
 # 초기 설정
 game_world.init_world()

@@ -94,31 +94,6 @@ class Player:
 
 # ----- 박자표 클래스 -----
 
-class BeatTimer1:
-
-    imagesmall, imagebig = None, None # 작은 박자 / 큰 박자 이미지
-
-    def __init__(self, bnum, ctime):
-
-        # 작은 박자 / 큰 박자 이미지
-        # if BeatTimer.imagesmall == None:
-        #    BeatTimer.imagesmall = load_image('img_beat_small.png')
-        # if BeatTimer.imagebig == None:
-        #     BeatTimer.imagebig = load_image('img_beat_big.png')
-
-        # 박자 관련 변수
-        self.beatnum = bnum                             # 박자수 (큰 박자 나오는 주기)
-        self.cycle_time = ctime                         # 큰 박자 사이의 '실제 시간'
-        self.nowtick = 0                                # 현재 틱수
-        self.maxtick = 100 * self.beatnum               # 최대 틱수 (1박당 100틱)
-        self.beat1time = self.cycle_time / self.beatnum # 한 박자당 시간
-        self.tick1time = self.beat1time / 100           # 1틱당 시간
-
-        pass
-
-
-
-
 class BeatTimer:
 
     # 박자표 이미지 list
@@ -126,14 +101,14 @@ class BeatTimer:
 
     def __init__(self, bnum, ctime):
 
-        self.beatnum = bnum                             # 박자수 (큰 박자 나오는 주기)
+        self.beatnum = bnum                             # 박자 수 (큰 박자 나오는 주기)
         self.cycle_time = ctime                         # 큰 박자 사이의 '실제 시간'
         self.nowtick = 0                                # 현재 틱수
         self.maxtick = 100 * self.beatnum               # 최대 틱수 (1박당 100틱)
         self.beat1time = self.cycle_time / self.beatnum # 한 박자당 시간
         self.tick1time = self.beat1time / 100           # 1틱당 시간
 
-        # '박자수 - 1'개의 작은 박자와, 1개의 큰 박자를 넣는다
+        # '박자 수 - 1'개의 작은 박자와, 1개의 큰 박자를 넣는다
         for n in range(0, self.beatnum - 1):
             self.beat_image_list[n] = "small"
         self.beat_image_list[self.beatnum-1] = "big"
@@ -200,7 +175,7 @@ player = Player()
 # basicBeatTimer (기본 박자표)를 첫 박자표로 지정해준다.
 
 # 박자표 종류
-basicBeatTimer = BeatTimer(4, 1.0) # 박자표 (1초에 4박자) <기본>
+basicBeatTimer = BeatTimer(5, 1.0) # 박자표 (1초에 4박자) <기본>
 ### secondBeatTimer = BeatTimer(5, 1.4) # 박자표 (1.4초에 5박자) <- 예시입니다
 
 # 첫 박자표는 기본 박자표 (1초에 4박자)로 지정한다.
