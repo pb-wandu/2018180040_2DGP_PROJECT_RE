@@ -51,14 +51,16 @@ def timeupdate(obj):
     if obj.nowtick > obj.maxtick:
         obj.nowtick = 0
 
+
+
     ### 테스트용 - 박자 표시
     if obj.nowtick % 100 == 0 and obj.nowtick != 0:
         ### 테스트용 - 큰박자
         if obj.nowtick == obj.maxtick:
-            print("<큰 박자> 박자표 [4 / 4] 박자")
+            print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
         ### 테스트용 - 그 외
         else:
-            print(f"박자표 [{int(obj.nowtick / 100)} / 4] 박자")
+            print(f"박자표 [{int(obj.nowtick / 100)} / {obj.beatnum}] 박자")
 
     # nowtime 1틱만큼의 지연 시간
     delay(obj.tick1time)
@@ -72,7 +74,6 @@ def draw_beattimer(obj):
 
     beatnum = obj.beatnum # 박자 수
 
-    ### 박자표 중심은 '400, 400' (임시)
     SIZEX, SIZEY     = 100, 100 # 이미지 크기
     CENTERX, CENTERY = 400, 500 # 박자표 중심
 
