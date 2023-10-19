@@ -94,16 +94,49 @@ class Player:
 
 # ----- 박자표 클래스 -----
 
-class BeatTimer:
+class BeatTimer1:
+
+    imagesmall, imagebig = None, None # 작은 박자 / 큰 박자 이미지
+
     def __init__(self, bnum, ctime):
-        ### (테스트) 기본적으로 4/4박자를 기준으로 한다
-        # 박자표에서의 현재 틱수를 0으로 초기화
+
+        # 작은 박자 / 큰 박자 이미지
+        # if BeatTimer.imagesmall == None:
+        #    BeatTimer.imagesmall = load_image('img_beat_small.png')
+        # if BeatTimer.imagebig == None:
+        #     BeatTimer.imagebig = load_image('img_beat_big.png')
+
+        # 박자 관련 변수
         self.beatnum = bnum                             # 박자수 (큰 박자 나오는 주기)
         self.cycle_time = ctime                         # 큰 박자 사이의 '실제 시간'
         self.nowtick = 0                                # 현재 틱수
         self.maxtick = 100 * self.beatnum               # 최대 틱수 (1박당 100틱)
         self.beat1time = self.cycle_time / self.beatnum # 한 박자당 시간
         self.tick1time = self.beat1time / 100           # 1틱당 시간
+
+        pass
+
+
+
+
+class BeatTimer:
+
+    # 박자표 이미지 list
+    beat_image_list = [None, None, None, None, None, None]
+
+    def __init__(self, bnum, ctime):
+
+        self.beatnum = bnum                             # 박자수 (큰 박자 나오는 주기)
+        self.cycle_time = ctime                         # 큰 박자 사이의 '실제 시간'
+        self.nowtick = 0                                # 현재 틱수
+        self.maxtick = 100 * self.beatnum               # 최대 틱수 (1박당 100틱)
+        self.beat1time = self.cycle_time / self.beatnum # 한 박자당 시간
+        self.tick1time = self.beat1time / 100           # 1틱당 시간
+
+        # '박자수 - 1'개의 작은 박자와, 1개의 큰 박자를 넣는다
+        for n in range(0, self.beatnum - 1):
+            self.beat_image_list[n] = "small"
+        self.beat_image_list[self.beatnum-1] = "big"
 
         pass
 
@@ -121,8 +154,9 @@ class BeatTimer:
 
     @staticmethod
     def draw():
-        state_machine.cur_state.do(beattimer)
+        state_machine.cur_state.draw(beattimer)
         pass
+
 
 # 펀치 클래스
 class Punch:

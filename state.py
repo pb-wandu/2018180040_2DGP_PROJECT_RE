@@ -4,6 +4,7 @@
 
 from pico2d import * # pico2d 모듈
 import objects # 상태 머신 및 오브젝트 모듈 import
+# import images # 이미지 저장 모듈 import
 
 # ----- 게임 흐름 -----
 
@@ -18,7 +19,7 @@ import objects # 상태 머신 및 오브젝트 모듈 import
 # (적의 HP가 0 이하가 되면)
 # Finish       : 대결 완료
 
-# ----- 이벤트 확인 함수 및 상태별 동작 -----
+# ----- 이벤트 확인 함수 -----
 
 ### 임시 함수
 def temp(e):
@@ -27,6 +28,8 @@ def temp(e):
 # 스페이스 바 눌림
 def space_down(e):
     return e[0] == "INPUT" and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
+
+# ----- 각 오브젝트별 상세 동작 및 그리기 -----
 
 # 플레이어 - 펀치 실행
 def punch_activated(e):
@@ -60,7 +63,29 @@ def timeupdate(obj):
     # nowtime 1틱만큼의 지연 시간
     delay(obj.tick1time)
 
-# ----- 각 world 상태별 상세 -----
+# 박자표 그리기
+def draw_beattimer(obj):
+    
+    # 박자표 이미지
+    img_beat_small = load_image('img_beat_small.png')
+    img_beat_big = load_image('img_beat_big.png')
+
+    # 박자표 이미지 list에서 - index는 list에서의 위치, beat는 실제 값
+    for index, beat in enumerate(obj.beat_image_list):
+        # 해당 박자가 없으면 - 그리기 종료
+        if beat == None:
+            img = None
+            break
+
+        # 해당 박자가 작은 박자이면 - 작은 박자 이미지 그리기
+        elif beat == "small":
+            img_beat_small.draw(250 + index * 100, 400)
+
+        # 해당 박자가 큰 박자이면 - 큰 박자 이미지 그리기
+        elif beat == "big":
+            img_beat_big.draw(250 + index * 100, 400)
+
+# ----- world 각 상태별 동작 상세 -----
 
 # Ready (준비 상태)
 class Ready:
@@ -95,6 +120,16 @@ class Ready:
     # 현 상태에서 각 오브젝트 그리기
     @staticmethod
     def draw(obj):
+
+        # 플레이어
+        if obj == objects.player:
+            pass
+
+        # 박자표
+        elif obj == objects.beattimer:
+            # Ready 상태에서는 박자표를 그리지 않음
+            pass
+
         pass
 
 # Standoff (대치 상태)
@@ -136,6 +171,16 @@ class Standoff:
     # 현 상태에서 각 오브젝트 그리기
     @staticmethod
     def draw(obj):
+
+        # 플레이어
+        if obj == objects.player:
+            pass
+
+        # 박자표
+        elif obj == objects.beattimer:
+            draw_beattimer(obj) # 박자표 그리기
+            pass
+
         pass
 
 """
