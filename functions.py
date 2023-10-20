@@ -1,4 +1,4 @@
-# -----------<함수들>-----------
+# -----------<동작 함수들>-----------
 
 # 이벤트 및 오브젝트별 동작 함수를 기록한 파일
 
@@ -35,14 +35,14 @@ def timeupdate(obj):
     # nowtime 1틱씩 진행
     obj.nowtick += 1
 
-    # maxtime 초과시 0틱으로 초기화
-    if obj.nowtick > obj.maxtick:
+    # 최대 틱(에서 100틱) 초과시 0틱으로 초기화
+    if obj.nowtick > (obj.maxtick + 100):
         obj.nowtick = 0
 
     ### 테스트용 - 박자 표시
     if obj.nowtick % obj.ticknum == 0 and obj.nowtick != 0:
         ### 테스트용 - 큰박자
-        if obj.nowtick == obj.maxtick:
+        if obj.nowtick == (obj.maxtick + 100):
             print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
         ### 테스트용 - 그 외
         else:
@@ -52,29 +52,48 @@ def timeupdate(obj):
 
 def draw_beattimer(obj):
 
-    img_beat_small = load_image('img_beat_small.png')
-    img_beat_big = load_image('img_beat_big.png')
+    img_beat_bg     = load_image('img_beat_bg.png')     # 박자 배경
+    img_beat_effect = load_image('img_beat_effect.png') # 현재 박자 이펙트
+    img_beat_small  = load_image('img_beat_small.png')  # 작은 박자
+    img_beat_big    = load_image('img_beat_big.png')    # 큰 박자
 
     beatnum = obj.beatnum  # 박자 수
 
-    SIZEX, SIZEY = 100, 100  # 이미지 크기
-    CENTERX, CENTERY = 400, 500  # 박자표 중심
+    SIZE_BG_X, SIZE_BG_Y                 = 100, 100 # 박자표 틀 이미지 크기
+    SIZE_EF_X, SIZE_EF_Y                 = 90, 90   # 박자표 효과 이미지 크기
+    SIZE_BEAT_BIG_X, SIZE_BEAT_BIG_Y     = 70, 70   # 큰 박자 이미지 크기
+    SIZE_BEAT_SMALL_X, SIZE_BEAT_SMALL_Y = 40, 40   # 작은 박자 이미지 크기
+
+    CENTERX, CENTERY = 400, 500 # 박자표 중심
 
     # 박자표 이미지 list에서 - index는 list에서의 위치, beat는 실제 값
     for index, beatimg in enumerate(obj.beat_image_list):
 
         # 이미지 그리기 시작하는 위치
-        startx = (CENTERX - (beatnum - 1) * SIZEX / 2) + (index * SIZEX)
+        startx = (CENTERX - (beatnum - 1) * SIZE_BG_X / 2) + (index * SIZE_BG_X)
         starty = CENTERY
 
         # 해당 박자가 없으면 - 그리기 종료
         if beatimg == None:
             break
 
-        # 해당 박자가 작은 박자이면 - 작은 박자 이미지 그리기
-        elif beatimg == "small":
-            img_beat_small.draw(startx, starty, SIZEX, SIZEY)
+        else:
 
-        # 해당 박자가 큰 박자이면 - 큰 박자 이미지 그리기
-        elif beatimg == "big":
-            img_beat_big.draw(startx, starty, SIZEX, SIZEY)
+            # 박자 배경 그리기
+            img_beat_bg.draw(startx, starty, SIZE_BG_X, SIZE_BG_Y)
+
+            # 박자 이펙트 그리기
+            if index == (obj.nowtick // obj.ticknum - 1):
+                img_beat_effect.draw(startx, starty, SIZE_EF_X, SIZE_EF_Y)
+
+            # 해당 박자가 작은 박자이면 -
+            if beatimg == "small":
+
+                # 작은 박자 이미지 그리기
+                img_beat_small.draw(startx, starty, SIZE_BEAT_SMALL_X, SIZE_BEAT_SMALL_Y)
+
+            # 해당 박자가 큰 박자이면 - 큰 박자 이미지 그리기
+            elif beatimg == "big":
+
+                # 큰 박자 이미지 그리기
+                img_beat_big.draw(startx, starty, SIZE_BEAT_BIG_X, SIZE_BEAT_BIG_Y)
