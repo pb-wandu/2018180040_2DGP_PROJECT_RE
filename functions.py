@@ -3,7 +3,6 @@
 # 이벤트 및 오브젝트별 동작 함수를 기록한 파일
 
 from pico2d import * # pico2d 모듈 import
-# import images      # 이미지 저장 모듈 import
 
 # ----- 이벤트 확인 함수 -----
 

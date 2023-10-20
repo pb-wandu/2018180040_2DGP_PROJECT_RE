@@ -10,6 +10,8 @@ objects = [ [ ], [ ] ]
 # depth 0 : 배경
 # depth 1 : 전면
 
+img_bg = None # 배경 이미지
+
 # event 처리
 def handle_events():
     global gameplaying # 게임 실행중 여부
@@ -84,13 +86,22 @@ def update_allobject():
 
 # objects[] 안에 있는 오브젝트들 그리기
 def render_allobject():
+    global img_bg
+
     # 화면 초기화
     clear_canvas()
+
+    ### 임시 배경 렌더 위치 - 수정할 것
+    if img_bg == None:
+        img_bg = load_image('img_background.png')
+    img_bg.draw(400, 300, 800, 600)  # 배경 그리기
+
     # world 안에 있는 모든 layer에 대하여
     for layer in objects:
         # layer 안에 있는 모든 오브젝트에 대하여
         for obj in layer:
             # 오브젝트 그리기
             obj.draw()
+
     # 화면 업데이트
     update_canvas()

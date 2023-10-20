@@ -50,9 +50,6 @@ class StateMachine:
 
 class Player:
     def __init__(self):
-        # self.x, self.y = 400, 90
-        # self.sizex, self.sizey = 100, 100
-        # self.image = load_image('image.png')
         self.nowpunchhand = None # 현재 주먹을 지른 손
         pass
 
@@ -164,12 +161,9 @@ class Punch:
 # 상태 머신 (world에 실물이 없는 가상 머신이다)
 state_machine = StateMachine() # 상태 머신 오브젝트
 
-# 오브젝트 (world(게임 화면)에 실물이 있는 것들이다)
-
 # 플레이어 오브젝트 : 플레이어(양쪽 글러브)는 단일 오브젝트임이 명확하다.
 player = Player()
 
-# 하지만 박자표는? 박자표는 등장 적에 따라 바뀌는 오브젝트이다.
 # 박자표 종류
 basicBeatTimer = BeatTimer(4, 100) # (4박자, 1박자당 100틱) 박자표 <기본>
 
