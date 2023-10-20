@@ -39,13 +39,20 @@ def timeupdate(obj):
         obj.nowtick = 0
 
     ### 테스트용 - 박자 표시
-    if obj.nowtick % obj.ticknum == 0 and obj.nowtick != 0:
+    if obj.nowtick % obj.ticknum == 0:
         ### 테스트용 - 큰박자
         if obj.nowtick == (obj.maxtick + 100):
             print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
         ### 테스트용 - 그 외
-        else:
-            print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
+        elif int(obj.nowtick / obj.ticknum) <= (obj.beatnum - 1):
+            print(f"박자표 [{int(obj.nowtick / obj.ticknum+1)} / {obj.beatnum}] 박자")
+
+def draw_bg(obj):
+    if obj.image == None:
+        obj.image = load_image('img_background.png')
+
+    obj.image.draw(400, 300, 800, 600)  # 배경 그리기
+
 
 # 박자표 그리기
 

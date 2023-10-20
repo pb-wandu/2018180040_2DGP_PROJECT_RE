@@ -112,6 +112,11 @@ class Standoff:
         if obj == objects.player:
             pass
 
+        # 배경
+        elif obj == objects.background:
+            draw_bg(obj) # 배경 그리기
+            pass
+
         # 박자표
         elif obj == objects.beattimer:
             draw_beattimer(obj) # 박자표 그리기

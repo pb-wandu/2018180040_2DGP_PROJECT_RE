@@ -46,6 +46,17 @@ class StateMachine:
     def draw(self):
         self.cur_state.draw(StateMachine)
 
+# ----- 배경 클래스 -----
+
+class Background:
+    image = None
+
+    def update(self):
+        pass
+
+    def draw(self):
+        state_machine.cur_state.draw(self)
+
 # ----- 플레이어 클래스 -----
 
 class Player:
@@ -69,7 +80,7 @@ class Player:
 
     @staticmethod
     def draw():
-        state_machine.cur_state.do(player)
+        state_machine.cur_state.draw(player)
         pass
 
     # 플레이어 - 펀치 날리기
@@ -161,8 +172,11 @@ class Punch:
 # 상태 머신 (world에 실물이 없는 가상 머신이다)
 state_machine = StateMachine() # 상태 머신 오브젝트
 
-# 플레이어 오브젝트 : 플레이어(양쪽 글러브)는 단일 오브젝트임이 명확하다.
+# 플레이어 오브젝트
 player = Player()
+
+# 배경 오브젝트
+background = Background()
 
 # 박자표 종류
 basicBeatTimer = BeatTimer(4, 100) # (4박자, 1박자당 100틱) 박자표 <기본>
@@ -171,7 +185,7 @@ basicBeatTimer = BeatTimer(4, 100) # (4박자, 1박자당 100틱) 박자표 <기
 beattimer = basicBeatTimer
 
 ### 테스트용
-beattimer = BeatTimer(5, 140)
+beattimer = BeatTimer(5, 40)
 
 
 

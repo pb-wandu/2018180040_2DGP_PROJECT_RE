@@ -42,7 +42,7 @@ def init_world():
     # (해당 실물 오브젝트는 objects.py 끝부분에 있음)
 
     # 배경은 depth 0 (배경)에
-    ### add_object(background, 0) # 배경
+    add_object(background, 0) # 배경
 
     # 나머지는 depth 1 (전면)에
     add_object(player, 1)    # 플레이어
@@ -90,11 +90,6 @@ def render_allobject():
 
     # 화면 초기화
     clear_canvas()
-
-    ### 임시 배경 렌더 위치 - 수정할 것
-    if img_bg == None:
-        img_bg = load_image('img_background.png')
-    img_bg.draw(400, 300, 800, 600)  # 배경 그리기
 
     # world 안에 있는 모든 layer에 대하여
     for layer in objects:
