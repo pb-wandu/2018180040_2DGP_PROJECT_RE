@@ -17,7 +17,8 @@ class StateMachine:
         # 동작 전환
         self.transitions = {
             Ready: {space_down: Standoff},
-            Standoff: {temp: Standoff}
+            Standoff: {punch_activated: Action},
+            Action: {func_temp: Standoff}
         }
 
     # 상태 머신 시작
@@ -185,7 +186,7 @@ basicBeatTimer = BeatTimer(4, 100) # (4박자, 1박자당 100틱) 박자표 <기
 beattimer = basicBeatTimer
 
 ### 테스트용
-beattimer = BeatTimer(5, 40)
+beattimer = BeatTimer(5, 50)
 
 
 

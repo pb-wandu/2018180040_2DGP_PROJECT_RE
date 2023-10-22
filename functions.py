@@ -3,12 +3,13 @@
 # 이벤트 및 오브젝트별 동작 함수를 기록한 파일
 
 from pico2d import * # pico2d 모듈 import
+import objects       # 상태 머신 및 오브젝트 모듈 import
 
 # ----- 이벤트 확인 함수 -----
 
-### 임시 함수
-def temp(e):
-    return False
+### 임시 함수 (바로 다음 상태로 이동)
+def func_temp(e):
+    return True
 
 # 스페이스 바 눌림
 def space_down(e):
@@ -18,15 +19,36 @@ def space_down(e):
 
 # 플레이어 - 펀치 실행
 def punch_activated(e):
-    """
-    if 키보드 왼쪽 5줄 중 하나를 눌렀다면:
-        player.nowpunchhand = "left"
-    elif 키보드 오른쪽 5줄 중 하나를 눌렀다면:
-        player.nowpunchhand = "right"
-    else: # 다른 키를 눌렀다면
-        player.nowpunchhand = None
-    """
-    return False  ### 임시
+
+    left_punch_keys = [
+        SDLK_q, SDLK_w, SDLK_e, SDLK_r, SDLK_t,
+        SDLK_a, SDLK_s, SDLK_d, SDLK_f, SDLK_g,
+        SDLK_z, SDLK_x, SDLK_c, SDLK_v, SDLK_b
+    ]
+    right_punch_keys = [
+        SDLK_i, SDLK_o, SDLK_p, SDLK_LEFTBRACKET, SDLK_RIGHTBRACKET,
+        SDLK_j, SDLK_k, SDLK_l, SDLK_SEMICOLON, SDLK_QUOTE,
+        SDLK_n, SDLK_m, SDLK_COMMA, SDLK_PERIOD, SDLK_SLASH
+    ]
+
+    # 키가 눌렸다면
+    if e[0] == "INPUT" and e[1].type == SDL_KEYDOWN:
+        # 왼쪽 5줄 중 하나의 키를 눌렀다면 왼쪽 펀치
+        if e[1].key in left_punch_keys:
+            objects.player.nowpunchhand = "left"
+            print("왼쪽 펀치")
+            return True
+        # 오른쪽 5줄 중 하나의 키를 눌렀다면 오른쪽 펀치
+        elif e[1].key in right_punch_keys:
+            objects.player.nowpunchhand = "right"
+            print("오른쪽 펀치")
+            return True
+        # 다른 키라면 어떤 방향 펀치도 아님
+        else:
+            objects.player.nowpunchhand = None
+            print("펀치 아님")
+            return False
+
 
 
 # 박자표 - 시간 업데이트 (1틱 간격)
@@ -39,13 +61,13 @@ def timeupdate(obj):
         obj.nowtick = 0
 
     ### 테스트용 - 박자 표시
-    if obj.nowtick % obj.ticknum == 0:
+    if obj.nowtick % obj.ticknum == 0 and obj.nowtick != 0:
         ### 테스트용 - 큰박자
-        if obj.nowtick == (obj.maxtick + 100):
+        if obj.nowtick == (obj.maxtick):
             print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
         ### 테스트용 - 그 외
-        elif int(obj.nowtick / obj.ticknum) <= (obj.beatnum - 1):
-            print(f"박자표 [{int(obj.nowtick / obj.ticknum+1)} / {obj.beatnum}] 박자")
+        elif int(obj.nowtick / obj.ticknum) <= obj.beatnum:
+            print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
 
 def draw_bg(obj):
     if obj.image == None:

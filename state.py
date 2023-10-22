@@ -80,11 +80,6 @@ class Standoff:
     @staticmethod
     def exit():
 
-        # 펀치로 인한 상태 종료시
-        if punch_activated(e):
-            # 플레이어의 펀치 동작 수행
-            player.punch_action()
-
         print("Standoff (대치 상태) exit")
         pass
 
@@ -124,26 +119,55 @@ class Standoff:
 
         pass
 
-"""
 # Action (동작)
 class Action:
     @staticmethod
     def enter():
+        print("Action (동작 상태) enter")
         pass
 
+    # 상태 종료
     @staticmethod
     def exit():
+
+        print("Action (동작 상태) exit")
         pass
 
+    # 현 상태에서 각 오브젝트에 따른 동작
     @staticmethod
-    def do():
+    def do(obj):
+
+        # 플레이어
+        if obj == objects.player:
+            pass
+
+        # 박자표
+        elif obj == objects.beattimer:
+            pass
+
         pass
 
+    # 현 상태에서 각 오브젝트 그리기
     @staticmethod
-    def draw():
+    def draw(obj):
+
+        # 플레이어
+        if obj == objects.player:
+            pass
+
+        # 배경
+        elif obj == objects.background:
+            draw_bg(obj) # 배경 그리기
+            pass
+
+        # 박자표
+        elif obj == objects.beattimer:
+            draw_beattimer(obj) # 박자표 그리기
+            pass
+
         pass
 
-
+"""
 # ActionResult (동작 결과)
 class ActionResult:
     @staticmethod
