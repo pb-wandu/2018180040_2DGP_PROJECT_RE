@@ -63,7 +63,7 @@ def add_objects(objs, depth):
     objects[depth] += objs
 
 # 오브젝트 지우기
-def remove_object(o):
+def remove_object(obj):
     # objects에 있는 레이어에 대하여
     for layer in objects:
         # 레이어 안에 오브젝트가 있다면
@@ -86,7 +86,6 @@ def update_allobject():
 
 # objects[] 안에 있는 오브젝트들 그리기
 def render_allobject():
-    global img_bg
 
     # 화면 초기화
     clear_canvas()
