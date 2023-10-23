@@ -141,31 +141,36 @@ class BeatTimer:
         state_machine.cur_state.draw(beattimer)
         pass
 
+# ----- 글러브 클래스 -----
 
-# 펀치 클래스
-class Punch:
-    image = None
+class Glove:
+    image = None    # 이미지
+    glovedir = None # 글러브 방향
+    x, y = 0, 0     # 글러브 위치
 
     ### (예정) 실제 제작할 때 내용 채워넣기
 
-    def __init__(self, posx, posy):
-        # if Punch.image_l == None:
-        #    Punch.image_l = load_image('펀치이미지왼쪽.png')
-        # if Punch.image_r == None:
-        #    Punch.image_r = load_image('펀치이미지오른쪽.png')
-	    # 입력값에 따른 위치 지정
+    def __init__(self, dir, posx, posy):
+
+        # 입력값에 따른 방향 지정
+        self.glovedir = dir
+        # 입력값에 따른 위치 지정
+        self.x, self.y = posx, posy
+    
+    # 글러브 위치 (재)지정
+    def setpos(self, posx, posy):
         self.x, self.y = posx, posy
 
-    def draw(self):
-	    # 펀치 이미지 그리기
-        # self.image.draw(self.x, self.y)
+    @staticmethod
+    def update():
+        state_machine.cur_state.do(glove_l)
+        state_machine.cur_state.do(glove_r)
         pass
 
-    def update(self):
-	    # 업데이트시 할 동작
-        # if 조건:
-            # 일정 시간이 지나면 펀치 오브젝트 삭제
-        #    game_world.remove_object(self)
+    @staticmethod
+    def draw():
+        state_machine.cur_state.draw(glove_l)
+        state_machine.cur_state.draw(glove_r)
         pass
 
 # ----- 클래스별 실제 오브젝트 -----
@@ -175,6 +180,10 @@ state_machine = StateMachine() # 상태 머신 오브젝트
 
 # 플레이어 오브젝트
 player = Player()
+
+# 글러브 오브젝트
+glove_l = Glove("left", 200, 200)
+glove_r = Glove("right", 600, 200)
 
 # 배경 오브젝트
 background = Background()

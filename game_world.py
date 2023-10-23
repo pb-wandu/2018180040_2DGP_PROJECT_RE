@@ -46,7 +46,12 @@ def init_world():
 
     # 나머지는 depth 1 (전면)에
     add_object(player, 1)    # 플레이어
+
+    add_object(glove_l, 1)   # 글러브 왼쪽
+    add_object(glove_r, 1)   # 글러브 오른쪽
+
     add_object(beattimer, 1) # 박자표
+
 
     ### 플레이어가 적보다 우선하는 등 추가 레이어 필요시 추가 예정
 

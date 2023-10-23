@@ -63,11 +63,13 @@ def timeupdate(obj):
     ### 테스트용 - 박자 표시
     if obj.nowtick % obj.ticknum == 0 and obj.nowtick != 0:
         ### 테스트용 - 큰박자
-        if obj.nowtick == (obj.maxtick):
-            print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
+        if obj.nowtick == obj.maxtick:
+            ### print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
+            pass
         ### 테스트용 - 그 외
         elif int(obj.nowtick / obj.ticknum) <= obj.beatnum:
-            print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
+            ### print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
+            pass
 
 def draw_bg(obj):
     if obj.image == None:
@@ -75,9 +77,27 @@ def draw_bg(obj):
 
     obj.image.draw(400, 300, 800, 600)  # 배경 그리기
 
+# 글러브 그리기
+def draw_glove(obj):
+
+    img_glove_left  = load_image('img_glove_left.png')  # 왼쪽 글러브
+    img_glove_right = load_image('img_glove_right.png') # 오른쪽 글러브
+
+    # 글러브 방향에 따라 이미지 표시하기
+    if obj.glovedir == "left":
+        obj.image = img_glove_left
+    elif obj.glovedir == "right":
+        obj.image = img_glove_right
+    else:
+        obj.image = None
+
+    # 글러브 정보
+    x, y = obj.x, obj.y   # x, y 위치
+    SIZEX, SIZEY = 200, 160 # x, y 크기
+
+    obj.image.draw(x, y, SIZEX, SIZEY)
 
 # 박자표 그리기
-
 def draw_beattimer(obj):
 
     img_beat_bg     = load_image('img_beat_bg.png')     # 박자 배경

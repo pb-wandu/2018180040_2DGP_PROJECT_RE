@@ -103,13 +103,20 @@ class Standoff:
     @staticmethod
     def draw(obj):
 
-        # 플레이어
-        if obj == objects.player:
-            pass
+        ### print(obj)
 
         # 배경
-        elif obj == objects.background:
+        if obj == objects.background:
             draw_bg(obj) # 배경 그리기
+            pass
+
+        # 플레이어
+        elif obj == objects.player:
+            pass
+
+        # 글러브
+        elif obj == objects.glove_l or obj == objects.glove_r:
+            draw_glove(obj)
             pass
 
         # 박자표
