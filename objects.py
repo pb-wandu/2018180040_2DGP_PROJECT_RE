@@ -3,6 +3,8 @@
 # 상태 머신 및 오브젝트들을 기록한 파일
 
 from pico2d import *    # pico2d 모듈 import
+
+import functions
 from state import *     # 상태를 담은 모듈 import
 from functions import * # 이벤트 및 오브젝트별 동작 모듈 import
 
@@ -13,6 +15,7 @@ class StateMachine:
     # 초기 상태 설정
     def __init__(self):
         self.cur_state = Ready # 초기 상태 : Ready 상태
+        self.now_action = None # 초기 상태 : 현재 동작 없음
 
         # 동작 전환
         self.transitions = {
@@ -61,6 +64,7 @@ class Background:
 # ----- 플레이어 클래스 -----
 
 class Player:
+
     def __init__(self):
         self.nowpunchhand = None # 현재 주먹을 지른 손
         pass
@@ -84,24 +88,6 @@ class Player:
         state_machine.cur_state.draw(player)
         pass
 
-    # 플레이어 - 펀치 날리기
-    def punch_action(self):
-        ### (예정) 펀치 이미지 추가
-        ### punch = Punch(x위치, y위치)
-        ### game_world.add_object(punch, 1)
-
-        # 현재 펀치 날리는 손에 따른 구분
-        if self.nowpunchhand == "left":
-            # print("punch_action (left)")
-            ### (예정) 실제 동작
-            pass
-        elif self.nowpunchhand == "right":
-            # print("punch_action (right)")
-            ### (예정) 실제 동작
-            pass
-        else:
-            pass
-
 # ----- 박자표 클래스 -----
 
 class BeatTimer:
@@ -115,6 +101,8 @@ class BeatTimer:
         self.nowtick = 0                      # 현재 틱수
         self.ticknum = ticknum                # 1박자당 틱수
         self.maxtick = ticknum * self.beatnum # 최대 틱수 (1박자당 ticknum틱)
+
+        self.punch_cooltime = 0 # 펀치 쿨타임
 
         # '박자 수 - 1'개의 작은 박자와, 1개의 큰 박자를 넣는다
         for n in range(0, self.beatnum - 1):

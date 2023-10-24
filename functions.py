@@ -31,42 +31,71 @@ def punch_activated(e):
         SDLK_n, SDLK_m, SDLK_COMMA, SDLK_PERIOD, SDLK_SLASH
     ]
 
-    # 키가 눌렸다면
-    if e[0] == "INPUT" and e[1].type == SDL_KEYDOWN:
-        # 왼쪽 5줄 중 하나의 키를 눌렀다면 왼쪽 펀치
-        if e[1].key in left_punch_keys:
-            objects.player.nowpunchhand = "left"
-            print("왼쪽 펀치")
-            return True
-        # 오른쪽 5줄 중 하나의 키를 눌렀다면 오른쪽 펀치
-        elif e[1].key in right_punch_keys:
-            objects.player.nowpunchhand = "right"
-            print("오른쪽 펀치")
-            return True
-        # 다른 키라면 어떤 방향 펀치도 아님
-        else:
-            objects.player.nowpunchhand = None
-            print("펀치 아님")
-            return False
+    # 펀치 쿨타임 (### 수치는 변경될 수 있음)
+    PUNCH_COOLTIME = 50
 
+    # 펀치 쿨타임이 0인 경우에만
+    if objects.beattimer.punch_cooltime == 0:
 
+        # 키가 눌렸다면
+        if e[0] == "INPUT" and e[1].type == SDL_KEYDOWN:
+            # 왼쪽 5줄 중 하나의 키를 눌렀다면 왼쪽 펀치
+            if e[1].key in left_punch_keys:
+                objects.player.nowpunchhand = "left"
+                objects.state_machine.now_action = "punch"
+                objects.beattimer.punch_cooltime = PUNCH_COOLTIME
+                print("[<-] <왼쪽 펀치>")
+                return True
+            # 오른쪽 5줄 중 하나의 키를 눌렀다면 오른쪽 펀치
+            elif e[1].key in right_punch_keys:
+                objects.player.nowpunchhand = "right"
+                objects.state_machine.now_action = "punch"
+                objects.beattimer.punch_cooltime = PUNCH_COOLTIME
+
+                print("[->] <오른쪽 펀치>")
+                return True
+            # 다른 키라면 어떤 방향 펀치도 아님
+            else:
+                objects.player.nowpunchhand = None
+                print("펀치 아님")
+                return False
+    else:
+        ### 테스트용
+        print(f"펀치 쿨타임이 남아있습니다- {objects.beattimer.punch_cooltime}틱")
 
 # 박자표 - 시간 업데이트 (1틱 간격)
-def timeupdate(obj):
+def timeupdate(obj, nowstate):
     # nowtime 1틱씩 진행
     obj.nowtick += 1
 
     # 최대 틱(에서 100틱) 초과시 0틱으로 초기화
     if obj.nowtick > (obj.maxtick + 100):
         obj.nowtick = 0
+    
+    # 펀치중이라면
+    if objects.state_machine.now_action == "punch":
+
+        # 펀치 쿨타임 감소
+        if objects.beattimer.punch_cooltime > 0:
+            objects.beattimer.punch_cooltime -= 1
+            
+            # 쿨타임이 0이 되었다면
+            if objects.beattimer.punch_cooltime <= 0:
+                # 현재 하는 동작 없음
+                objects.state_machine.now_action = None 
+
+                ### 테스트용
+                print(f"펀치 쿨타임 초기화 완료")
+        else:
+            pass
 
     ### 테스트용 - 박자 표시
     if obj.nowtick % obj.ticknum == 0 and obj.nowtick != 0:
-        ### 테스트용 - 큰박자
+        ### 큰 박자
         if obj.nowtick == obj.maxtick:
             ### print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
             pass
-        ### 테스트용 - 그 외
+        ### 그 외
         elif int(obj.nowtick / obj.ticknum) <= obj.beatnum:
             ### print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
             pass

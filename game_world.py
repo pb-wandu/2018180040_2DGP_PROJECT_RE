@@ -2,7 +2,8 @@
 
 # world 전체 관련 내용을 기록한 파일
 
-from objects import * # 상태 머신 및 오브젝트 모듈 import
+from objects import *   # 상태 머신 및 오브젝트 모듈 import
+from functions import * # 이벤트 및 오브젝트별 동작 모듈 import
 
 # ----- world 전체 관련 코드 -----
 
@@ -32,11 +33,14 @@ def handle_events():
 
 # world 초기 설정
 def init_world():
-    global gameplaying # 게임 실행중 여부
-    global world # 오브젝트들을 담는 list
+    global gameplaying    # 게임 실행중 여부
+    global world          # 오브젝트들을 담는 list
 
+    # 초기 설정
     gameplaying = True    # 게임 실행을 True로 한다
     state_machine.start() # 상태 머신을 실행시킨다
+
+    functions.punch_cooltime = 0 # 펀치 쿨타임을 0으로 한다
 
     # world 안에 오브젝트 추가
     # (해당 실물 오브젝트는 objects.py 끝부분에 있음)

@@ -92,7 +92,6 @@ class Standoff:
     # 상태 종료
     @staticmethod
     def exit():
-
         print("Standoff (대치 상태) exit")
         pass
 
@@ -106,8 +105,7 @@ class Standoff:
 
         # 박자표
         elif obj == objects.beattimer:
-            # 박자표 시간 업데이트
-            timeupdate(obj)
+            timeupdate(obj, "Standoff") # 박자표 시간 업데이트
             pass
 
         pass
@@ -167,6 +165,7 @@ class Action:
 
         # 박자표
         elif obj == objects.beattimer:
+            timeupdate(obj, "Action") # 박자표 시간 업데이트
             pass
 
         pass
