@@ -170,8 +170,8 @@ state_machine = StateMachine() # 상태 머신 오브젝트
 player = Player()
 
 # 글러브 오브젝트
-glove_l = Glove("left", 200, 200)
-glove_r = Glove("right", 600, 200)
+glove_l = Glove("left", 200, 80)
+glove_r = Glove("right", 600, 80)
 
 # 배경 오브젝트
 background = Background()

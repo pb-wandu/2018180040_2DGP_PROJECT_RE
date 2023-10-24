@@ -144,7 +144,7 @@ def draw_glove(obj):
 
     # 글러브 정보
     x, y = obj.x, obj.y   # x, y 위치
-    SIZEX, SIZEY = 200, 160 # x, y 크기
+    SIZEX, SIZEY = 240, 240 # x, y 크기
 
     obj.image.draw(x, y, SIZEX, SIZEY)
 
