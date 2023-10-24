@@ -131,21 +131,18 @@ def draw_state_info(nowstate):
 # 글러브 그리기
 def draw_glove(obj):
 
-    img_glove_left  = load_image('img_glove_left.png')  # 왼쪽 글러브
-    img_glove_right = load_image('img_glove_right.png') # 오른쪽 글러브
-
-    # 글러브 방향에 따라 이미지 표시하기
-    if obj.glovedir == "left":
-        obj.image = img_glove_left
-    elif obj.glovedir == "right":
-        obj.image = img_glove_right
-    else:
-        obj.image = None
+    if obj.image == None:
+        # 글러브 방향에 따라 이미지 표시하기
+        if obj.glovedir == "left":
+            obj.image = load_image('img_glove_left.png')  # 왼쪽 글러브
+        elif obj.glovedir == "right":
+            obj.image = load_image('img_glove_right.png') # 오른쪽 글러브
 
     # 글러브 정보
     x, y = obj.x, obj.y   # x, y 위치
     SIZEX, SIZEY = 240, 240 # x, y 크기
-
+    
+    # 글러브 그리기
     obj.image.draw(x, y, SIZEX, SIZEY)
 
 # 박자표 그리기
