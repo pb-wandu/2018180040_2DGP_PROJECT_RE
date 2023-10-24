@@ -71,11 +71,33 @@ def timeupdate(obj):
             ### print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
             pass
 
+# 배경 그리기
 def draw_bg(obj):
     if obj.image == None:
         obj.image = load_image('img_background.png')
 
     obj.image.draw(400, 300, 800, 600)  # 배경 그리기
+
+# 정보 그리기
+def draw_state_info(nowstate):
+    infoimg = None
+
+    # 현재 상태에 따라 표시할 정보들
+    # 별도 오브젝트가 아닌 것들
+
+    if nowstate == "Ready":
+        infoimg = load_image('img_ready_info_text.png')  # 왼쪽 글러브
+
+        x, y = 400, 500          # x, y 위치
+        SIZEX, SIZEY = 300, 60  # x, y 크기
+
+        infoimg.draw(x, y, SIZEX, SIZEY)
+
+    elif nowstate == "Standoff":
+        pass
+
+    elif nowstate == "Action":
+        pass
 
 # 글러브 그리기
 def draw_glove(obj):

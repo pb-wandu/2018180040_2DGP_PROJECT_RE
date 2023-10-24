@@ -57,8 +57,21 @@ class Ready:
     @staticmethod
     def draw(obj):
 
+        # 상태에 따른 정보 표시
+        draw_state_info("Ready")
+
+        # 배경
+        if obj == objects.background:
+            draw_bg(obj)  # 배경 그리기
+            pass
+
         # 플레이어
-        if obj == objects.player:
+        elif obj == objects.player:
+            pass
+
+        # 글러브
+        elif obj == objects.glove_l or obj == objects.glove_r:
+            draw_glove(obj) # 글러브 그리기
             pass
 
         # 박자표
@@ -103,7 +116,8 @@ class Standoff:
     @staticmethod
     def draw(obj):
 
-        ### print(obj)
+        # 상태에 따른 정보 표시
+        draw_state_info("Standoff")
 
         # 배경
         if obj == objects.background:
@@ -116,7 +130,7 @@ class Standoff:
 
         # 글러브
         elif obj == objects.glove_l or obj == objects.glove_r:
-            draw_glove(obj)
+            draw_glove(obj) # 글러브 그리기
             pass
 
         # 박자표
@@ -144,6 +158,9 @@ class Action:
     @staticmethod
     def do(obj):
 
+        # 상태에 따른 정보 표시
+        draw_state_info("Action")
+
         # 플레이어
         if obj == objects.player:
             pass
@@ -158,13 +175,18 @@ class Action:
     @staticmethod
     def draw(obj):
 
-        # 플레이어
-        if obj == objects.player:
+        # 배경
+        if obj == objects.background:
+            draw_bg(obj) # 배경 그리기
             pass
 
-        # 배경
-        elif obj == objects.background:
-            draw_bg(obj) # 배경 그리기
+        # 플레이어
+        elif obj == objects.player:
+            pass
+
+        # 글러브
+        elif obj == objects.glove_l or obj == objects.glove_r:
+            draw_glove(obj) # 글러브 그리기
             pass
 
         # 박자표
