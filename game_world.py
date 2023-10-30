@@ -2,18 +2,16 @@
 
 # world 전체 관련 내용을 기록한 파일
 
-from objects import *   # 상태 머신 및 오브젝트 모듈 import
-from functions import * # 이벤트 및 오브젝트별 동작 모듈 import
+from objects import * # 상태 머신 및 오브젝트 모듈 import
 
-import gamemode_2_gamemenu
+# '모드 2 - 게임 메뉴'용 상태 머신 import
+import gamemode_2_gamemenu_statemachine as gamestatemachine
 
 # ----- world 전체 관련 코드 -----
 
-objects = [ [ ], [ ] ]
+objects = [ [ ], [ ] ] # object 전체를 담아두는 list
 # depth 0 : 배경
 # depth 1 : 전면
-
-img_bg = None # 배경 이미지
 
 # event 처리
 def handle_events():
@@ -38,10 +36,10 @@ def init_world():
     global world          # 오브젝트들을 담는 list
 
     # 상태 머신을 실행시킨다 (상태 머신은 gamemenu 모드에 해당)
-    gamemode_2_gamemenu.state_machine.start()
+    gamestatemachine.state_machine.start()
 
-    functions.punch_cooltime = 0 # 펀치 쿨타임을 0으로 초기화
-    beattimer.nowtick = 0        # 박자표 틱을 0으로 초기화
+    gamestatemachine.punch_cooltime = 0 # 펀치 쿨타임을 0으로 초기화
+    beattimer.nowtick = 0               # 박자표 틱을 0으로 초기화
 
     # world 안에 오브젝트 추가
     # (해당 실물 오브젝트는 objects.py 끝부분에 있음)

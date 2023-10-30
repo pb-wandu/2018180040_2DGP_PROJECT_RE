@@ -4,10 +4,8 @@
 
 from pico2d import *    # pico2d 모듈 import
 
-import functions
-from functions import * # 이벤트 및 오브젝트별 동작 모듈 import
-
-import gamemode_2_gamemenu # 게임 모드 gamemenu 모듈 import
+# '모드 2 - 게임 메뉴'용 상태 머신 import
+import gamemode_2_gamemenu_statemachine as gamestatemachine
 
 # ----- 배경 클래스 -----
 
@@ -18,7 +16,7 @@ class Background:
         pass
 
     def draw(self):
-        gamemode_2_gamemenu.state_machine.cur_state.draw(self)
+        gamestatemachine.state_machine.cur_state.draw(self)
 
 # ----- 플레이어 클래스 -----
 
@@ -32,19 +30,19 @@ class Player:
     def handle_event(event):
         # 입력받은 값에 따라 state_machine에서 event를 수행한다
         # e[0] = 이벤트 종류, e[1] = 실제 이벤트 값
-        gamemode_2_gamemenu.state_machine.handle_event(('INPUT', event))
+        gamestatemachine.state_machine.handle_event(('INPUT', event))
 
     # update와 draw는 state_machine의 현재 상태에서
     # 그 클래스에 대한 실제 오브젝트의 동작을 수행한다
 
     @staticmethod
     def update():
-        gamemode_2_gamemenu.state_machine.cur_state.do(player)
+        gamestatemachine.state_machine.cur_state.do(player)
         pass
 
     @staticmethod
     def draw():
-        gamemode_2_gamemenu.state_machine.cur_state.draw(player)
+        gamestatemachine.state_machine.cur_state.draw(player)
         pass
 
 # ----- 박자표 클래스 -----
@@ -80,12 +78,12 @@ class BeatTimer:
 
     @staticmethod
     def update():
-        gamemode_2_gamemenu.state_machine.cur_state.do(beattimer)
+        gamestatemachine.state_machine.cur_state.do(beattimer)
         pass
 
     @staticmethod
     def draw():
-        gamemode_2_gamemenu.state_machine.cur_state.draw(beattimer)
+        gamestatemachine.state_machine.cur_state.draw(beattimer)
         pass
 
 # ----- 글러브 클래스 -----
@@ -110,14 +108,14 @@ class Glove:
 
     @staticmethod
     def update():
-        gamemode_2_gamemenu.state_machine.cur_state.do(glove_l)
-        gamemode_2_gamemenu.state_machine.cur_state.do(glove_r)
+        gamestatemachine.state_machine.cur_state.do(glove_l)
+        gamestatemachine.state_machine.cur_state.do(glove_r)
         pass
 
     @staticmethod
     def draw():
-        gamemode_2_gamemenu.state_machine.cur_state.draw(glove_l)
-        gamemode_2_gamemenu.state_machine.cur_state.draw(glove_r)
+        gamestatemachine.state_machine.cur_state.draw(glove_l)
+        gamestatemachine.state_machine.cur_state.draw(glove_r)
         pass
 
 # ----- 클래스별 실제 오브젝트 -----
@@ -133,15 +131,13 @@ glove_r = Glove("right", 550, 80)
 background = Background()
 
 # 박자표 종류
-basicBeatTimer = BeatTimer(4, 30) # (4박자, 1박자당 30틱) 박자표 <기본>
+basicBeatTimer = BeatTimer(4, 50) # (4박자, 1박자당 50틱) 박자표 <기본>
 
 # basicBeatTimer (기본 박자표)를 첫 박자표로 지정한다.
 beattimer = basicBeatTimer
 
 ### 테스트용
-beattimer = BeatTimer(5, 30)
-
-
+beattimer = BeatTimer(6, 40)
 
 ### 추후 Finish 상태에서 exit했을 때 game_world.remove_object(o)를 이용하여 기존에 있는 박자표 오브젝트를 삭제하고
 ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.

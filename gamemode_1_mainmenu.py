@@ -9,6 +9,24 @@ import gamemode_2_gamemenu # 게임 모드 gamemenu 모듈 import
 
 # ----- 게임 프레임워크 동작 함수들 -----
 
+# 이벤트에 따른 동작 수행
+def handle_events():
+
+    events = get_events()
+
+    for event in events:
+        # SDL_QUIT일 경우 게임 종료
+        if event.type == SDL_QUIT:
+            game_framework.quit()
+
+        # esc키 누를 경우 메인메뉴로 이동
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            game_framework.change_mode(gamemode_1_mainmenu)
+
+        # 그 외
+        else:
+            pass
+
 def init():
     global tempimage
     global start_time
