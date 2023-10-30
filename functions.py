@@ -5,6 +5,8 @@
 from pico2d import * # pico2d 모듈 import
 import objects       # 상태 머신 및 오브젝트 모듈 import
 
+import gamemode_2_gamemenu # 게임 모드 gamemenu 모듈 import
+
 # ----- 이벤트 확인 함수 -----
 
 ### 임시 함수 (바로 다음 상태로 이동)
@@ -42,14 +44,14 @@ def punch_activated(e):
             # 왼쪽 5줄 중 하나의 키를 눌렀다면 왼쪽 펀치
             if e[1].key in left_punch_keys:
                 objects.player.nowpunchhand = "left"
-                objects.state_machine.now_action = "punch"
+                gamemode_2_gamemenu.state_machine.now_action = "punch"
                 objects.beattimer.punch_cooltime = PUNCH_COOLTIME
                 print("[<-] <왼쪽 펀치>")
                 return True
             # 오른쪽 5줄 중 하나의 키를 눌렀다면 오른쪽 펀치
             elif e[1].key in right_punch_keys:
                 objects.player.nowpunchhand = "right"
-                objects.state_machine.now_action = "punch"
+                gamemode_2_gamemenu.state_machine.now_action = "punch"
                 objects.beattimer.punch_cooltime = PUNCH_COOLTIME
 
                 print("[->] <오른쪽 펀치>")
@@ -68,12 +70,13 @@ def timeupdate(obj, nowstate):
     # nowtime 1틱씩 진행
     obj.nowtick += 1
 
-    # 최대 틱(에서 100틱) 초과시 0틱으로 초기화
-    if obj.nowtick > (obj.maxtick + 100):
+    # 해당 오브젝트의 박자 수에서 1박자가 더 넘어가면 0틱으로 초기화
+    nextbeattick = obj.maxtick * ((obj.beatnum + 1) / obj.beatnum)
+    if obj.nowtick > nextbeattick:
         obj.nowtick = 0
     
     # 펀치중이라면
-    if objects.state_machine.now_action == "punch":
+    if gamemode_2_gamemenu.state_machine.now_action == "punch":
 
         # 펀치 쿨타임 감소
         if objects.beattimer.punch_cooltime > 0:
@@ -82,7 +85,7 @@ def timeupdate(obj, nowstate):
             # 쿨타임이 0이 되었다면
             if objects.beattimer.punch_cooltime <= 0:
                 # 현재 하는 동작 없음
-                objects.state_machine.now_action = None 
+                gamemode_2_gamemenu.state_machine.now_action = None
 
                 ### 테스트용
                 print(f"펀치 쿨타임 초기화 완료")
@@ -93,11 +96,11 @@ def timeupdate(obj, nowstate):
     if obj.nowtick % obj.ticknum == 0 and obj.nowtick != 0:
         ### 큰 박자
         if obj.nowtick == obj.maxtick:
-            ### print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
+            print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
             pass
         ### 그 외
         elif int(obj.nowtick / obj.ticknum) <= obj.beatnum:
-            ### print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
+            print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
             pass
 
 # 배경 그리기

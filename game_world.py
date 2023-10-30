@@ -5,6 +5,8 @@
 from objects import *   # 상태 머신 및 오브젝트 모듈 import
 from functions import * # 이벤트 및 오브젝트별 동작 모듈 import
 
+import gamemode_2_gamemenu
+
 # ----- world 전체 관련 코드 -----
 
 objects = [ [ ], [ ] ]
@@ -33,12 +35,10 @@ def handle_events():
 
 # world 초기 설정
 def init_world():
-    global gameplaying    # 게임 실행중 여부
     global world          # 오브젝트들을 담는 list
 
     # 초기 설정
-    gameplaying = True    # 게임 실행을 True로 한다
-    state_machine.start() # 상태 머신을 실행시킨다
+    gamemode_2_gamemenu.state_machine.start() # 상태 머신을 실행시킨다
 
     functions.punch_cooltime = 0 # 펀치 쿨타임을 0으로 한다
 
@@ -70,6 +70,11 @@ def add_object(obj, depth):
 # 오브젝트들 추가
 def add_objects(objs, depth):
     objects[depth] += objs
+
+# 오브젝트 전부 정리
+def clear_objects():
+    for layer in objects:
+        layer.clear()
 
 # 오브젝트 지우기
 def remove_object(obj):
