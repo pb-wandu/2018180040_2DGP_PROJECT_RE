@@ -19,9 +19,9 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
 
-        # esc키 누를 경우 메인메뉴로 이동
+        # esc키 누를 경우 게임 종료
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            game_framework.change_mode(gamemode_1_mainmenu)
+            game_framework.quit()
 
         # 그 외
         else:

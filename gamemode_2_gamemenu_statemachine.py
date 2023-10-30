@@ -263,6 +263,14 @@ def punch_activated(e):
     # 펀치 쿨타임 (### 수치는 변경될 수 있음)
     PUNCH_COOLTIME = 20
 
+    # 펀치가 유효타로 들어간 타이밍
+    HITTIMING = 8 # 앞뒤 타이밍 범위 (### 수치는 변경될 수 있음)
+    hit_timing = (objects.beattimer.maxtick - HITTIMING,
+                  objects.beattimer.maxtick + HITTIMING)
+
+    # 펀치가 명중(크리티컬)으로 들어간 타이밍
+    ### crit_timing = 더 좁은 범위 (예정)
+
     # 펀치 쿨타임이 0인 경우에만
     if objects.beattimer.punch_cooltime == 0:
 
@@ -273,16 +281,33 @@ def punch_activated(e):
                 objects.player.nowpunchhand = "left"
                 state_machine.now_action = "punch"
                 objects.beattimer.punch_cooltime = PUNCH_COOLTIME
-                print("[<-] <왼쪽 펀치>")
+                
+                ### 테스트용
+                print(f"[<-] <왼쪽 펀치> ({objects.beattimer.nowtick}틱)")
+                print(f"맞힘 타이밍 : {hit_timing}")
+                if hit_timing[0] <= objects.beattimer.nowtick <= hit_timing[1]:
+                    print("공격 맞힘!")
+                else:
+                    print("공격 실패")
+
                 return True
+
             # 오른쪽 5줄 중 하나의 키를 눌렀다면 오른쪽 펀치
             elif e[1].key in right_punch_keys:
                 objects.player.nowpunchhand = "right"
                 state_machine.now_action = "punch"
                 objects.beattimer.punch_cooltime = PUNCH_COOLTIME
 
-                print("[->] <오른쪽 펀치>")
+                ### 테스트용
+                print(f"[->] <오른쪽 펀치> ({objects.beattimer.nowtick}틱)")
+                print(f"맞힘 타이밍 : {hit_timing}")
+                if hit_timing[0] <= objects.beattimer.nowtick <= hit_timing[1]:
+                    print("공격 맞힘!")
+                else:
+                    print("공격 실패")
+
                 return True
+
             # 다른 키라면 어떤 방향 펀치도 아님
             else:
                 objects.player.nowpunchhand = None
