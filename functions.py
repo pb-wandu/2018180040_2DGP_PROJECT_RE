@@ -34,7 +34,7 @@ def punch_activated(e):
     ]
 
     # 펀치 쿨타임 (### 수치는 변경될 수 있음)
-    PUNCH_COOLTIME = 50
+    PUNCH_COOLTIME = 20
 
     # 펀치 쿨타임이 0인 경우에만
     if objects.beattimer.punch_cooltime == 0:
