@@ -281,6 +281,8 @@ def punch_activated(e):
                 objects.player.nowpunchhand = "left"
                 state_machine.now_action = "punch"
                 objects.beattimer.punch_cooltime = PUNCH_COOLTIME
+
+                setglovespos() # 글러브 위치 지정
                 
                 ### 테스트용
                 print(f"[<-] <왼쪽 펀치> ({objects.beattimer.nowtick}틱)")
@@ -298,6 +300,8 @@ def punch_activated(e):
                 state_machine.now_action = "punch"
                 objects.beattimer.punch_cooltime = PUNCH_COOLTIME
 
+                setglovespos()  # 글러브 위치 지정
+
                 ### 테스트용
                 print(f"[->] <오른쪽 펀치> ({objects.beattimer.nowtick}틱)")
                 print(f"맞힘 타이밍 : {hit_timing}")
@@ -311,15 +315,43 @@ def punch_activated(e):
             # 다른 키라면 어떤 방향 펀치도 아님
             else:
                 objects.player.nowpunchhand = None
+
+                ### 테스트용
                 print("펀치 아님")
+
                 return False
     else:
         ### 테스트용
         print(f"펀치 쿨타임이 남아있습니다- {objects.beattimer.punch_cooltime}틱")
 
+# 글러브 - 펀치 동작에 따른 위치설정
+def setglovespos():
+
+    if objects.player.nowpunchhand == None:
+        objects.glove_l.setpos(250, 80)
+        objects.glove_r.setpos(550, 80)
+
+    elif objects.player.nowpunchhand == "left":
+        objects.glove_l.setpos(250+100, 80+120)
+        objects.glove_r.setpos(550, 80)
+
+    elif objects.player.nowpunchhand == "right":
+        objects.glove_l.setpos(250, 80)
+        objects.glove_r.setpos(550-100, 80+120)
 
 # 박자표 - 시간 업데이트 (1틱 간격)
 def timeupdate(obj, nowstate):
+    global timer_setglovepos
+
+    # 왼손 또는 오른손 펀치를 날리고 있자면
+    if objects.player.nowpunchhand == "left" or objects.player.nowpunchhand == "right":
+        timer_setglovepos += 1
+        # 펀치를 날린지 일정 시간이 지나면 펀치중인 손을 없음으로 초기화
+        if timer_setglovepos >= 30:
+            objects.player.nowpunchhand = None
+            timer_setglovepos = 0
+            setglovespos() # 글러브 위치설정
+
     # nowtime 1틱씩 진행
     obj.nowtick += 1
 

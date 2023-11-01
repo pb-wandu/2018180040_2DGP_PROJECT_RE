@@ -38,8 +38,9 @@ def init_world():
     # 상태 머신을 실행시킨다 (상태 머신은 gamemenu 모드에 해당)
     gamestatemachine.state_machine.start()
 
-    gamestatemachine.punch_cooltime = 0 # 펀치 쿨타임을 0으로 초기화
-    beattimer.nowtick = 0               # 박자표 틱을 0으로 초기화
+    gamestatemachine.punch_cooltime = 0    # 펀치 쿨타임을 0으로 초기화
+    beattimer.nowtick = 0                  # 박자표 틱을 0으로 초기화
+    gamestatemachine.timer_setglovepos = 0 # 펀치위치 표시 타이머를 0으로 초기화
 
     # world 안에 오브젝트 추가
     # (해당 실물 오브젝트는 objects.py 끝부분에 있음)

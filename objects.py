@@ -6,6 +6,8 @@ from pico2d import *    # pico2d 모듈 import
 
 # '모드 2 - 게임 메뉴'용 상태 머신 import
 import gamemode_2_gamemenu_statemachine as gamestatemachine
+import objects
+
 
 # ----- 배경 클래스 -----
 
