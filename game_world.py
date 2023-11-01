@@ -4,8 +4,9 @@
 
 from objects import * # 상태 머신 및 오브젝트 모듈 import
 
-# '모드 2 - 게임 메뉴'용 상태 머신 import
-import gamemode_2_gamemenu_statemachine as gamestatemachine
+# '모드 2 - 게임 메뉴'용 모듈 import
+import gamemode_2_1_state     as gamestate
+import gamemode_2_1_functions as gamefunctions
 
 # ----- world 전체 관련 코드 -----
 
@@ -36,11 +37,11 @@ def init_world():
     global world          # 오브젝트들을 담는 list
 
     # 상태 머신을 실행시킨다 (상태 머신은 gamemenu 모드에 해당)
-    gamestatemachine.state_machine.start()
+    gamestate.state_machine.start()
 
-    gamestatemachine.punch_cooltime = 0    # 펀치 쿨타임을 0으로 초기화
-    beattimer.nowtick = 0                  # 박자표 틱을 0으로 초기화
-    gamestatemachine.timer_setglovepos = 0 # 펀치위치 표시 타이머를 0으로 초기화
+    gamestate.punch_cooltime = 0        # 펀치 쿨타임을 0으로 초기화
+    beattimer.nowtick = 0               # 박자표 틱을 0으로 초기화
+    gamefunctions.timer_setglovepos = 0 # 펀치위치 표시 타이머를 0으로 초기화
 
     # world 안에 오브젝트 추가
     # (해당 실물 오브젝트는 objects.py 끝부분에 있음)

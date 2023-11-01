@@ -10,11 +10,7 @@ import objects          # 상태 머신 및 오브젝트 모듈 import
 import game_world
 import game_framework
 
-import gamemode_1_mainmenu # 게임 모드 mainmenu 모듈 import
-
-# '모드 2 - 게임 메뉴'용 상태 머신 import
-# gamemenu 내에서의 세부 상태 (Ready ~ Finish)를 확인하는 기능을 한다
-import gamemode_2_gamemenu_statemachine as gamestatemachine
+import gamemode_1_0_mainmenu # 게임 모드 mainmenu 모듈 import
 
 # ----- 게임 프레임워크 동작 함수들 -----
 
@@ -30,7 +26,7 @@ def handle_events():
 
         # esc키 누를 경우 메인메뉴로 이동
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            game_framework.change_mode(gamemode_1_mainmenu)
+            game_framework.change_mode(gamemode_1_0_mainmenu)
 
         # 그 외
         else:
