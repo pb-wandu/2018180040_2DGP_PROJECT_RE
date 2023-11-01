@@ -28,7 +28,7 @@ def handle_events():
             pass
 
 def init():
-    global tempimage
+    global tempimage ### 나중에 수정할 것
     global start_time
     tempimage = load_image('img_gamewaiting.png')
     start_time = get_time()

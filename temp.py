@@ -4,14 +4,11 @@
 
 from pico2d  import * # pico2d 모듈 import
 
-
 # ----- '임시 플레이'용 내용 -----
 
 # event 처리
 def handle_events():
     global temp_playing # 게임 실행중 여부
-
-
 
     events = get_events() # event 입력받기
 
@@ -42,6 +39,36 @@ temp_playing = True
 while temp_playing:
     clear_canvas()  # 화면 초기화
     handle_events() # 동작 핸들러
+
+    # 여기다가 입력
+
+    img_info_hpbar_bg = load_image('img_info_hpbar_bg.png')
+    img_info_hpbar_hp = load_image('img_info_hpbar_hp.png')
+    img_info_hpbar_frame = load_image('img_info_hpbar_frame.png')
+    img_info_playerlife = load_image('img_info_playerlife.png')
+    img_info_playerlife_lost = load_image('img_info_playerlife_lost.png')
+
+    HPBARLENGTH = 150
+
+    enemy_hp_total = 100
+    enemy_hp_left = 70
+
+    player_max_life = 3
+    player_life_now = 2
+
+    for n in range(player_max_life):
+        img_info_playerlife_lost.draw(140 + n * 60, 200, 40, 40)
+    for n in range(player_life_now):
+        img_info_playerlife.draw(140 + n * 60, 200, 40, 40)
+
+    hpbar_drawlength = HPBARLENGTH * (enemy_hp_left / enemy_hp_total)
+
+    img_info_hpbar_bg.draw(100, 500, HPBARLENGTH, 40)
+    img_info_hpbar_hp.draw(100 - (HPBARLENGTH - hpbar_drawlength)/2, 500, hpbar_drawlength, 40)
+    img_info_hpbar_frame.draw(100, 500, HPBARLENGTH, 40)
+
+    # 여기다가 입력 종료
+
     update_canvas() # 화면 업데이트
 
 # 게임 종료
