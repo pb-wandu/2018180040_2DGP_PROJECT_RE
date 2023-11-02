@@ -333,6 +333,15 @@ def punch_activated(e):
 
 # 상태에 따른 정보 그리기
 def draw_state_info(nowstate):
+    global start_time
+
+    # 시간 표시
+    FONTSIZE = 24
+    nowtime = get_time() - start_time
+    font.draw(10, 600 - (10 + FONTSIZE // 2), f'(Time: {nowtime:.1f})', (0, 0, 0))
+
+    # 정보 이미지 표시
+
     infoimg = None
 
     # 현재 상태에 따라 표시할 정보들

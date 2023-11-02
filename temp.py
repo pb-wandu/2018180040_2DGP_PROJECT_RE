@@ -67,6 +67,12 @@ while temp_playing:
     img_info_hpbar_hp.draw(100 - (HPBARLENGTH - hpbar_drawlength)/2, 500, hpbar_drawlength, 40)
     img_info_hpbar_frame.draw(100, 500, HPBARLENGTH, 40)
 
+    # 시간
+    nowgametime = get_time()
+
+    font = load_font('ENCR10B.TTF', 16)
+    font.draw(100, 100, f'(Time: {nowgametime:.2f})', (0, 0, 0))
+
     # 여기다가 입력 종료
 
     update_canvas() # 화면 업데이트

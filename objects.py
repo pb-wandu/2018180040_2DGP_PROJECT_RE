@@ -138,7 +138,7 @@ background = Background()
 # beattimer = basicBeatTimer # basicBeatTimer (기본 박자표)를 첫 박자표로 지정한다.
 
 ### 테스트용
-beattimer = BeatTimer(3, 50)
+beattimer = BeatTimer(3, 40)
 
 ### 추후 Finish 상태에서 exit했을 때 game_world.remove_object(o)를 이용하여 기존에 있는 박자표 오브젝트를 삭제하고
 ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.
