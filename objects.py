@@ -5,9 +5,9 @@
 from pico2d import *    # pico2d 모듈 import
 
 # '모드 2 - 게임 메뉴'용 상태 머신 import
-import gamemode_2_1_state as func_and_state
-import objects
-
+import gamemode_2_0_gamemenu                   # 게임 모드 gamemenu 모듈 import
+import gamemode_2_1_state     as gamestate     # 상태 관련 모듈 import
+import gamemode_2_1_functions as gamefunctions # 함수 모음 모듈 import
 
 # ----- 배경 클래스 -----
 
@@ -18,7 +18,31 @@ class Background:
         pass
 
     def draw(self):
-        func_and_state.state_machine.cur_state.draw(self)
+        gamestate.state_machine.cur_state.draw(self)
+
+# ----- 게임 정보 클래스 -----
+
+class Gameinfomation:
+    img_info_hpbar_bg        = None
+    img_info_hpbar_hp        = None
+    img_info_hpbar_frame     = None
+    img_info_playerlife      = None
+    img_info_playerlife_lost = None
+
+    img_whitesquare = None
+
+    def update(self):
+        pass
+
+    def draw(self):
+
+        ### 임시 (현재 플레이어 하트, 최대 하트, 현재 적 체력, 최대 체력)
+        p_nowlife, p_maxlife, e_nowhp, e_maxhp = 2, 4, 80, 100
+
+        ### 상태 머신이 Ready상태가 아닐 경우 (임시)
+        if gamestate.state_machine.cur_state != gamestate.Ready:
+            # 하트 및 체력바 그리기
+            gamefunctions.draw_life_hp_info(self, p_nowlife, p_maxlife, e_nowhp, e_maxhp)
 
 # ----- 플레이어 클래스 -----
 
@@ -33,19 +57,19 @@ class Player:
     def handle_event(event):
         # 입력받은 값에 따라 state_machine에서 event를 수행한다
         # e[0] = 이벤트 종류, e[1] = 실제 이벤트 값
-        func_and_state.state_machine.handle_event(('INPUT', event))
+        gamestate.state_machine.handle_event(('INPUT', event))
 
     # update와 draw는 state_machine의 현재 상태에서
     # 그 클래스에 대한 실제 오브젝트의 동작을 수행한다
 
     @staticmethod
     def update():
-        func_and_state.state_machine.cur_state.do(player)
+        gamestate.state_machine.cur_state.do(player)
         pass
 
     @staticmethod
     def draw():
-        func_and_state.state_machine.cur_state.draw(player)
+        gamestate.state_machine.cur_state.draw(player)
         pass
 
 # ----- 박자표 클래스 -----
@@ -81,12 +105,12 @@ class BeatTimer:
 
     @staticmethod
     def update():
-        func_and_state.state_machine.cur_state.do(beattimer)
+        gamestate.state_machine.cur_state.do(beattimer)
         pass
 
     @staticmethod
     def draw():
-        func_and_state.state_machine.cur_state.draw(beattimer)
+        gamestate.state_machine.cur_state.draw(beattimer)
         pass
 
 # ----- 글러브 클래스 -----
@@ -111,14 +135,14 @@ class Glove:
 
     @staticmethod
     def update():
-        func_and_state.state_machine.cur_state.do(glove_l)
-        func_and_state.state_machine.cur_state.do(glove_r)
+        gamestate.state_machine.cur_state.do(glove_l)
+        gamestate.state_machine.cur_state.do(glove_r)
         pass
 
     @staticmethod
     def draw():
-        func_and_state.state_machine.cur_state.draw(glove_l)
-        func_and_state.state_machine.cur_state.draw(glove_r)
+        gamestate.state_machine.cur_state.draw(glove_l)
+        gamestate.state_machine.cur_state.draw(glove_r)
         pass
 
 # ----- 클래스별 실제 오브젝트 -----
@@ -130,8 +154,8 @@ player = Player()
 glove_l = Glove("left", 250, 80)
 glove_r = Glove("right", 550, 80)
 
-# 배경 오브젝트
-background = Background()
+background = Background() # 배경 오브젝트
+gameinfomation = Gameinfomation() # 게임 정보
 
 # 박자표
 # basicBeatTimer = BeatTimer(4, 50) # (4박자, 1박자당 50틱) 박자표 <기본>

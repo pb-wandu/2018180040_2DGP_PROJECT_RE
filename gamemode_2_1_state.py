@@ -341,14 +341,16 @@ def draw_state_info(nowstate):
     font.draw(10, 600 - (10 + FONTSIZE // 2), f'(Time: {nowtime:.1f})', (0, 0, 0))
 
     # 정보 이미지 표시
-
     infoimg = None
 
+    ### 임시 정보
+    e_nowhp, e_maxhp = 70, 100
+    p_nowlife, p_maxlife = 2, 3
+
     # 현재 상태에 따라 표시할 정보들
-    # 별도 오브젝트가 아닌 것들
 
     if nowstate == "Ready":
-        infoimg = load_image('img_ready_info_text.png')  # 왼쪽 글러브
+        infoimg = load_image('img_ready_info_text.png')
 
         x, y = 400, 500  # x, y 위치
         SIZEX, SIZEY = 300, 60  # x, y 크기
@@ -395,12 +397,11 @@ class StateMachine:
 
     # update와 draw는 state_machine의 현재 상태에서
     # 그 오브젝트에 대한 동작을 수행한다
-    # (참고 : 상태 머신 자체는 update하거나 draw할 내용 없음)
-
     def update(self):
         self.cur_state.do(StateMachine)
 
     def draw(self):
+        
         self.cur_state.draw(StateMachine)
 
 # 상태 머신 (world에 실물이 없는 가상 머신이다)

@@ -53,7 +53,8 @@ def init_world():
     # (해당 실물 오브젝트는 objects.py 끝부분에 있음)
 
     # 배경은 depth 0 (배경)에
-    add_object(background, 0) # 배경
+    add_object(background, 0)     # 배경
+    add_object(gameinfomation, 0) # 게임 정보
 
     # 나머지는 depth 1 (전면)에
     add_object(player, 1)    # 플레이어

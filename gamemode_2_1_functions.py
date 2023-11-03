@@ -144,7 +144,7 @@ def draw_beattimer(obj):
     SIZE_BEAT_BIG_X, SIZE_BEAT_BIG_Y = 70, 70  # 큰 박자 이미지 크기
     SIZE_BEAT_SMALL_X, SIZE_BEAT_SMALL_Y = 40, 40  # 작은 박자 이미지 크기
 
-    CENTERX, CENTERY = 400, 500  # 박자표 중심
+    CENTERX, CENTERY = 400, 530  # 박자표 중심
 
     # 박자표 이미지 list에서 - index는 list에서의 위치, beat는 실제 값
     for index, beatimg in enumerate(obj.beat_image_list):
@@ -177,3 +177,43 @@ def draw_beattimer(obj):
 
                 # 큰 박자 이미지 그리기
                 img_beat_big.draw(startx, starty, SIZE_BEAT_BIG_X, SIZE_BEAT_BIG_Y)
+    pass
+
+# 하트 및 체력바 그리기
+def draw_life_hp_info(obj, p_nowlife, p_maxlife, e_nowhp, e_maxhp):
+    if obj.img_info_hpbar_bg == None:
+        obj.img_info_hpbar_bg = load_image('img_info_hpbar_bg.png')
+    if obj.img_info_hpbar_hp == None:
+        obj.img_info_hpbar_hp = load_image('img_info_hpbar_hp.png')
+    if obj.img_info_hpbar_frame == None:
+        obj.img_info_hpbar_frame = load_image('img_info_hpbar_frame.png')
+    if obj.img_info_playerlife == None:
+        obj.img_info_playerlife = load_image('img_info_playerlife.png')
+    if obj.img_info_playerlife_lost == None:
+        obj.img_info_playerlife_lost = load_image('img_info_playerlife_lost.png')
+
+    if obj.img_whitesquare == None:
+        obj.img_whitesquare = load_image('img_whitesquare.png')
+
+    player_now_life, player_max_life = p_nowlife, p_maxlife # 플레이어 하트
+    enemy_hp_left, enemy_hp_total = e_nowhp, e_maxhp # 적 체력
+
+    HPBARLENGTH = 150 # 체력바 길이
+    HPBARPOSY   = 450 # 체력바 y위치
+    hpnow_drawlength = HPBARLENGTH * (enemy_hp_left / enemy_hp_total) # 남은 체력 길이
+    hpnowposx = 400 - (HPBARLENGTH - hpnow_drawlength) / 2 # 남은 체력 현재 위치
+
+    # 플레이어 하트 그리기
+    for n in range(player_max_life):
+        obj.img_whitesquare.draw(50, 50 + n * 50, 60, 60)
+        obj.img_info_playerlife_lost.draw(50, 50 + n * 50, 30, 30)
+    for n in range(player_now_life):
+        obj.img_whitesquare.draw(50, 50 + n * 50, 60, 60)
+        obj.img_info_playerlife.draw(50, 50 + n * 50, 30, 30)
+
+    # 적 체력 그리기
+    obj.img_info_hpbar_bg.draw   (400,       HPBARPOSY, HPBARLENGTH,      40)
+    obj.img_info_hpbar_hp.draw   (hpnowposx, HPBARPOSY, hpnow_drawlength, 40)
+    obj.img_info_hpbar_frame.draw(400,       HPBARPOSY, HPBARLENGTH,      40)
+
+    pass
