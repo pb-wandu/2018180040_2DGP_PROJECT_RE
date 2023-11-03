@@ -75,6 +75,10 @@ class Player:
 # ----- 박자표 클래스 -----
 
 class BeatTimer:
+    img_beat_bg = None
+    img_beat_effect = None
+    img_beat_small = None
+    img_beat_big = None
 
     # 박자표 이미지 list
     beat_image_list = [None, None, None, None, None, None]

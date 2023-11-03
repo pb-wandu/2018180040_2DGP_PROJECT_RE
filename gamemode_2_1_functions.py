@@ -3,7 +3,9 @@
 from pico2d import *    # pico2d 모듈 import
 import objects          # 상태 머신 및 오브젝트 모듈 import
 
-import gamemode_2_1_state as state # 상태 관련 모듈 import
+import gamemode_2_1_state as gamestate # 상태 관련 모듈 import
+
+import game_timer # 타이머 모듈 import
 
 # ----- 함수들 -----
 
@@ -44,7 +46,7 @@ def timeupdate(obj, nowstate):
         obj.nowtick = 0
 
     # 펀치중이라면
-    if state.state_machine.now_action == "punch":
+    if gamestate.state_machine.now_action == "punch":
 
         # 펀치 쿨타임 감소
         if objects.beattimer.punch_cooltime > 0:
@@ -53,7 +55,7 @@ def timeupdate(obj, nowstate):
             # 쿨타임이 0이 되었다면
             if objects.beattimer.punch_cooltime <= 0:
                 # 현재 하는 동작 없음
-                state.now_action = None
+                gamestate.now_action = None
 
                 ### 테스트용
                 print(f"펀치 쿨타임 초기화 완료")
@@ -132,10 +134,14 @@ def draw_puncheffect(obj):
 
 # 박자표 그리기
 def draw_beattimer(obj):
-    img_beat_bg = load_image('img_beat_bg.png')  # 박자 배경
-    img_beat_effect = load_image('img_beat_effect.png')  # 현재 박자 이펙트
-    img_beat_small = load_image('img_beat_small.png')  # 작은 박자
-    img_beat_big = load_image('img_beat_big.png')  # 큰 박자
+    if obj.img_beat_bg == None:
+        obj.img_beat_bg = load_image('img_beat_bg.png')  # 박자 배경
+    if obj.img_beat_effect == None:
+        obj.img_beat_effect = load_image('img_beat_effect.png')  # 현재 박자 이펙트
+    if obj.img_beat_small == None:
+        obj.img_beat_small = load_image('img_beat_small.png')  # 작은 박자
+    if obj.img_beat_big == None:
+        obj.img_beat_big = load_image('img_beat_big.png')  # 큰 박자
 
     beatnum = obj.beatnum  # 박자 수
 
@@ -160,23 +166,21 @@ def draw_beattimer(obj):
         else:
 
             # 박자 배경 그리기
-            img_beat_bg.draw(startx, starty, SIZE_BG_X, SIZE_BG_Y)
+            obj.img_beat_bg.draw(startx, starty, SIZE_BG_X, SIZE_BG_Y)
 
             # 박자 이펙트 그리기
             if index == (obj.nowtick // obj.ticknum - 1):
-                img_beat_effect.draw(startx, starty, SIZE_EF_X, SIZE_EF_Y)
+                obj.img_beat_effect.draw(startx, starty, SIZE_EF_X, SIZE_EF_Y)
 
             # 해당 박자가 작은 박자이면 -
             if beatimg == "small":
-
                 # 작은 박자 이미지 그리기
-                img_beat_small.draw(startx, starty, SIZE_BEAT_SMALL_X, SIZE_BEAT_SMALL_Y)
+                obj.img_beat_small.draw(startx, starty, SIZE_BEAT_SMALL_X, SIZE_BEAT_SMALL_Y)
 
             # 해당 박자가 큰 박자이면 - 큰 박자 이미지 그리기
             elif beatimg == "big":
-
                 # 큰 박자 이미지 그리기
-                img_beat_big.draw(startx, starty, SIZE_BEAT_BIG_X, SIZE_BEAT_BIG_Y)
+                obj.img_beat_big.draw(startx, starty, SIZE_BEAT_BIG_X, SIZE_BEAT_BIG_Y)
     pass
 
 # 하트 및 체력바 그리기
