@@ -4,8 +4,10 @@
 
 # ----- 모듈 import -----
 
-from pico2d import *    # pico2d 모듈 import
-import objects          # 상태 머신 및 오브젝트 모듈 import
+from pico2d import * # pico2d 모듈 import
+
+import game_objects        # 오브젝트 모듈 import
+import game_playerAndEnemy # 플레이어 및 대결 상대 모듈 import
 
 import game_world
 import game_framework
@@ -31,7 +33,7 @@ def handle_events():
         # 그 외
         else:
             # 플레이어 동작에 따른 이벤트 수행
-            objects.player.handle_event(event)
+            game_playerAndEnemy.player.handle_event(event)
 
 def init():
     # 월드 초기 설정

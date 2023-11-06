@@ -1,7 +1,9 @@
 # ----------<'모드 2 - 게임 메뉴'용 함수들>----------
 
-from pico2d import *    # pico2d 모듈 import
-import objects          # 상태 머신 및 오브젝트 모듈 import
+from pico2d import * # pico2d 모듈 import
+
+import game_objects        # 오브젝트 모듈 import
+import game_playerAndEnemy # 플레이어 및 대결 상대 모듈 import
 
 import gamemode_2_1_state as gamestate # 상태 관련 모듈 import
 
@@ -12,28 +14,29 @@ import game_timer # 타이머 모듈 import
 # 글러브 - 펀치 동작에 따른 위치설정
 def setglovespos():
 
-    if objects.player.nowpunchhand == None:
-        objects.glove_l.setpos(250, 80)
-        objects.glove_r.setpos(550, 80)
+    if game_playerAndEnemy.player.nowpunchhand == None:
+        game_objects.glove_l.setpos(250, 80)
+        game_objects.glove_r.setpos(550, 80)
 
-    elif objects.player.nowpunchhand == "left":
-        objects.glove_l.setpos(250+100, 80+120)
-        objects.glove_r.setpos(550, 80)
+    elif game_playerAndEnemy.player.nowpunchhand == "left":
+        game_objects.glove_l.setpos(250+100, 80+120)
+        game_objects.glove_r.setpos(550, 80)
 
-    elif objects.player.nowpunchhand == "right":
-        objects.glove_l.setpos(250, 80)
-        objects.glove_r.setpos(550-100, 80+120)
+    elif game_playerAndEnemy.player.nowpunchhand == "right":
+        game_objects.glove_l.setpos(250, 80)
+        game_objects.glove_r.setpos(550-100, 80+120)
 
 # 박자표 - 시간 업데이트 (1틱 간격)
 def timeupdate(obj, nowstate):
     global timer_setglovepos
 
     # 왼손 또는 오른손 펀치를 날리고 있자면
-    if objects.player.nowpunchhand == "left" or objects.player.nowpunchhand == "right":
+    if (game_playerAndEnemy.player.nowpunchhand == "left"
+            or game_playerAndEnemy.player.nowpunchhand == "right"):
         timer_setglovepos += 1
         # 펀치를 날린지 일정 시간이 지나면 펀치중인 손을 없음으로 초기화
         if timer_setglovepos >= 30:
-            objects.player.nowpunchhand = None
+            game_playerAndEnemy.player.nowpunchhand = None
             timer_setglovepos = 0
             setglovespos() # 글러브 위치설정
 
@@ -49,11 +52,11 @@ def timeupdate(obj, nowstate):
     if gamestate.state_machine.now_action == "punch":
 
         # 펀치 쿨타임 감소
-        if objects.beattimer.punch_cooltime > 0:
-            objects.beattimer.punch_cooltime -= 1
+        if game_objects.beattimer.punch_cooltime > 0:
+            game_objects.beattimer.punch_cooltime -= 1
 
             # 쿨타임이 0이 되었다면
-            if objects.beattimer.punch_cooltime <= 0:
+            if game_objects.beattimer.punch_cooltime <= 0:
                 # 현재 하는 동작 없음
                 gamestate.now_action = None
 
@@ -106,7 +109,7 @@ def draw_puncheffect(obj):
     img_punch_eff_miss      = load_image('img_punch_eff_miss.png')      # 빗나감시 효과
     img_punch_eff_miss_text = load_image('img_punch_eff_miss_text.png') # 빗나감시 텍스트
 
-    # obj == objects.player
+    # obj == game_playerAndEnemy.player
     # 펀치 성공 상황에 따른 이펙트 표시
 
     # 명중

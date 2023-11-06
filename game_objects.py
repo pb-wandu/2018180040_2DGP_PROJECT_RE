@@ -1,6 +1,6 @@
-# ----------<상태 머신 및 오브젝트>----------
+# ----------<오브젝트>----------
 
-# 상태 머신 및 오브젝트들을 기록한 파일
+# 오브젝트들을 기록한 파일
 
 from pico2d import *    # pico2d 모듈 import
 
@@ -11,7 +11,14 @@ import gamemode_2_1_functions as gamefunctions # 함수 모음 모듈 import
 
 # ----- 배경 클래스 -----
 
-class Background:
+class Background_main:
+    image = None
+
+    # 내용 추가하기
+
+    pass
+
+class Background_game:
     image = None
 
     def update(self):
@@ -31,46 +38,21 @@ class Gameinfomation:
 
     img_whitesquare = None
 
+    # 게임 정보 변수들
+    p_nowlife = 0 # 현재 플레이어 하트
+    p_maxlife = 0 # 최대 플레이어 하트
+    e_nowhp   = 0 # 현재 적 체력
+    e_maxhp   = 0 # 적 최대 체력
+
     def update(self):
         pass
 
     def draw(self):
-
-        ### 임시 (현재 플레이어 하트, 최대 하트, 현재 적 체력, 최대 체력)
-        p_nowlife, p_maxlife, e_nowhp, e_maxhp = 2, 4, 80, 100
-
         ### 상태 머신이 Ready상태가 아닐 경우 (임시)
         if gamestate.state_machine.cur_state != gamestate.Ready:
             # 하트 및 체력바 그리기
-            gamefunctions.draw_life_hp_info(self, p_nowlife, p_maxlife, e_nowhp, e_maxhp)
-
-# ----- 플레이어 클래스 -----
-
-class Player:
-
-    def __init__(self):
-        self.nowpunchhand   = None # 현재 주먹을 지른 손
-        self.ifpunchsuccess = None # 펀치 성공 여부
-        pass
-
-    @staticmethod
-    def handle_event(event):
-        # 입력받은 값에 따라 state_machine에서 event를 수행한다
-        # e[0] = 이벤트 종류, e[1] = 실제 이벤트 값
-        gamestate.state_machine.handle_event(('INPUT', event))
-
-    # update와 draw는 state_machine의 현재 상태에서
-    # 그 클래스에 대한 실제 오브젝트의 동작을 수행한다
-
-    @staticmethod
-    def update():
-        gamestate.state_machine.cur_state.do(player)
-        pass
-
-    @staticmethod
-    def draw():
-        gamestate.state_machine.cur_state.draw(player)
-        pass
+            gamefunctions.draw_life_hp_info(self,
+                self.p_nowlife, self.p_maxlife, self.e_nowhp, self.e_maxhp)
 
 # ----- 박자표 클래스 -----
 
@@ -151,15 +133,16 @@ class Glove:
 
 # ----- 클래스별 실제 오브젝트 -----
 
-# 플레이어 오브젝트
-player = Player()
-
 # 글러브 오브젝트
 glove_l = Glove("left", 250, 80)
 glove_r = Glove("right", 550, 80)
 
-background = Background() # 배경 오브젝트
-gameinfomation = Gameinfomation() # 게임 정보
+# 배경 오브젝트
+background_main = Background_main() # 메인메뉴 배경
+background_game = Background_game() # 게임메뉴 배경
+
+# 게임 정보
+gameinfomation = Gameinfomation()
 
 # 박자표
 # basicBeatTimer = BeatTimer(4, 50) # (4박자, 1박자당 50틱) 박자표 <기본>

@@ -2,11 +2,15 @@
 
 # world 전체 관련 내용을 기록한 파일
 
-from objects import * # 상태 머신 및 오브젝트 모듈 import
+from game_objects import *        # 오브젝트 모듈 import
+from game_playerAndEnemy import * # 플레이어 및 대결 상대 모듈 import
 
 # '모드 2 - 게임 메뉴'용 모듈 import
 import gamemode_2_1_state     as gamestate
 import gamemode_2_1_functions as gamefunctions
+
+# 게임 충돌 체크 import
+import game_collisionCheck as collisionCheck
 
 # ----- world 전체 관련 코드 -----
 
@@ -34,7 +38,7 @@ def handle_events():
 
 # world 초기 설정
 def init_world():
-    global world      # 오브젝트들을 담는 list
+    global world # 오브젝트들을 담는 list
 
     # 상태 머신을 실행시킨다 (상태 머신은 gamemenu 모드에 해당)
     gamestate.state_machine.start()
@@ -53,19 +57,21 @@ def init_world():
     # (해당 실물 오브젝트는 objects.py 끝부분에 있음)
 
     # 배경은 depth 0 (배경)에
-    add_object(background, 0)     # 배경
-    add_object(gameinfomation, 0) # 게임 정보
+    add_object(background_game, 0) # 배경
+    add_object(gameinfomation,  0) # 게임 정보
 
     # 나머지는 depth 1 (전면)에
-    add_object(player, 1)    # 플레이어
 
-    add_object(glove_l, 1)   # 글러브 왼쪽
-    add_object(glove_r, 1)   # 글러브 오른쪽
-
+    add_object(enemy,     1) # 대결 상대
+    add_object(player,    1) # 플레이어
+    add_object(glove_l,   1) # 글러브 왼쪽
+    add_object(glove_r,   1) # 글러브 오른쪽
     add_object(beattimer, 1) # 박자표
 
-
-    ### 플레이어가 적보다 우선하는 등 추가 레이어 필요시 추가 예정
+    # 글러브와 적 충돌체크 지정
+    collisionCheck.add_collision_pair('glove-enemy', glove_l, None)
+    collisionCheck.add_collision_pair('glove-enemy', glove_r, None)
+    collisionCheck.add_collision_pair('glove-enemy', None,   enemy)
 
     pass
 
@@ -91,9 +97,13 @@ def remove_object(obj):
         # 레이어 안에 오브젝트가 있다면
         if obj in layer:
             print("지운 오브젝트 : " + str(type(obj)))
-            # 해당 오브젝트를 지운다
+
+            # 해당 오브젝트를 월드에서 지운다
             layer.remove(obj)
+            # 해당 오브젝트를 충돌 목록에서 지운다
+            collisionCheck.remove_collision_object(o)
             return
+
     # 오류 발생시 오류 메시지 출력
     raise ValueError('존재하지 않는 object는 지울 수 없습니다')
 
@@ -105,6 +115,9 @@ def update_allobject():
         for obj in layer:
             # 오브젝트 업데이트
             obj.update()
+
+    # 충돌 처리
+    collisionCheck.handle_collisions()
 
 # objects[] 안에 있는 오브젝트들 그리기
 def render_allobject():
