@@ -23,6 +23,23 @@ def remove_collision_object(obj):
         if obj in pairs[1]:
             pairs[1].remove(obj)
 
+# 충돌 확인
+
+def collide(a, b):
+    # 바운딩 박스
+    left_a, bottom_a, right_a, top_a = a.get_bb()
+    left_b, bottom_b, right_b, top_b = b.get_bb()
+
+    # 충돌이 아닌 경우 False
+    if left_a > right_b: return False
+    if right_a < left_b: return False
+    if top_a < bottom_b: return False
+    if bottom_a > top_b: return False
+
+    # 충돌한 경우 True
+    return True
+
+
 # 충돌 처리
 def handle_collisions():
     # collision_pairs에 있는 group과 pairs에 대하여

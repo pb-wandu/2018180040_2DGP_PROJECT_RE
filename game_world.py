@@ -62,16 +62,21 @@ def init_world():
 
     # 나머지는 depth 1 (전면)에
 
-    add_object(enemy,     1) # 대결 상대
-    add_object(player,    1) # 플레이어
-    add_object(glove_l,   1) # 글러브 왼쪽
-    add_object(glove_r,   1) # 글러브 오른쪽
     add_object(beattimer, 1) # 박자표
 
-    # 글러브와 적 충돌체크 지정
+    add_object(enemy,     1) # 대결 상대
+    add_object(glove_l,   1) # 글러브 왼쪽
+    add_object(glove_r,   1) # 글러브 오른쪽
+    add_object(player,    1) # 플레이어
+
+
+    # 글러브와 대결 상대 충돌체크 지정
     collisionCheck.add_collision_pair('glove-enemy', glove_l, None)
     collisionCheck.add_collision_pair('glove-enemy', glove_r, None)
     collisionCheck.add_collision_pair('glove-enemy', None,   enemy)
+
+    # 플레이어와 대결 상대 충돌체크 지정
+    collisionCheck.add_collision_pair('player-enemy', player, enemy)
 
     pass
 
