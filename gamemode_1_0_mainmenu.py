@@ -51,6 +51,9 @@ def finish():
     # 게임 타이머에 현재 시간을 시작시간으로 지정
     game_timer.gametimer.setStartTime()
 
+    # 상태 머신의 현재 상태를 Ready로 지정
+    gamestate.state_machine.cur_state = gamestate.Ready
+
     print("### mainmenu에서 나가기")
 
 def update():

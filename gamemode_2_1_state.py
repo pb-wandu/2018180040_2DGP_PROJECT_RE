@@ -270,6 +270,8 @@ def space_down(e):
 
 # 플레이어 - 펀치 실행
 def punch_activated(e):
+    global nowstate
+
     left_punch_keys = [
         SDLK_q, SDLK_w, SDLK_e, SDLK_r, SDLK_t,
         SDLK_a, SDLK_s, SDLK_d, SDLK_f, SDLK_g,
@@ -292,8 +294,9 @@ def punch_activated(e):
     # 펀치가 명중(크리티컬)으로 들어간 타이밍
     ### crit_timing = 더 좁은 범위 (예정)
 
-    # 펀치 쿨타임이 0인 경우에만
-    if game_objects.beattimer.punch_cooltime == 0:
+    # 상태 머신이 Ready 상태가 아니고 펀치 쿨타임이 0인 경우에만
+    if state_machine.cur_state != Ready and\
+        game_objects.beattimer.punch_cooltime == 0:
 
         # 키가 눌렸다면
         if e[0] == "INPUT" and e[1].type == SDL_KEYDOWN:
