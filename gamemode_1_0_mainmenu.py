@@ -31,8 +31,13 @@ def handle_events():
             pass
 
 def init():
+
     global tempimage ### 나중에 수정할 것
     tempimage = load_image('img_gamewaiting.png')
+
+    # 메인메뉴 배경
+    global mainmenubg
+    mainmenubg = load_image('img_background_mainmenu.png')
 
     # 게임 타이머에 현재 시간을 시작시간으로 지정
     game_timer.gametimer.setStartTime()
@@ -58,8 +63,11 @@ def update():
 
 def draw():
     global tempimage
+    global mainmenubg
+
     clear_canvas()
-    tempimage.draw(800//2, 600//2)
+    mainmenubg.draw(400, 300, 800, 600)  # 배경 그리기
+    tempimage.draw(800 // 2, 600 // 2)
     update_canvas()
     pass
 

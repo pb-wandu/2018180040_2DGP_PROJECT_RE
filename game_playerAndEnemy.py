@@ -54,7 +54,7 @@ class Player:
         """
         pass
 
-    # 바운딩 박스 그리기
+    # 바운딩 박스 가져오기
     def get_bb(self):
         return self.x - 240, self.y - 180, self.x + 240, self.y + 80
 
@@ -99,7 +99,7 @@ class Enemy:
         """
         pass
 
-    # 바운딩 박스 그리기
+    # 바운딩 박스 가져오기
     def get_bb(self):
         return self.x - 150, self.y - 100, self.x + 150, self.y + 120
 

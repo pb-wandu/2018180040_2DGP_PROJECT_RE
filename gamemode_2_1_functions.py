@@ -76,9 +76,10 @@ def timeupdate(obj, nowstate):
             print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
             pass
 
-
 # 배경 그리기
 def draw_bg(obj):
+
+    # 게임메뉴 배경
     if obj.image == None:
         obj.image = load_image('img_background.png')
 

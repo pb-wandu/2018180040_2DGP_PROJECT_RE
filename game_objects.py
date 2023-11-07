@@ -14,7 +14,11 @@ import gamemode_2_1_functions as gamefunctions # 함수 모음 모듈 import
 class Background_main:
     image = None
 
-    # 내용 추가하기
+    def update(self):
+        pass
+
+    def draw(self):
+        gamestate.state_machine.cur_state.draw(self)
 
     pass
 
