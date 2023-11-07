@@ -207,9 +207,9 @@ def draw_life_hp_info(obj, p_nowlife, p_maxlife, e_nowhp, e_maxhp):
     enemy_hp_left, enemy_hp_total = e_nowhp, e_maxhp # 적 체력
 
     HPBARLENGTH = 150 # 체력바 길이
-    HPBARPOSY   = 450 # 체력바 y위치
+    HPBARPOSX, HPBARPOSY = 330, 450 # 체력바 x, y위치
     hpnow_drawlength = HPBARLENGTH * (enemy_hp_left / enemy_hp_total) # 남은 체력 길이
-    hpnowposx = 400 - (HPBARLENGTH - hpnow_drawlength) / 2 # 남은 체력 현재 위치
+    hpnowposx = HPBARPOSX - (HPBARLENGTH - hpnow_drawlength) / 2 # 남은 체력 현재 위치
 
     # 플레이어 하트 그리기
     for n in range(player_max_life):
@@ -220,8 +220,8 @@ def draw_life_hp_info(obj, p_nowlife, p_maxlife, e_nowhp, e_maxhp):
         obj.img_info_playerlife.draw(50, 50 + n * 50, 30, 30)
 
     # 적 체력 그리기
-    obj.img_info_hpbar_bg.draw   (400,       HPBARPOSY, HPBARLENGTH,      40)
+    obj.img_info_hpbar_bg.draw   (HPBARPOSX, HPBARPOSY, HPBARLENGTH,      40)
     obj.img_info_hpbar_hp.draw   (hpnowposx, HPBARPOSY, hpnow_drawlength, 40)
-    obj.img_info_hpbar_frame.draw(400,       HPBARPOSY, HPBARLENGTH,      40)
+    obj.img_info_hpbar_frame.draw(HPBARPOSX, HPBARPOSY, HPBARLENGTH,      40)
 
     pass

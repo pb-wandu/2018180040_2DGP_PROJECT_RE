@@ -58,6 +58,11 @@ class Gameinfomation:
             gamefunctions.draw_life_hp_info(self,
                 self.p_nowlife, self.p_maxlife, self.e_nowhp, self.e_maxhp)
 
+            # 체력바 옆에 현재 체력/전체 체력 표시
+            FONTSIZE = 20
+            gamestate.font.draw(420, 470 - (10 + FONTSIZE // 2),
+                                f'{self.e_nowhp} / {self.e_maxhp}', (0, 0, 0))
+
 # ----- 박자표 클래스 -----
 
 class BeatTimer:
