@@ -56,9 +56,12 @@ def init_world():
     gamestate.font = game_objects.load_font('ENCR10B.TTF', FONTSIZE)
 
     # world 안에 오브젝트 추가
-    # (해당 실물 오브젝트는 objects.py 끝부분에 있음)
+
+    ### 추후 Finish 상태에서 exit했을 때 game_world.remove_object(o)를 이용하여 기존에 있는 박자표 오브젝트를 삭제하고
+    ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.
 
     # 배경은 depth 0 (배경)에
+
     add_object(game_objects.background_game, 0) # 배경
     add_object(game_objects.gameinfomation,  0) # 게임 정보
 

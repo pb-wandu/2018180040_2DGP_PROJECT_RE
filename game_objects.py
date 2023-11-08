@@ -9,6 +9,8 @@ import gamemode_2_0_gamemenu                   # 게임 모드 gamemenu 모듈 i
 import gamemode_2_1_state     as gamestate     # 상태 관련 모듈 import
 import gamemode_2_1_functions as gamefunctions # 함수 모음 모듈 import
 
+import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
+
 # ----- 배경 클래스 -----
 
 class Background_main:
@@ -90,7 +92,6 @@ class BeatTimer:
 
         pass
 
-
     def handle_event(self, event):
         # 처리받을 입력이 없음
         pass
@@ -120,6 +121,16 @@ gameinfomation = Gameinfomation()
 # 박자표
 
 beattimer = BeatTimer(5, 30)
+
+# 박자 설정 (임시 지정)
+def set_beats(beats):
+    num = 0
+    for beat in beats:
+        if beat != None:
+            beattimer.beat_image_list[num] = beat
+            num += 1
+    pass
+set_beats(["small", "small", "big", "small", "big"])
 
 ### 추후 Finish 상태에서 exit했을 때 game_world.remove_object(o)를 이용하여 기존에 있는 박자표 오브젝트를 삭제하고
 ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.

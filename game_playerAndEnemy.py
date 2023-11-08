@@ -10,7 +10,8 @@ import gamemode_2_1_state as gamestate  # 상태 관련 모듈 import
 import gamemode_2_1_functions as gamefunctions  # 함수 모음 모듈 import
 
 import game_world          # 게임 월드 모듈 import
-import game_playerAndEnemy # 플레이어 및 대결 상대 모듈 import
+
+from game_objects import *  # 게임 오브젝트 모듈 import
 
 # ----- 플레이어 클래스 -----
 

@@ -67,13 +67,19 @@ def timeupdate(obj, nowstate):
 
     ### 테스트용 - 박자 표시
     if obj.nowtick % obj.ticknum == 0 and obj.nowtick != 0:
-        ### 큰 박자
-        if obj.nowtick == obj.maxtick:
+
+        nowbeat = int(obj.nowtick / obj.ticknum) # 현재 박자
+        nowbeatimg = game_objects.beattimer.beat_image_list[nowbeat-1] # 현재 박자 이미지
+
+        print(nowbeat, nowbeatimg)
+
+        # 큰 박자인 경우
+        if nowbeatimg == "big":
             print(f"<큰 박자> 박자표 [{obj.beatnum} / {obj.beatnum}] 박자")
             pass
-        ### 그 외
-        elif int(obj.nowtick / obj.ticknum) <= obj.beatnum:
-            print(f"박자표 [{int(obj.nowtick / obj.ticknum)} / {obj.beatnum}] 박자")
+        # 작은 박자인 경우
+        elif nowbeatimg == "small":
+            print(f"박자표 [{nowbeat} / {obj.beatnum}] 박자")
             pass
 
 # 배경 그리기

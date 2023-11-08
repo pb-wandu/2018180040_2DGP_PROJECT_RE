@@ -288,8 +288,6 @@ def punch_activated(e):
 
     # 펀치가 유효타로 들어간 타이밍
     HITTIMING = 8  # 앞뒤 타이밍 범위 (### 수치는 변경될 수 있음)
-    hit_timing = (game_objects.beattimer.maxtick - HITTIMING,
-                  game_objects.beattimer.maxtick + HITTIMING)
 
     # 펀치가 명중(크리티컬)으로 들어간 타이밍
     ### crit_timing = 더 좁은 범위 (예정)
@@ -308,12 +306,25 @@ def punch_activated(e):
 
                 functions.setglovespos()  # 글러브 위치 지정
 
+                ifhit = False # 맞힘 여부
+
                 ### 테스트용
-                print(f"[<-] <왼쪽 펀치> ({game_objects.beattimer.nowtick}틱)")
-                print(f"맞힘 타이밍 : {hit_timing}")
-                if hit_timing[0] <= game_objects.beattimer.nowtick <= hit_timing[1]:
+
+                imglist = game_objects.beattimer.beat_image_list # 박자 이미지 리스트
+                hittime = game_objects.beattimer.nowtick # 펀치를 누른 시간
+                hitbeat = int(hittime / game_objects.beattimer.ticknum) # 펀치를 누른 현재 박자
+
+                print(f"[<-] <왼쪽 펀치> ({hittime}틱)")
+                print(f"### {hitbeat}번째 박자에서 클릭")
+
+                # 큰 박자
+                if (imglist[hitbeat-1] == "big" and
+                        (hitbeat * game_objects.beattimer.ticknum - HITTIMING <= hittime
+                         <= hitbeat * game_objects.beattimer.ticknum + HITTIMING)):
                     pne.player.ifpunchsuccess = "hit"
                     print("공격 맞힘!")
+
+                # 작은 박자
                 else:
                     pne.player.ifpunchsuccess = "failed"
                     print("공격 실패")
@@ -329,11 +340,22 @@ def punch_activated(e):
                 functions.setglovespos()  # 글러브 위치 지정
 
                 ### 테스트용
-                print(f"[->] <오른쪽 펀치> ({game_objects.beattimer.nowtick}틱)")
-                print(f"맞힘 타이밍 : {hit_timing}")
-                if hit_timing[0] <= game_objects.beattimer.nowtick <= hit_timing[1]:
+
+                imglist = game_objects.beattimer.beat_image_list # 박자 이미지 리스트
+                hittime = game_objects.beattimer.nowtick # 펀치를 누른 시간
+                hitbeat = int(hittime / game_objects.beattimer.ticknum) # 펀치를 누른 현재 박자
+
+                print(f"[->] <오른쪽 펀치> ({hittime}틱)")
+                print(f"### {hitbeat}번째 박자에서 클릭")
+
+                # 큰 박자
+                if (imglist[hitbeat - 1] == "big" and
+                        (hitbeat * game_objects.beattimer.ticknum - HITTIMING <= hittime
+                         <= hitbeat * game_objects.beattimer.ticknum + HITTIMING)):
                     pne.player.ifpunchsuccess = "hit"
                     print("공격 맞힘!")
+
+                # 작은 박자
                 else:
                     pne.player.ifpunchsuccess = "failed"
                     print("공격 실패")
