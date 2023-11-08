@@ -2,8 +2,10 @@
 
 # world 전체 관련 내용을 기록한 파일
 
-from game_objects import *        # 오브젝트 모듈 import
-from game_playerAndEnemy import * # 플레이어 및 대결 상대 모듈 import
+from pico2d import *  # pico2d 모듈 import
+
+import game_objects               # 오브젝트 모듈 import
+import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
 
 # '모드 2 - 게임 메뉴'용 모듈 import
 import gamemode_2_1_state     as gamestate
@@ -44,39 +46,37 @@ def init_world():
     gamestate.state_machine.start()
 
     # gamestate.punch_cooltime = 0        # 펀치 쿨타임을 0으로 초기화
-    beattimer.nowtick = 0               # 박자표 틱을 0으로 초기화
+    game_objects.beattimer.nowtick = 0               # 박자표 틱을 0으로 초기화
     gamefunctions.timer_setglovepos = 0 # 펀치위치 표시 타이머를 0으로 초기화
 
     gamestate.start_time = 0 # 시작 시간을 0으로 초기화
 
     # 폰트 지정
     FONTSIZE = 24
-    gamestate.font = load_font('ENCR10B.TTF', FONTSIZE)
+    gamestate.font = game_objects.load_font('ENCR10B.TTF', FONTSIZE)
 
     # world 안에 오브젝트 추가
     # (해당 실물 오브젝트는 objects.py 끝부분에 있음)
 
     # 배경은 depth 0 (배경)에
-    add_object(background_game, 0) # 배경
-    add_object(gameinfomation,  0) # 게임 정보
+    add_object(game_objects.background_game, 0) # 배경
+    add_object(game_objects.gameinfomation,  0) # 게임 정보
 
     # 나머지는 depth 1 (전면)에
 
-    add_object(beattimer, 1) # 박자표
-
-    add_object(enemy,     1) # 대결 상대
-    add_object(glove_l,   1) # 글러브 왼쪽
-    add_object(glove_r,   1) # 글러브 오른쪽
-    add_object(player,    1) # 플레이어
-
+    add_object(game_objects.beattimer, 1) # 박자표
+    add_object(pne.enemy, 1) # 대결 상대
+    add_object(pne.player.glove_l, 1)  # 글러브 왼쪽
+    add_object(pne.player.glove_r, 1)  # 글러브 오른쪽
+    add_object(pne.player, 1) # 플레이어
 
     # 글러브와 대결 상대 충돌체크 지정
-    collisionCheck.add_collision_pair('glove-enemy', glove_l, None)
-    collisionCheck.add_collision_pair('glove-enemy', glove_r, None)
-    collisionCheck.add_collision_pair('glove-enemy', None,   enemy)
+    collisionCheck.add_collision_pair('glove-enemy', pne.player.glove_l, None)
+    collisionCheck.add_collision_pair('glove-enemy', pne.player.glove_r, None)
+    collisionCheck.add_collision_pair('glove-enemy', None, pne.enemy)
 
     # 플레이어와 대결 상대 충돌체크 지정
-    collisionCheck.add_collision_pair('player-enemy', player, enemy)
+    collisionCheck.add_collision_pair('player-enemy', pne.player, pne.enemy)
 
     pass
 

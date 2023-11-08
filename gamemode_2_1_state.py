@@ -19,8 +19,8 @@
 
 from pico2d import *  # pico2d 모듈 import
 
-import game_objects  # 오브젝트 모듈 import
-import game_playerAndEnemy  # 플레이어 및 대결 상대 모듈 import
+import game_objects               # 오브젝트 모듈 import
+import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
 
 import gamemode_2_0_gamemenu  # 게임 모드 gamemenu 모듈 import
 import gamemode_2_1_functions as functions  # 함수 모음 모듈 import
@@ -61,7 +61,7 @@ class Ready:
     def do(obj):
 
         # 플레이어
-        if obj == game_playerAndEnemy.player:
+        if obj == pne.player:
             pass
 
         # 박자표
@@ -84,11 +84,11 @@ class Ready:
             pass
 
         # 플레이어
-        elif obj == game_playerAndEnemy.player:
+        elif obj == pne.player:
             pass
 
         # 글러브
-        elif obj == game_playerAndEnemy.glove_l or obj == game_playerAndEnemy.glove_r:
+        elif obj == pne.player.glove_l or obj == pne.player.glove_r:
             functions.draw_glove(obj)  # 글러브 그리기
             pass
 
@@ -119,7 +119,7 @@ class Standoff:
     def do(obj):
 
         # 플레이어
-        if obj == game_playerAndEnemy.player:
+        if obj == pne.player:
             pass
 
         # 박자표
@@ -142,12 +142,12 @@ class Standoff:
             pass
 
         # 플레이어
-        elif obj == game_playerAndEnemy.player:
+        elif obj == pne.player:
             functions.draw_puncheffect(obj)  # 펀치 이펙트 그리기
             pass
 
         # 글러브
-        elif obj == game_playerAndEnemy.glove_l or obj == game_playerAndEnemy.glove_r:
+        elif obj == pne.player.glove_l or obj == pne.player.glove_r:
             functions.draw_glove(obj)  # 글러브 그리기
             pass
 
@@ -181,7 +181,7 @@ class Action:
         draw_state_info("Action")
 
         # 플레이어
-        if obj == game_playerAndEnemy.player:
+        if obj == pne.player:
             pass
 
         # 박자표
@@ -201,12 +201,12 @@ class Action:
             pass
 
         # 플레이어
-        elif obj == game_playerAndEnemy.player:
+        elif obj == pne.player:
             functions.draw_puncheffect(obj)  # 펀치 이펙트 그리기
             pass
 
         # 글러브
-        elif obj == game_playerAndEnemy.glove_l or obj == game_playerAndEnemy.glove_r:
+        elif obj == pne.player.glove_l or obj == pne.player.glove_r:
             functions.draw_glove(obj)  # 글러브 그리기
             pass
 
@@ -302,7 +302,7 @@ def punch_activated(e):
         if e[0] == "INPUT" and e[1].type == SDL_KEYDOWN:
             # 왼쪽 5줄 중 하나의 키를 눌렀다면 왼쪽 펀치
             if e[1].key in left_punch_keys:
-                game_playerAndEnemy.player.nowpunchhand = "left"
+                pne.player.nowpunchhand = "left"
                 state_machine.now_action = "punch"
                 game_objects.beattimer.punch_cooltime = PUNCH_COOLTIME
 
@@ -312,17 +312,17 @@ def punch_activated(e):
                 print(f"[<-] <왼쪽 펀치> ({game_objects.beattimer.nowtick}틱)")
                 print(f"맞힘 타이밍 : {hit_timing}")
                 if hit_timing[0] <= game_objects.beattimer.nowtick <= hit_timing[1]:
-                    game_playerAndEnemy.player.ifpunchsuccess = "hit"
+                    pne.player.ifpunchsuccess = "hit"
                     print("공격 맞힘!")
                 else:
-                    game_playerAndEnemy.player.ifpunchsuccess = "failed"
+                    pne.player.ifpunchsuccess = "failed"
                     print("공격 실패")
 
                 return True
 
             # 오른쪽 5줄 중 하나의 키를 눌렀다면 오른쪽 펀치
             elif e[1].key in right_punch_keys:
-                game_playerAndEnemy.player.nowpunchhand = "right"
+                pne.player.nowpunchhand = "right"
                 state_machine.now_action = "punch"
                 game_objects.beattimer.punch_cooltime = PUNCH_COOLTIME
 
@@ -332,17 +332,17 @@ def punch_activated(e):
                 print(f"[->] <오른쪽 펀치> ({game_objects.beattimer.nowtick}틱)")
                 print(f"맞힘 타이밍 : {hit_timing}")
                 if hit_timing[0] <= game_objects.beattimer.nowtick <= hit_timing[1]:
-                    game_playerAndEnemy.player.ifpunchsuccess = "hit"
+                    pne.player.ifpunchsuccess = "hit"
                     print("공격 맞힘!")
                 else:
-                    game_playerAndEnemy.player.ifpunchsuccess = "failed"
+                    pne.player.ifpunchsuccess = "failed"
                     print("공격 실패")
 
                 return True
 
             # 다른 키라면 어떤 방향 펀치도 아님
             else:
-                game_playerAndEnemy.player.nowpunchhand = None
+                pne.player.nowpunchhand = None
 
                 ### 테스트용
                 print("펀치 아님")

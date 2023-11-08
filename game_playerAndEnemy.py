@@ -9,6 +9,8 @@ import gamemode_2_0_gamemenu  # 게임 모드 gamemenu 모듈 import
 import gamemode_2_1_state as gamestate  # 상태 관련 모듈 import
 import gamemode_2_1_functions as gamefunctions  # 함수 모음 모듈 import
 
+import game_world          # 게임 월드 모듈 import
+import game_playerAndEnemy # 플레이어 및 대결 상대 모듈 import
 
 # ----- 플레이어 클래스 -----
 
@@ -18,6 +20,8 @@ class Player:
         self.nowpunchhand = None  # 현재 주먹을 지른 손
         self.ifpunchsuccess = None  # 펀치 성공 여부
         self.x, self.y = 400, 100  # 플레이어 x, y 위치
+        self.glove_l = Player_Glove("left", 250, 80)
+        self.glove_r = Player_Glove("right", 550, 80)
         pass
 
     @staticmethod
@@ -32,14 +36,22 @@ class Player:
     @staticmethod
     def update():
         gamestate.state_machine.cur_state.do(player)
+
+        # 글러브 업데이트
+        gamestate.state_machine.cur_state.do(player.glove_l)
+        gamestate.state_machine.cur_state.do(player.glove_r)
         pass
 
     @staticmethod
     def draw():
         gamestate.state_machine.cur_state.draw(player)
+        gamestate.state_machine.cur_state.draw(player.glove_l)
+        gamestate.state_machine.cur_state.draw(player.glove_r)
 
         ### 테스트용 - 바운딩 박스 그리기
         draw_rectangle(*player.get_bb())
+        draw_rectangle(*player.glove_l.get_bb())
+        draw_rectangle(*player.glove_r.get_bb())
         pass
 
     # 충돌 판정
@@ -58,14 +70,12 @@ class Player:
     def get_bb(self):
         return self.x - 240, self.y - 180, self.x + 240, self.y + 80
 
-# ----- 글러브 클래스 -----
+# ----- 플레이어 글러브 클래스 -----
 
-class Glove:
+class Player_Glove:
     image = None  # 이미지
     glovedir = None  # 글러브 방향
     x, y = 0, 0  # 글러브 위치
-
-    ### (예정) 실제 제작할 때 내용 채워넣기
 
     def __init__(self, dir, posx, posy):
         # 입력값에 따른 방향 지정
@@ -79,18 +89,10 @@ class Glove:
 
     @staticmethod
     def update():
-        gamestate.state_machine.cur_state.do(glove_l)
-        gamestate.state_machine.cur_state.do(glove_r)
         pass
 
     @staticmethod
     def draw():
-        gamestate.state_machine.cur_state.draw(glove_l)
-        gamestate.state_machine.cur_state.draw(glove_r)
-
-        ### 테스트용 - 바운딩 박스 그리기
-        draw_rectangle(*glove_l.get_bb())
-        draw_rectangle(*glove_r.get_bb())
         pass
 
     # 바운딩 박스 가져오기
@@ -145,10 +147,6 @@ class Enemy:
 
 # 플레이어 오브젝트
 player = Player()
-
-# 글러브 오브젝트
-glove_l = Glove("left", 250, 80)
-glove_r = Glove("right", 550, 80)
 
 # 대결 상대 오브젝트
 enemy = Enemy()
