@@ -58,6 +58,44 @@ class Player:
     def get_bb(self):
         return self.x - 240, self.y - 180, self.x + 240, self.y + 80
 
+# ----- 글러브 클래스 -----
+
+class Glove:
+    image = None  # 이미지
+    glovedir = None  # 글러브 방향
+    x, y = 0, 0  # 글러브 위치
+
+    ### (예정) 실제 제작할 때 내용 채워넣기
+
+    def __init__(self, dir, posx, posy):
+        # 입력값에 따른 방향 지정
+        self.glovedir = dir
+        # 입력값에 따른 위치 지정
+        self.x, self.y = posx, posy
+
+    # 글러브 위치 (재)지정
+    def setpos(self, posx, posy):
+        self.x, self.y = posx, posy
+
+    @staticmethod
+    def update():
+        gamestate.state_machine.cur_state.do(glove_l)
+        gamestate.state_machine.cur_state.do(glove_r)
+        pass
+
+    @staticmethod
+    def draw():
+        gamestate.state_machine.cur_state.draw(glove_l)
+        gamestate.state_machine.cur_state.draw(glove_r)
+
+        ### 테스트용 - 바운딩 박스 그리기
+        draw_rectangle(*glove_l.get_bb())
+        draw_rectangle(*glove_r.get_bb())
+        pass
+
+    # 바운딩 박스 가져오기
+    def get_bb(self):
+        return self.x - 90, self.y - 90, self.x + 90, self.y + 90
 
 # ----- 대결 상대 클래스 -----
 
@@ -105,5 +143,12 @@ class Enemy:
 
 # ----- 클래스별 실제 오브젝트 -----
 
-player = Player()  # 플레이어 오브젝트
-enemy = Enemy()  # 대결 상대 오브젝트
+# 플레이어 오브젝트
+player = Player()
+
+# 글러브 오브젝트
+glove_l = Glove("left", 250, 80)
+glove_r = Glove("right", 550, 80)
+
+# 대결 상대 오브젝트
+enemy = Enemy()

@@ -88,7 +88,7 @@ class Ready:
             pass
 
         # 글러브
-        elif obj == game_objects.glove_l or obj == game_objects.glove_r:
+        elif obj == game_playerAndEnemy.glove_l or obj == game_playerAndEnemy.glove_r:
             functions.draw_glove(obj)  # 글러브 그리기
             pass
 
@@ -147,7 +147,7 @@ class Standoff:
             pass
 
         # 글러브
-        elif obj == game_objects.glove_l or obj == game_objects.glove_r:
+        elif obj == game_playerAndEnemy.glove_l or obj == game_playerAndEnemy.glove_r:
             functions.draw_glove(obj)  # 글러브 그리기
             pass
 
@@ -206,7 +206,7 @@ class Action:
             pass
 
         # 글러브
-        elif obj == game_objects.glove_l or obj == game_objects.glove_r:
+        elif obj == game_playerAndEnemy.glove_l or obj == game_playerAndEnemy.glove_r:
             functions.draw_glove(obj)  # 글러브 그리기
             pass
 

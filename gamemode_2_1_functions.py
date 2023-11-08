@@ -15,16 +15,16 @@ import game_timer # 타이머 모듈 import
 def setglovespos():
 
     if game_playerAndEnemy.player.nowpunchhand == None:
-        game_objects.glove_l.setpos(250, 80)
-        game_objects.glove_r.setpos(550, 80)
+        game_playerAndEnemy.glove_l.setpos(250, 80)
+        game_playerAndEnemy.glove_r.setpos(550, 80)
 
     elif game_playerAndEnemy.player.nowpunchhand == "left":
-        game_objects.glove_l.setpos(250+100, 80+120)
-        game_objects.glove_r.setpos(550, 80)
+        game_playerAndEnemy.glove_l.setpos(250+100, 80+120)
+        game_playerAndEnemy.glove_r.setpos(550, 80)
 
     elif game_playerAndEnemy.player.nowpunchhand == "right":
-        game_objects.glove_l.setpos(250, 80)
-        game_objects.glove_r.setpos(550-100, 80+120)
+        game_playerAndEnemy.glove_l.setpos(250, 80)
+        game_playerAndEnemy.glove_r.setpos(550-100, 80+120)
 
 # 박자표 - 시간 업데이트 (1틱 간격)
 def timeupdate(obj, nowstate):

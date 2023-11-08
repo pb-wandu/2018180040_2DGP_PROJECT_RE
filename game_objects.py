@@ -108,43 +108,7 @@ class BeatTimer:
         gamestate.state_machine.cur_state.draw(beattimer)
         pass
 
-# ----- 글러브 클래스 -----
-
-class Glove:
-    image = None    # 이미지
-    glovedir = None # 글러브 방향
-    x, y = 0, 0     # 글러브 위치
-
-    ### (예정) 실제 제작할 때 내용 채워넣기
-
-    def __init__(self, dir, posx, posy):
-
-        # 입력값에 따른 방향 지정
-        self.glovedir = dir
-        # 입력값에 따른 위치 지정
-        self.x, self.y = posx, posy
-    
-    # 글러브 위치 (재)지정
-    def setpos(self, posx, posy):
-        self.x, self.y = posx, posy
-
-    @staticmethod
-    def update():
-        gamestate.state_machine.cur_state.do(glove_l)
-        gamestate.state_machine.cur_state.do(glove_r)
-        pass
-
-    @staticmethod
-    def draw():
-        gamestate.state_machine.cur_state.draw(glove_l)
-        gamestate.state_machine.cur_state.draw(glove_r)
-        pass
-
 # ----- 클래스별 실제 오브젝트 -----
-
-# 글러브 오브젝트
-glove_l = Glove("left", 250, 80)
-glove_r = Glove("right", 550, 80)
 
 # 배경 오브젝트
 background_main = Background_main() # 메인메뉴 배경
@@ -154,11 +118,8 @@ background_game = Background_game() # 게임메뉴 배경
 gameinfomation = Gameinfomation()
 
 # 박자표
-# basicBeatTimer = BeatTimer(4, 50) # (4박자, 1박자당 50틱) 박자표 <기본>
-# beattimer = basicBeatTimer # basicBeatTimer (기본 박자표)를 첫 박자표로 지정한다.
 
-### 테스트용
-beattimer = BeatTimer(3, 40)
+beattimer = BeatTimer(5, 30)
 
 ### 추후 Finish 상태에서 exit했을 때 game_world.remove_object(o)를 이용하여 기존에 있는 박자표 오브젝트를 삭제하고
 ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.
