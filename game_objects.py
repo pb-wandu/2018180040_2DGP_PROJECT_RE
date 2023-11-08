@@ -85,11 +85,16 @@ class BeatTimer:
 
         self.punch_cooltime = 0 # 펀치 쿨타임
 
-        # '박자 수 - 1'개의 작은 박자와, 1개의 큰 박자를 넣는다
-        for n in range(0, self.beatnum - 1):
-            self.beat_image_list[n] = "small"
-        self.beat_image_list[self.beatnum-1] = "big"
+        pass
 
+    # 박자 설정 (임시 지정)
+    def set_beats(self, beats):
+
+        num = 0
+        for beat in beats:
+            if beat != None:
+                self.beat_image_list[num] = beat
+                num += 1
         pass
 
     def handle_event(self, event):
@@ -120,17 +125,8 @@ gameinfomation = Gameinfomation()
 
 # 박자표
 
-beattimer = BeatTimer(5, 30)
-
-# 박자 설정 (임시 지정)
-def set_beats(beats):
-    num = 0
-    for beat in beats:
-        if beat != None:
-            beattimer.beat_image_list[num] = beat
-            num += 1
-    pass
-set_beats(["small", "small", "big", "small", "big"])
+beattimer = BeatTimer(5, 40)
+beattimer.set_beats(["small", "small", "big", "small", "big"])
 
 ### 추후 Finish 상태에서 exit했을 때 game_world.remove_object(o)를 이용하여 기존에 있는 박자표 오브젝트를 삭제하고
 ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.

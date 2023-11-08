@@ -121,8 +121,12 @@ def draw_puncheffect(obj):
 
     # 명중
     if obj.ifpunchsuccess == "crit":
-        ### 추가 예정
-        pass
+        if obj.nowpunchhand == "left":
+            img_punch_eff_crit.draw(360, 260, 280, 280)
+            img_punch_eff_crit_text.draw(450, 360, 80, 40)
+        elif obj.nowpunchhand == "right":
+            img_punch_eff_crit.draw(440, 260, 280, 280)
+            img_punch_eff_crit_text.draw(290, 360, 80, 40)
 
     # 맞힘
     elif obj.ifpunchsuccess == "hit":
