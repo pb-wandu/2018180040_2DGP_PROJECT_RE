@@ -11,6 +11,8 @@ import gamemode_2_1_functions as gamefunctions # 함수 모음 모듈 import
 
 import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
 
+import game_timer # 타이머 모듈 import
+
 # ----- 배경 클래스 -----
 
 class Background_main:
@@ -36,24 +38,32 @@ class Background_game:
 # ----- 게임 정보 클래스 -----
 
 class Gameinfomation:
-    img_info_hpbar_bg        = None
-    img_info_hpbar_hp        = None
-    img_info_hpbar_frame     = None
-    img_info_playerlife      = None
-    img_info_playerlife_lost = None
-
     img_whitesquare = None
 
-    # 게임 정보 변수들
+    # 대결 상대 체혁바
+    img_info_hpbar_bg    = None
+    img_info_hpbar_hp    = None
+    img_info_hpbar_frame = None
+    e_nowhp = 0 # 대결 상대 현재 체력
+    e_maxhp = 0 # 대결 상대 최대 체력
+
+    # 플레이어 하트
+    img_info_playerlife      = None
+    img_info_playerlife_lost = None
     p_nowlife = 0 # 현재 플레이어 하트
     p_maxlife = 0 # 최대 플레이어 하트
-    e_nowhp   = 0 # 현재 적 체력
-    e_maxhp   = 0 # 적 최대 체력
+
+    nowtime = 0 # 시간 표시
+
+    ### // 여기에다가 게임 점수(gamescore) 추가할 것
 
     def update(self):
+        # 게임 시간 업데이트
+        self.nowtime = get_time() - game_timer.gametimer.start_time
         pass
 
     def draw(self):
+
         ### 상태 머신이 Ready상태가 아닐 경우 (임시)
         if gamestate.state_machine.cur_state != gamestate.Ready:
             # 하트 및 체력바 그리기
@@ -62,8 +72,12 @@ class Gameinfomation:
 
             # 체력바 옆에 현재 체력/전체 체력 표시
             FONTSIZE = 20
-            gamestate.font.draw(420, 470 - (10 + FONTSIZE // 2),
+            font.draw(420, 470 - (10 + FONTSIZE // 2),
                                 f'{self.e_nowhp} / {self.e_maxhp}', (0, 0, 0))
+
+        # 게임 시간 표시
+        FONTSIZE = 24
+        font.draw(10, 600 - (10 + FONTSIZE // 2), f'(Time: {self.nowtime:.1f})', (0, 0, 0))
 
 # ----- 박자표 클래스 -----
 

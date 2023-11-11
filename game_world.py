@@ -16,7 +16,7 @@ import game_collisionCheck as collisionCheck
 
 # ----- world 전체 관련 코드 -----
 
-objects = [ [ ], [ ] ] # object 전체를 담아두는 list
+objects = [ [ ], [ ], [ ] ] # object 전체를 담아두는 list
 # depth 0 : 배경
 # depth 1 : 전면
 
@@ -53,7 +53,7 @@ def init_world():
 
     # 폰트 지정
     FONTSIZE = 24
-    gamestate.font = game_objects.load_font('ENCR10B.TTF', FONTSIZE)
+    game_objects.font = game_objects.load_font('ENCR10B.TTF', FONTSIZE)
 
     # world 안에 오브젝트 추가
 
@@ -61,17 +61,17 @@ def init_world():
     ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.
 
     # 배경은 depth 0 (배경)에
-
     add_object(game_objects.background_game, 0) # 배경
-    add_object(game_objects.gameinfomation,  0) # 게임 정보
 
     # 나머지는 depth 1 (전면)에
-
     add_object(game_objects.beattimer, 1) # 박자표
     add_object(pne.enemy, 1) # 대결 상대
     add_object(pne.player.glove_l, 1)  # 글러브 왼쪽
     add_object(pne.player.glove_r, 1)  # 글러브 오른쪽
     add_object(pne.player, 1) # 플레이어
+
+    # 게임 정보는 depth 2 (가장 앞)에
+    add_object(game_objects.gameinfomation, 2)  # 게임 정보
 
     # 글러브와 대결 상대 충돌체크 지정
     collisionCheck.add_collision_pair('glove-enemy', pne.player.glove_l, None)
