@@ -104,9 +104,25 @@ class Player_Glove:
 
 class Enemy:
 
+    # 적 동작 패턴
+    nowPattern = 0
+    maxPattern = 2
+    pattern = [
+        ["small", "small", "small", "small", "big", None],
+        ["small", "small", "big", "small", "big", None],
+        ["small", "big", "small", "big", "small", None],
+    ]
+
     def __init__(self):
         self.x, self.y = 400, 300  # 대결 상대 x, y 위치
         pass
+
+    # 대결 상대 다음 동작 패턴
+    def nextPattern(self):
+        if self.nowPattern < self.maxPattern:
+            self.nowPattern += 1
+        else:
+            self.nowPattern = 0
 
     def handle_event(self, event):
         # 처리받을 입력이 없음

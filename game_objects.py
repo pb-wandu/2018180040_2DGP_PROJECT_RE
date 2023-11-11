@@ -138,9 +138,8 @@ background_game = Background_game() # 게임메뉴 배경
 gameinfomation = Gameinfomation()
 
 # 박자표
-
 beattimer = BeatTimer(5, 40)
-beattimer.set_beats(["small", "small", "big", "small", "big"])
+beattimer.set_beats(pne.enemy.pattern[pne.enemy.nowPattern])
 
 ### 추후 Finish 상태에서 exit했을 때 game_world.remove_object(o)를 이용하여 기존에 있는 박자표 오브젝트를 삭제하고
 ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.
