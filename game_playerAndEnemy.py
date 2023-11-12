@@ -5,13 +5,13 @@
 from pico2d import *  # pico2d 모듈 import
 
 # '모드 2 - 게임 메뉴'용 상태 머신 import
-import gamemode_2_0_gamemenu  # 게임 모드 gamemenu 모듈 import
-import gamemode_2_1_state as gamestate  # 상태 관련 모듈 import
-import gamemode_2_1_functions as gamefunctions  # 함수 모음 모듈 import
+import gamemode_2_1_state     as gamestate     # 상태 관련 모듈 import
+import gamemode_2_1_functions as gamefunctions # 함수 모음 모듈 import
 
-import game_world          # 게임 월드 모듈 import
-
-from game_objects import *  # 게임 오브젝트 모듈 import
+# 그 외 import
+import game_world                           # 게임 월드 모듈 import
+from game_objects import *                  # 게임 오브젝트 모듈 import
+import game_PAE_ePatternlist as patternlist # 대결 상대 패턴 import
 
 # ----- 플레이어 클래스 -----
 
@@ -104,18 +104,18 @@ class Player_Glove:
 
 class Enemy:
 
-    # 적 동작 패턴
-    nowPattern = 0
-    maxPattern = 2
-    pattern = [
-        ["small", "small", "small", "small", "big", None],
-        ["small", "small", "big", "small", "big", None],
-        ["small", "big", "small", "big", "small", None],
-    ]
-
-    def __init__(self):
+    def __init__(self, beatnum, pattern):
         self.x, self.y = 400, 300  # 대결 상대 x, y 위치
-        pass
+
+        # 대결 상대 동작 패턴 지정
+        self.nowPattern = 0
+        self.maxPattern = beatnum
+        self.pattern    = pattern
+
+    # 대결 상대 동작 패턴 지정
+    def setPattern(self, beatnum, pattern):
+        self.maxPattern = beatnum
+        self.pattern    = pattern
 
     # 대결 상대 다음 동작 패턴
     def nextPattern(self):
@@ -165,5 +165,5 @@ class Enemy:
 # 플레이어 오브젝트
 player = Player()
 
-# 대결 상대 오브젝트
-enemy = Enemy()
+# 대결 상대 오브젝트 - 생성시에 첫 패턴을 지정
+enemy = Enemy(patternlist.enemy_1_1num, patternlist.enemy_1_1)
