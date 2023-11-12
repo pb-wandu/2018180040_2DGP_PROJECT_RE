@@ -9,9 +9,9 @@ import gamemode_2_1_state     as gamestate     # 상태 관련 모듈 import
 import gamemode_2_1_functions as gamefunctions # 함수 모음 모듈 import
 
 # 그 외 import
-import game_world                           # 게임 월드 모듈 import
-from game_objects import *                  # 게임 오브젝트 모듈 import
-import game_PAE_ePatternlist as patternlist # 대결 상대 패턴 import
+import game_world                       # 게임 월드 모듈 import
+from game_objects import *              # 게임 오브젝트 모듈 import
+import game_PAE_ePatternAndWave as EPAW # 대결 상대 패턴 import
 
 # ----- 플레이어 클래스 -----
 
@@ -165,5 +165,5 @@ class Enemy:
 # 플레이어 오브젝트
 player = Player()
 
-# 대결 상대 오브젝트 - 생성시에 첫 패턴을 지정
-enemy = Enemy(patternlist.enemy_1_1num, patternlist.enemy_1_1)
+# 대결 상대 오브젝트 생성시에 첫 패턴(1-1)을 지정
+enemy = Enemy(EPAW.nowPatternNum-1, EPAW.nowEnemyPattern)
