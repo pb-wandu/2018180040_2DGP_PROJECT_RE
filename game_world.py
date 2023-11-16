@@ -53,7 +53,7 @@ def init_world():
 
     # 폰트 지정
     FONTSIZE = 24
-    game_objects.font = game_objects.load_font('ENCR10B.TTF', FONTSIZE)
+    game_objects.font = game_objects.load_font('FONT_KOTRA_HOPE_TTF.TTF', FONTSIZE)
 
     # world 안에 오브젝트 추가
 
