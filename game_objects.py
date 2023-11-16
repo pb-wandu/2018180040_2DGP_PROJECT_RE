@@ -8,6 +8,8 @@ from pico2d import *    # pico2d 모듈 import
 import gamemode_2_0_gamemenu                   # 게임 모드 gamemenu 모듈 import
 import gamemode_2_1_state     as gamestate     # 상태 관련 모듈 import
 import gamemode_2_1_functions as gamefunctions # 함수 모음 모듈 import
+import gamemode_2_1_gameinfo  as gameinfo      # 게임 정보 모듈 import
+
 
 import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
 
@@ -34,50 +36,6 @@ class Background_game:
 
     def draw(self):
         gamestate.state_machine.cur_state.draw(self)
-
-# ----- 게임 정보 클래스 -----
-
-class Gameinfomation:
-    img_whitesquare = None
-
-    # 대결 상대 체혁바
-    img_info_hpbar_bg    = None
-    img_info_hpbar_hp    = None
-    img_info_hpbar_frame = None
-    e_nowhp = 0 # 대결 상대 현재 체력
-    e_maxhp = 0 # 대결 상대 최대 체력
-
-    # 플레이어 하트
-    img_info_playerlife      = None
-    img_info_playerlife_lost = None
-    p_nowlife = 0 # 현재 플레이어 하트
-    p_maxlife = 0 # 최대 플레이어 하트
-
-    nowtime = 0 # 시간 표시
-
-    ### // 여기에다가 게임 점수(gamescore) 추가할 것
-
-    def update(self):
-        # 게임 시간 업데이트
-        self.nowtime = get_time() - game_timer.gametimer.start_time
-        pass
-
-    def draw(self):
-
-        ### 상태 머신이 Ready상태가 아닐 경우 (임시)
-        if gamestate.state_machine.cur_state != gamestate.Ready:
-            # 하트 및 체력바 그리기
-            gamefunctions.draw_life_hp_info(self,
-                self.p_nowlife, self.p_maxlife, self.e_nowhp, self.e_maxhp)
-
-            # 체력바 옆에 현재 체력/전체 체력 표시
-            FONTSIZE = 20
-            font.draw(420, 470 - (10 + FONTSIZE // 2),
-                                f'{self.e_nowhp} / {self.e_maxhp}', (0, 0, 0))
-
-        # 게임 시간 표시
-        FONTSIZE = 24
-        font.draw(10, 600 - (10 + FONTSIZE // 2), f'(Time: {self.nowtime:.1f})', (0, 0, 0))
 
 # ----- 박자표 클래스 -----
 
@@ -135,7 +93,7 @@ background_main = Background_main() # 메인메뉴 배경
 background_game = Background_game() # 게임메뉴 배경
 
 # 게임 정보
-gameinfomation = Gameinfomation()
+gameinfomation = gameinfo.Gameinfomation()
 
 # 박자표
 beattimer = BeatTimer(4, 40)
