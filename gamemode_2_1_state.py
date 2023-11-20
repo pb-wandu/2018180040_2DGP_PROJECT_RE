@@ -270,6 +270,7 @@ def space_down(e):
 
 # 플레이어 - 펀치 실행
 def punch_activated(e):
+    global combochanged # 콤보 바뀜 여부
     global nowstate
 
     left_punch_keys = [
@@ -319,16 +320,28 @@ def punch_activated(e):
                     if (hitbeat * game_objects.beattimer.ticknum - CRITTIMING <= hittime
                          <= hitbeat * game_objects.beattimer.ticknum + CRITTIMING):
                         pne.player.ifpunchsuccess = "crit"
+
+                        # 콤보 수 증가
+                        game_objects.gameinfomation.nowcombo += 1
+
                         print("!!공격 명중!!")
 
                     elif (hitbeat * game_objects.beattimer.ticknum - HITTIMING <= hittime
                          <= hitbeat * game_objects.beattimer.ticknum + HITTIMING):
                         pne.player.ifpunchsuccess = "hit"
+
+                        # 콤보 수 증가
+                        game_objects.gameinfomation.nowcombo += 1
+
                         print("공격 맞힘!")
 
                 # 작은 박자
                 else:
                     pne.player.ifpunchsuccess = "failed"
+
+                    # 콤보 수 초기화
+                    game_objects.gameinfomation.nowcombo = 0
+
                     print("공격 실패...")
 
                 return True
@@ -356,16 +369,28 @@ def punch_activated(e):
                     if (hitbeat * game_objects.beattimer.ticknum - CRITTIMING <= hittime
                          <= hitbeat * game_objects.beattimer.ticknum + CRITTIMING):
                         pne.player.ifpunchsuccess = "crit"
+
+                        # 콤보 수 증가
+                        game_objects.gameinfomation.nowcombo += 1
+
                         print("!!공격 명중!!")
 
                     elif (hitbeat * game_objects.beattimer.ticknum - HITTIMING <= hittime
                          <= hitbeat * game_objects.beattimer.ticknum + HITTIMING):
                         pne.player.ifpunchsuccess = "hit"
+
+                        # 콤보 수 증가
+                        game_objects.gameinfomation.nowcombo += 1
+
                         print("공격 맞힘!")
 
                 # 작은 박자
                 else:
                     pne.player.ifpunchsuccess = "failed"
+
+                    # 콤보 수 초기화
+                    game_objects.gameinfomation.nowcombo = 0
+
                     print("공격 실패")
 
                 return True

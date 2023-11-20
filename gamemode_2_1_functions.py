@@ -5,9 +5,12 @@ from pico2d import * # pico2d 모듈 import
 import game_objects               # 오브젝트 모듈 import
 import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 impor
 
-import gamemode_2_1_state as gamestate # 상태 관련 모듈 import
+import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
+import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 관련 모듈 import
 
 import game_timer # 타이머 모듈 import
+
+combochanged = "none" # 콤보 변화 여부
 
 # ----- 함수들 -----
 
@@ -115,6 +118,7 @@ def draw_glove(obj):
 
 # 펀치 이펙트 그리기
 def draw_puncheffect(obj):
+    
     img_punch_eff_crit      = load_image('img_punch_eff_crit.png')      # 명중시 효과
     img_punch_eff_crit_text = load_image('img_punch_eff_crit_text.png') # 명중시 텍스트
     img_punch_eff_hit       = load_image('img_punch_eff_hit.png')       # 맞힘시 효과
@@ -127,6 +131,7 @@ def draw_puncheffect(obj):
 
     # 명중
     if obj.ifpunchsuccess == "crit":
+
         if obj.nowpunchhand == "left":
             img_punch_eff_crit.draw(360, 260, 280, 280)
             img_punch_eff_crit_text.draw(450, 360, 80, 40)
@@ -136,6 +141,7 @@ def draw_puncheffect(obj):
 
     # 맞힘
     elif obj.ifpunchsuccess == "hit":
+
         if obj.nowpunchhand == "left":
             img_punch_eff_hit.draw(360, 260, 280, 280)
             img_punch_eff_hit_text.draw(450, 360, 60, 40)
@@ -145,6 +151,7 @@ def draw_puncheffect(obj):
 
     # 빗나감
     elif obj.ifpunchsuccess == "failed":
+
         if obj.nowpunchhand == "left":
             img_punch_eff_miss.draw(370, 260, 220, 220)
             img_punch_eff_miss_text.draw(450, 360, 80, 40)

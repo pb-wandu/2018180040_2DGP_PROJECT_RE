@@ -69,7 +69,7 @@ class Gameinfomation:
         game_objects.font.draw(10, 540 - (10 + FONTSIZE // 2), f'현재 스테이지 점수 : {self.score_all}', (0, 0, 0))
 
         # 콤보 표시 (2콤보 이상일 때)
-        if self.nowcombo >= 0: ### 2로 수정할 것
+        if self.nowcombo >= 2:
             # 이미지 초기 지정
             if self.img_combo == None:
                 self.img_combo = load_image('img_info_combo.png')
