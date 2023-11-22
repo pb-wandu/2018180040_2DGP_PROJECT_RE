@@ -12,28 +12,6 @@ import game_playerAndEnemy as PAE # 플레이어 및 대결 상대 모듈 import
 
 import game_time # 시간 관련 모듈 import
 
-# ----- 배경 클래스 -----
-
-class Background_main:
-    image = None
-
-    def update(self):
-        pass
-
-    def draw(self):
-        gamestate.state_machine.cur_state.draw(self)
-
-    pass
-
-class Background_game:
-    image = None
-
-    def update(self):
-        pass
-
-    def draw(self):
-        gamestate.state_machine.cur_state.draw(self)
-
 # ----- 박자표 클래스 -----
 
 class BeatTimer:
@@ -84,10 +62,6 @@ class BeatTimer:
         pass
 
 # ----- 클래스별 실제 오브젝트 -----
-
-# 배경 오브젝트
-background_main = Background_main() # 메인메뉴 배경
-background_game = Background_game() # 게임메뉴 배경
 
 # 박자표
 beattimer = BeatTimer(4, 40)

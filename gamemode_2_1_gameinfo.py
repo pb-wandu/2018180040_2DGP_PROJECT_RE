@@ -77,7 +77,7 @@ class Gameinfomation:
         game_objects.font.draw(20, 530 - (10 + FONTSIZE // 2), f'현재 스테이지 점수 : {self.score_nowstage}', (0, 0, 0))
 
         # 스테이지 현황 표시
-        game_objects.font.draw(55, 470 - (10 + FONTSIZE // 2), f'<{self.nowStage}스테이지 - {self.nowWave}wave 진행중>', (0, 0, 0))
+        game_objects.font.draw(20, 500 - (10 + FONTSIZE // 2), f'--<{self.nowStage}스테이지 - {self.nowWave}wave>--', (0, 0, 0))
 
         # 콤보 표시 (1콤보 이상일 때)
         if self.nowcombo >= 1:
@@ -93,15 +93,6 @@ class Gameinfomation:
 gameinfomation = Gameinfomation()
             
 # ----- 게임 정보 표시 함수 -----
-
-# 배경 그리기
-def draw_bg(obj):
-
-    # 게임메뉴 배경
-    if obj.image == None:
-        obj.image = load_image('img_background.png')
-
-    obj.image.draw(400, 300, 800, 600)  # 배경 그리기
 
 # 박자표 그리기
 def draw_beattimer(obj):

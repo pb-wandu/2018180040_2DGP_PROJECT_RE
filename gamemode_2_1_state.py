@@ -21,6 +21,7 @@ from pico2d import *  # pico2d 모듈 import
 
 import game_objects               # 오브젝트 모듈 import
 import game_playerAndEnemy as PAE # 플레이어 및 대결 상대 모듈 import
+import game_background as gamebg  # 게임 배경
 
 import gamemode_2_0_gamemenu as gamemenu # 게임 모드 gamemenu 모듈 import
 import gamemode_2_1_gameinfo as gameinfo # 게임 정보 관련 모듈 import
@@ -79,8 +80,8 @@ class Ready:
         draw_state_info("Ready")
 
         # 배경
-        if obj == game_objects.background_game:
-            gameinfo.draw_bg(obj)  # 배경 그리기
+        if obj == gamebg.background_game:
+            gamebg.draw_bg(obj)  # 배경 그리기
             pass
 
         # 플레이어
@@ -137,8 +138,8 @@ class Standoff:
         draw_state_info("Standoff")
 
         # 배경
-        if obj == game_objects.background_game:
-            gameinfo.draw_bg(obj)  # 배경 그리기
+        if obj == gamebg.background_game:
+            gamebg.draw_bg(obj)  # 배경 그리기
             pass
 
         # 플레이어
@@ -196,8 +197,8 @@ class Action:
     def draw(obj):
 
         # 배경
-        if obj == game_objects.background_game:
-            gameinfo.draw_bg(obj)  # 배경 그리기
+        if obj == gamebg.background_game:
+            gamebg.draw_bg(obj)  # 배경 그리기
             pass
 
         # 플레이어

@@ -6,6 +6,8 @@ from pico2d import *  # pico2d 모듈 import
 
 import game_objects               # 오브젝트 모듈 import
 import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
+import game_background as gamebg  # 게임 배경
+
 
 import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
 import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 모듈 import
@@ -61,7 +63,7 @@ def init_world():
     ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.
 
     # 배경은 depth 0 (배경)에
-    add_object(game_objects.background_game, 0) # 배경
+    add_object(gamebg.background_game, 0) # 배경
 
     # 나머지는 depth 1 (전면)에
     add_object(game_objects.beattimer, 1) # 박자표
