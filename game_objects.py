@@ -8,7 +8,7 @@ from pico2d import *    # pico2d 모듈 import
 import gamemode_2_1_state     as gamestate # 상태 관련 모듈 import
 import gamemode_2_1_gameinfo  as gameinfo  # 게임 정보 모듈 import
 
-import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
+import game_playerAndEnemy as PAE # 플레이어 및 대결 상대 모듈 import
 
 import game_time # 시간 관련 모듈 import
 
@@ -91,7 +91,7 @@ background_game = Background_game() # 게임메뉴 배경
 
 # 박자표
 beattimer = BeatTimer(4, 40)
-beattimer.set_beats(pne.enemy.patternlist[pne.enemy.nowPattern])
+beattimer.set_beats(PAE.enemy.patternlist[PAE.enemy.nowPattern])
 
 ### 추후 Finish 상태에서 exit했을 때 game_world.remove_object(o)를 이용하여 기존에 있는 박자표 오브젝트를 삭제하고
 ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.

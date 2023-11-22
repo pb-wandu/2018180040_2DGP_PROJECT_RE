@@ -20,7 +20,7 @@
 from pico2d import *  # pico2d 모듈 import
 
 import game_objects               # 오브젝트 모듈 import
-import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
+import game_playerAndEnemy as PAE # 플레이어 및 대결 상대 모듈 import
 
 import gamemode_2_0_gamemenu as gamemenu # 게임 모드 gamemenu 모듈 import
 import gamemode_2_1_gameinfo as gameinfo # 게임 정보 관련 모듈 import
@@ -61,7 +61,7 @@ class Ready:
     def do(obj):
 
         # 플레이어
-        if obj == pne.player:
+        if obj == PAE.player:
             pass
 
         # 박자표
@@ -84,12 +84,12 @@ class Ready:
             pass
 
         # 플레이어
-        elif obj == pne.player:
+        elif obj == PAE.player:
             pass
 
         # 글러브
-        elif obj == pne.player.glove_l or obj == pne.player.glove_r:
-            pne.draw_glove(obj)  # 글러브 그리기
+        elif obj == PAE.player.glove_l or obj == PAE.player.glove_r:
+            PAE.draw_glove(obj)  # 글러브 그리기
             pass
 
         # 박자표
@@ -119,7 +119,7 @@ class Standoff:
     def do(obj):
 
         # 플레이어
-        if obj == pne.player:
+        if obj == PAE.player:
             pass
 
         # 박자표
@@ -142,13 +142,13 @@ class Standoff:
             pass
 
         # 플레이어
-        elif obj == pne.player:
-            pne.draw_puncheffect(obj)  # 펀치 이펙트 그리기
+        elif obj == PAE.player:
+            PAE.draw_puncheffect(obj)  # 펀치 이펙트 그리기
             pass
 
         # 글러브
-        elif obj == pne.player.glove_l or obj == pne.player.glove_r:
-            pne.draw_glove(obj)  # 글러브 그리기
+        elif obj == PAE.player.glove_l or obj == PAE.player.glove_r:
+            PAE.draw_glove(obj)  # 글러브 그리기
             pass
 
         # 박자표
@@ -181,7 +181,7 @@ class Action:
         draw_state_info("Action")
 
         # 플레이어
-        if obj == pne.player:
+        if obj == PAE.player:
             pass
 
         # 박자표
@@ -201,13 +201,13 @@ class Action:
             pass
 
         # 플레이어
-        elif obj == pne.player:
-            pne.draw_puncheffect(obj)  # 펀치 이펙트 그리기
+        elif obj == PAE.player:
+            PAE.draw_puncheffect(obj)  # 펀치 이펙트 그리기
             pass
 
         # 글러브
-        elif obj == pne.player.glove_l or obj == pne.player.glove_r:
-            pne.draw_glove(obj)  # 글러브 그리기
+        elif obj == PAE.player.glove_l or obj == PAE.player.glove_r:
+            PAE.draw_glove(obj)  # 글러브 그리기
             pass
 
         # 박자표
@@ -298,11 +298,11 @@ def punch_activated(e):
         if e[0] == "INPUT" and e[1].type == SDL_KEYDOWN:
             # 왼쪽 5줄 중 하나의 키를 눌렀다면 왼쪽 펀치
             if e[1].key in left_punch_keys:
-                pne.player.nowpunchhand = "left"
+                PAE.player.nowpunchhand = "left"
                 state_machine.now_action = "punch"
                 game_objects.beattimer.punch_cooltime = PUNCH_COOLTIME
 
-                pne.setglovespos()  # 글러브 위치 지정
+                PAE.setglovespos()  # 글러브 위치 지정
 
                 ### 테스트용
 
@@ -319,7 +319,7 @@ def punch_activated(e):
                     # 치명타
                     if (hitbeat * game_objects.beattimer.ticknum - CRITTIMING <= hittime
                          <= hitbeat * game_objects.beattimer.ticknum + CRITTIMING):
-                        pne.player.ifpunchsuccess = "crit"
+                        PAE.player.ifpunchsuccess = "crit"
 
                         # 콤보 수 증가
                         gameinfo.gameinfomation.nowcombo += 1
@@ -329,7 +329,7 @@ def punch_activated(e):
                     # 명중
                     elif (hitbeat * game_objects.beattimer.ticknum - HITTIMING <= hittime
                          <= hitbeat * game_objects.beattimer.ticknum + HITTIMING):
-                        pne.player.ifpunchsuccess = "hit"
+                        PAE.player.ifpunchsuccess = "hit"
 
                         # 콤보 수 증가
                         gameinfo.gameinfomation.nowcombo += 1
@@ -338,14 +338,14 @@ def punch_activated(e):
 
                     # 놓침
                     else:
-                        pne.player.ifpunchsuccess = "failed"
+                        PAE.player.ifpunchsuccess = "failed"
                         # 콤보 수 초기화
                         gameinfo.gameinfomation.nowcombo = 0
                         print("공격 놓침...")
 
                 # 작은 박자
                 else:
-                    pne.player.ifpunchsuccess = "failed"
+                    PAE.player.ifpunchsuccess = "failed"
                     # 콤보 수 초기화
                     gameinfo.gameinfomation.nowcombo = 0
                     print("공격 실패...")
@@ -354,11 +354,11 @@ def punch_activated(e):
 
             # 오른쪽 5줄 중 하나의 키를 눌렀다면 오른쪽 펀치
             elif e[1].key in right_punch_keys:
-                pne.player.nowpunchhand = "right"
+                PAE.player.nowpunchhand = "right"
                 state_machine.now_action = "punch"
                 game_objects.beattimer.punch_cooltime = PUNCH_COOLTIME
 
-                pne.setglovespos()  # 글러브 위치 지정
+                PAE.setglovespos()  # 글러브 위치 지정
 
                 ### 테스트용
 
@@ -374,7 +374,7 @@ def punch_activated(e):
 
                     if (hitbeat * game_objects.beattimer.ticknum - CRITTIMING <= hittime
                          <= hitbeat * game_objects.beattimer.ticknum + CRITTIMING):
-                        pne.player.ifpunchsuccess = "crit"
+                        PAE.player.ifpunchsuccess = "crit"
 
                         # 콤보 수 증가
                         gameinfo.gameinfomation.nowcombo += 1
@@ -383,7 +383,7 @@ def punch_activated(e):
 
                     elif (hitbeat * game_objects.beattimer.ticknum - HITTIMING <= hittime
                          <= hitbeat * game_objects.beattimer.ticknum + HITTIMING):
-                        pne.player.ifpunchsuccess = "hit"
+                        PAE.player.ifpunchsuccess = "hit"
 
                         # 콤보 수 증가
                         gameinfo.gameinfomation.nowcombo += 1
@@ -392,14 +392,14 @@ def punch_activated(e):
 
                     # 놓침
                     else:
-                        pne.player.ifpunchsuccess = "failed"
+                        PAE.player.ifpunchsuccess = "failed"
                         # 콤보 수 초기화
                         gameinfo.gameinfomation.nowcombo = 0
                         print("공격 놓침...")
 
                 # 작은 박자
                 else:
-                    pne.player.ifpunchsuccess = "failed"
+                    PAE.player.ifpunchsuccess = "failed"
                     # 콤보 수 초기화
                     gameinfo.gameinfomation.nowcombo = 0
                     print("공격 실패...")
@@ -408,7 +408,7 @@ def punch_activated(e):
 
             # 다른 키라면 어떤 방향 펀치도 아님
             else:
-                pne.player.nowpunchhand = None
+                PAE.player.nowpunchhand = None
 
                 ### 테스트용
                 print("펀치 아님")

@@ -52,7 +52,7 @@ def init_world():
     gamestate.start_time = 0 # 시작 시간을 0으로 초기화
 
     # 폰트 지정
-    FONTSIZE = 24
+    FONTSIZE = 20
     game_objects.font = game_objects.load_font('FONT_KOTRA_HOPE_TTF.TTF', FONTSIZE)
 
     # world 안에 오브젝트 추가

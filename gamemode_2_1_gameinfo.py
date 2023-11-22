@@ -7,9 +7,10 @@ from pico2d import *    # pico2d 모듈 import
 import game_time    # 시간 관련 모듈 import
 import game_objects # 오브젝트 모듈 import
 
-import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
-import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 모음 모듈 import
-import game_PAE_ePatternAndWave as EPAW   # 대결 상대 패턴 import
+import gamemode_2_1_state       as gamestate # 상태 관련 모듈 import
+import gamemode_2_1_gameinfo    as gameinfo  # 게임 정보 모음 모듈 import
+import game_PAE_ePatternAndWave as EPAW      # 대결 상대 패턴 import
+import game_playerAndEnemy      as PAE       # 플레이어 및 대결 상대 모듈 import
 
 # ----- 게임 정보 클래스 -----
 
@@ -59,7 +60,7 @@ class Gameinfomation:
         ### 상태 머신이 Ready상태가 아닐 경우 (임시)
         if gamestate.state_machine.cur_state != gamestate.Ready:
             # 하트 및 체력바 그리기
-            gameinfo.draw_life_hp_info(self,
+            PAE.draw_life_hp_info(self,
                 self.p_nowlife, self.p_maxlife, self.e_nowhp, self.e_maxhp)
 
             # 체력바 옆에 현재 체력/전체 체력 표시
@@ -67,16 +68,16 @@ class Gameinfomation:
             game_objects.font.draw(420, 470 - (10 + FONTSIZE // 2),
                                 f'{self.e_nowhp} / {self.e_maxhp}', (0, 0, 0))
 
-        # 게임 시간 표시
-        FONTSIZE = 16
-        game_objects.font.draw(10, 600 - (10 + FONTSIZE // 2), f'(게임 플레이 시간 : {self.nowtime:.1f})', (0, 0, 0))
+        # 폰트 크기
+        FONTSIZE = 20
 
-        # 현재 진행 스테이지 표시
-        game_objects.font.draw(10, 570 - (10 + FONTSIZE // 2), f'전체 점수 : {self.score_all}', (0, 0, 0))
-        game_objects.font.draw(10, 540 - (10 + FONTSIZE // 2), f'현재 스테이지 점수 : {self.score_nowstage}', (0, 0, 0))
+        # 게임 시간 및 현재 진행 스테이지 표시
+        game_objects.font.draw(20, 590 - (10 + FONTSIZE // 2), f'(게임 플레이 시간 : {self.nowtime:.1f})', (0, 0, 0))
+        game_objects.font.draw(20, 560 - (10 + FONTSIZE // 2), f'전체 점수 : {self.score_all}', (0, 0, 0))
+        game_objects.font.draw(20, 530 - (10 + FONTSIZE // 2), f'현재 스테이지 점수 : {self.score_nowstage}', (0, 0, 0))
 
         # 스테이지 현황 표시
-        game_objects.font.draw(10, 470 - (10 + FONTSIZE // 2), f'<{self.nowStage}스테이지 - {self.nowWave}wave 진행중>', (0, 0, 0))
+        game_objects.font.draw(55, 470 - (10 + FONTSIZE // 2), f'<{self.nowStage}스테이지 - {self.nowWave}wave 진행중>', (0, 0, 0))
 
         # 콤보 표시 (1콤보 이상일 때)
         if self.nowcombo >= 1:
@@ -92,45 +93,6 @@ class Gameinfomation:
 gameinfomation = Gameinfomation()
             
 # ----- 게임 정보 표시 함수 -----
-
-# 하트 및 체력바 그리기
-def draw_life_hp_info(obj, p_nowlife, p_maxlife, e_nowhp, e_maxhp):
-    if obj.img_info_hpbar_bg == None:
-        obj.img_info_hpbar_bg = load_image('img_info_hpbar_bg.png')
-    if obj.img_info_hpbar_hp == None:
-        obj.img_info_hpbar_hp = load_image('img_info_hpbar_hp.png')
-    if obj.img_info_hpbar_frame == None:
-        obj.img_info_hpbar_frame = load_image('img_info_hpbar_frame.png')
-    if obj.img_info_playerlife == None:
-        obj.img_info_playerlife = load_image('img_info_playerlife.png')
-    if obj.img_info_playerlife_lost == None:
-        obj.img_info_playerlife_lost = load_image('img_info_playerlife_lost.png')
-
-    if obj.img_whitesquare == None:
-        obj.img_whitesquare = load_image('img_whitesquare.png')
-
-    player_now_life, player_max_life = p_nowlife, p_maxlife # 플레이어 하트
-    enemy_hp_left, enemy_hp_total = e_nowhp, e_maxhp # 적 체력
-
-    HPBARLENGTH = 150 # 체력바 길이
-    HPBARPOSX, HPBARPOSY = 330, 450 # 체력바 x, y위치
-    hpnow_drawlength = HPBARLENGTH * (enemy_hp_left / enemy_hp_total) # 남은 체력 길이
-    hpnowposx = HPBARPOSX - (HPBARLENGTH - hpnow_drawlength) / 2 # 남은 체력 현재 위치
-
-    # 플레이어 하트 그리기
-    for n in range(player_max_life):
-        obj.img_whitesquare.draw(50, 50 + n * 50, 60, 60)
-        obj.img_info_playerlife_lost.draw(50, 50 + n * 50, 30, 30)
-    for n in range(player_now_life):
-        obj.img_whitesquare.draw(50, 50 + n * 50, 60, 60)
-        obj.img_info_playerlife.draw(50, 50 + n * 50, 30, 30)
-
-    # 적 체력 그리기
-    obj.img_info_hpbar_bg.draw   (HPBARPOSX, HPBARPOSY, HPBARLENGTH,      40)
-    obj.img_info_hpbar_hp.draw   (hpnowposx, HPBARPOSY, hpnow_drawlength, 40)
-    obj.img_info_hpbar_frame.draw(HPBARPOSX, HPBARPOSY, HPBARLENGTH,      40)
-
-    pass
 
 # 배경 그리기
 def draw_bg(obj):
