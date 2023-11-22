@@ -22,10 +22,10 @@ from pico2d import *  # pico2d 모듈 import
 import game_objects               # 오브젝트 모듈 import
 import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
 
-import gamemode_2_0_gamemenu  # 게임 모드 gamemenu 모듈 import
-import gamemode_2_1_functions as functions  # 함수 모음 모듈 import
+import gamemode_2_0_gamemenu as gamemenu # 게임 모드 gamemenu 모듈 import
+import gamemode_2_1_gameinfo as gameinfo # 게임 정보 관련 모듈 import
 
-import game_timer  # 타이머 모듈 import
+import game_time # 시간 관련 모듈 import
 
 # 적 체력, 플레이어 하트
 playerlife = 3
@@ -80,7 +80,7 @@ class Ready:
 
         # 배경
         if obj == game_objects.background_game:
-            functions.draw_bg(obj)  # 배경 그리기
+            gameinfo.draw_bg(obj)  # 배경 그리기
             pass
 
         # 플레이어
@@ -89,7 +89,7 @@ class Ready:
 
         # 글러브
         elif obj == pne.player.glove_l or obj == pne.player.glove_r:
-            functions.draw_glove(obj)  # 글러브 그리기
+            pne.draw_glove(obj)  # 글러브 그리기
             pass
 
         # 박자표
@@ -124,7 +124,7 @@ class Standoff:
 
         # 박자표
         elif obj == game_objects.beattimer:
-            functions.timeupdate(obj, "Standoff")  # 박자표 시간 업데이트
+            game_time.timeupdate(obj, "Standoff")  # 박자표 시간 업데이트
             pass
 
         pass
@@ -138,22 +138,22 @@ class Standoff:
 
         # 배경
         if obj == game_objects.background_game:
-            functions.draw_bg(obj)  # 배경 그리기
+            gameinfo.draw_bg(obj)  # 배경 그리기
             pass
 
         # 플레이어
         elif obj == pne.player:
-            functions.draw_puncheffect(obj)  # 펀치 이펙트 그리기
+            pne.draw_puncheffect(obj)  # 펀치 이펙트 그리기
             pass
 
         # 글러브
         elif obj == pne.player.glove_l or obj == pne.player.glove_r:
-            functions.draw_glove(obj)  # 글러브 그리기
+            pne.draw_glove(obj)  # 글러브 그리기
             pass
 
         # 박자표
         elif obj == game_objects.beattimer:
-            functions.draw_beattimer(obj)  # 박자표 그리기
+            gameinfo.draw_beattimer(obj)  # 박자표 그리기
             pass
 
         pass
@@ -186,7 +186,7 @@ class Action:
 
         # 박자표
         elif obj == game_objects.beattimer:
-            functions.timeupdate(obj, "Action")  # 박자표 시간 업데이트
+            game_time.timeupdate(obj, "Action")  # 박자표 시간 업데이트
             pass
 
         pass
@@ -197,22 +197,22 @@ class Action:
 
         # 배경
         if obj == game_objects.background_game:
-            functions.draw_bg(obj)  # 배경 그리기
+            gameinfo.draw_bg(obj)  # 배경 그리기
             pass
 
         # 플레이어
         elif obj == pne.player:
-            functions.draw_puncheffect(obj)  # 펀치 이펙트 그리기
+            pne.draw_puncheffect(obj)  # 펀치 이펙트 그리기
             pass
 
         # 글러브
         elif obj == pne.player.glove_l or obj == pne.player.glove_r:
-            functions.draw_glove(obj)  # 글러브 그리기
+            pne.draw_glove(obj)  # 글러브 그리기
             pass
 
         # 박자표
         elif obj == game_objects.beattimer:
-            functions.draw_beattimer(obj)  # 박자표 그리기
+            gameinfo.draw_beattimer(obj)  # 박자표 그리기
             pass
 
         pass
@@ -303,7 +303,7 @@ def punch_activated(e):
                 state_machine.now_action = "punch"
                 game_objects.beattimer.punch_cooltime = PUNCH_COOLTIME
 
-                functions.setglovespos()  # 글러브 위치 지정
+                pne.setglovespos()  # 글러브 위치 지정
 
                 ### 테스트용
 
@@ -352,7 +352,7 @@ def punch_activated(e):
                 state_machine.now_action = "punch"
                 game_objects.beattimer.punch_cooltime = PUNCH_COOLTIME
 
-                functions.setglovespos()  # 글러브 위치 지정
+                pne.setglovespos()  # 글러브 위치 지정
 
                 ### 테스트용
 

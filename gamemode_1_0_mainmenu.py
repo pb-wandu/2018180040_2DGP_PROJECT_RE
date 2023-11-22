@@ -8,7 +8,7 @@ import game_framework # 게임 프레임워크
 import gamemode_2_0_gamemenu # 게임 모드 gamemenu 모듈 import
 import gamemode_2_1_state as gamestate # 상태 관련 모듈 import
 
-import game_timer # 타이머 모듈 import
+import game_time # 시간 관련 모듈 import
 
 # ----- 게임 프레임워크 동작 함수들 -----
 
@@ -40,7 +40,7 @@ def init():
     mainmenubg = load_image('img_background_mainmenu.png')
 
     # 게임 타이머에 현재 시간을 시작시간으로 지정
-    game_timer.gametimer.setStartTime()
+    game_time.gametimer.setStartTime()
 
     print("### mainmenu 진입")
 
@@ -49,7 +49,7 @@ def finish():
     del tempimage
 
     # 게임 타이머에 현재 시간을 시작시간으로 지정
-    game_timer.gametimer.setStartTime()
+    game_time.gametimer.setStartTime()
 
     # 상태 머신의 현재 상태를 Ready로 지정
     gamestate.state_machine.cur_state = gamestate.Ready
@@ -58,9 +58,9 @@ def finish():
 
 def update():
     ### 임시로 2초 뒤 gamemenu로 넘어가게 함
-    if get_time() - game_timer.gametimer.start_time >= 2.0:
+    if get_time() - game_time.gametimer.start_time >= 2.0:
         # 게임 타이머에 현재 시간을 시작시간으로 지정
-        game_timer.gametimer.setStartTime()
+        game_time.gametimer.setStartTime()
         # gamemenu로 현재 모드 변경
         game_framework.change_mode(gamemode_2_0_gamemenu)
 

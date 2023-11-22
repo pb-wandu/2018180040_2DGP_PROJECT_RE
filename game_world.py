@@ -7,12 +7,9 @@ from pico2d import *  # pico2d 모듈 import
 import game_objects               # 오브젝트 모듈 import
 import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
 
-# '모드 2 - 게임 메뉴'용 모듈 import
-import gamemode_2_1_state     as gamestate
-import gamemode_2_1_functions as gamefunctions
-
-# 게임 충돌 체크 import
-import game_collisionCheck as collisionCheck
+import game_time                             # 시간 관련 모듈 import
+import gamemode_2_1_state as gamestate       # 상태 관련 모듈 import
+import game_collisionCheck as collisionCheck # 게임 충돌 체크 import
 
 # ----- world 전체 관련 코드 -----
 
@@ -45,9 +42,9 @@ def init_world():
     # 상태 머신을 실행시킨다 (상태 머신은 gamemenu 모드에 해당)
     gamestate.state_machine.start()
 
-    # gamestate.punch_cooltime = 0        # 펀치 쿨타임을 0으로 초기화
-    game_objects.beattimer.nowtick = 0               # 박자표 틱을 0으로 초기화
-    gamefunctions.timer_setglovepos = 0 # 펀치위치 표시 타이머를 0으로 초기화
+    # gamestate.punch_cooltime = 0     # 펀치 쿨타임을 0으로 초기화
+    game_objects.beattimer.nowtick = 0 # 박자표 틱을 0으로 초기화
+    game_time.timer_setglovepos = 0    # 펀치위치 표시 타이머를 0으로 초기화
 
     gamestate.start_time = 0 # 시작 시간을 0으로 초기화
 

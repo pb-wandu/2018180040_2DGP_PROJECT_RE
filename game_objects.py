@@ -5,15 +5,14 @@
 from pico2d import *    # pico2d 모듈 import
 
 # '모드 2 - 게임 메뉴'용 상태 머신 import
-import gamemode_2_0_gamemenu                   # 게임 모드 gamemenu 모듈 import
-import gamemode_2_1_state     as gamestate     # 상태 관련 모듈 import
-import gamemode_2_1_functions as gamefunctions # 함수 모음 모듈 import
-import gamemode_2_1_gameinfo  as gameinfo      # 게임 정보 모듈 import
+import gamemode_2_0_gamemenu               # 게임 모드 gamemenu 모듈 import
+import gamemode_2_1_state     as gamestate # 상태 관련 모듈 import
+import gamemode_2_1_gameinfo  as gameinfo  # 게임 정보 모듈 import
 
 
 import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
 
-import game_timer # 타이머 모듈 import
+import game_time # 시간 관련 모듈 import
 
 # ----- 배경 클래스 -----
 

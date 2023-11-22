@@ -5,13 +5,88 @@
 from pico2d import *  # pico2d 모듈 import
 
 # '모드 2 - 게임 메뉴'용 상태 머신 import
-import gamemode_2_1_state     as gamestate     # 상태 관련 모듈 import
-import gamemode_2_1_functions as gamefunctions # 함수 모음 모듈 import
+import gamemode_2_1_state as gamestate # 상태 관련 모듈 import
 
 # 그 외 import
 import game_world                       # 게임 월드 모듈 import
 from game_objects import *              # 게임 오브젝트 모듈 import
 import game_PAE_ePatternAndWave as EPAW # 대결 상대 패턴 import
+
+# ----- 플레이어 관련 함수 -----
+
+# 글러브 - 펀치 동작에 따른 위치설정
+def setglovespos():
+
+    if player.nowpunchhand == None:
+        player.glove_l.setpos(250, 80)
+        player.glove_r.setpos(550, 80)
+
+    elif player.nowpunchhand == "left":
+        player.glove_l.setpos(250+100, 80+120)
+        player.glove_r.setpos(550, 80)
+
+    elif player.nowpunchhand == "right":
+        player.glove_l.setpos(250, 80)
+        player.glove_r.setpos(550-100, 80+120)
+
+
+# 글러브 그리기
+def draw_glove(obj):
+    if obj.image == None:
+        # 글러브 방향에 따라 이미지 표시하기
+        if obj.glovedir == "left":
+            obj.image = load_image('img_glove_left.png')  # 왼쪽 글러브
+        elif obj.glovedir == "right":
+            obj.image = load_image('img_glove_right.png')  # 오른쪽 글러브
+
+    # 글러브 정보
+    x, y = obj.x, obj.y  # x, y 위치
+    SIZEX, SIZEY = 240, 240  # x, y 크기
+
+    # 글러브 그리기
+    obj.image.draw(x, y, SIZEX, SIZEY)
+
+# 펀치 이펙트 그리기
+def draw_puncheffect(obj):
+    img_punch_eff_crit = load_image('img_punch_eff_crit.png')  # 명중시 효과
+    img_punch_eff_crit_text = load_image('img_punch_eff_crit_text.png')  # 명중시 텍스트
+    img_punch_eff_hit = load_image('img_punch_eff_hit.png')  # 맞힘시 효과
+    img_punch_eff_hit_text = load_image('img_punch_eff_hit_text.png')  # 맞힘시 텍스트
+    img_punch_eff_miss = load_image('img_punch_eff_miss.png')  # 빗나감시 효과
+    img_punch_eff_miss_text = load_image('img_punch_eff_miss_text.png')  # 빗나감시 텍스트
+
+    # obj == pne.player
+    # 펀치 성공 상황에 따른 이펙트 표시
+
+    # 명중
+    if obj.ifpunchsuccess == "crit":
+
+        if obj.nowpunchhand == "left":
+            img_punch_eff_crit.draw(360, 260, 280, 280)
+            img_punch_eff_crit_text.draw(450, 360, 80, 40)
+        elif obj.nowpunchhand == "right":
+            img_punch_eff_crit.draw(440, 260, 280, 280)
+            img_punch_eff_crit_text.draw(290, 360, 80, 40)
+
+    # 맞힘
+    elif obj.ifpunchsuccess == "hit":
+
+        if obj.nowpunchhand == "left":
+            img_punch_eff_hit.draw(360, 260, 280, 280)
+            img_punch_eff_hit_text.draw(450, 360, 60, 40)
+        elif obj.nowpunchhand == "right":
+            img_punch_eff_hit.draw(440, 260, 280, 280)
+            img_punch_eff_hit_text.draw(360, 360, 60, 40)
+
+    # 빗나감
+    elif obj.ifpunchsuccess == "failed":
+
+        if obj.nowpunchhand == "left":
+            img_punch_eff_miss.draw(370, 260, 220, 220)
+            img_punch_eff_miss_text.draw(450, 360, 80, 40)
+        elif obj.nowpunchhand == "right":
+            img_punch_eff_miss.draw(430, 260, 220, 220)
+            img_punch_eff_miss_text.draw(380, 360, 80, 40)
 
 # ----- 플레이어 클래스 -----
 
@@ -23,6 +98,9 @@ class Player:
         self.x, self.y = 400, 100  # 플레이어 x, y 위치
         self.glove_l = Player_Glove("left", 250, 80)
         self.glove_r = Player_Glove("right", 550, 80)
+
+        self.timer_punch = 0 # 펀치 동작중 타이머
+
         pass
 
     @staticmethod
