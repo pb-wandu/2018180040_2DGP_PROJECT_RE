@@ -43,6 +43,12 @@ class Gameinfomation:
         self.img_combo = None # 콤보 표시용 이미지
         self.nowcombo = 0     # 현재 콤보
 
+        # ----- 스테이지 정보 -----
+
+        # 첫 대결 상대 지정
+        self.nowStage = 1 # 현재 스테이지
+        self.nowWave  = 1 # 현재 웨이브
+
     def update(self):
         # 게임 시간 업데이트
         self.nowtime = get_time() - game_time.gametimer.start_time
@@ -62,12 +68,15 @@ class Gameinfomation:
                                 f'{self.e_nowhp} / {self.e_maxhp}', (0, 0, 0))
 
         # 게임 시간 표시
-        FONTSIZE = 24
+        FONTSIZE = 16
         game_objects.font.draw(10, 600 - (10 + FONTSIZE // 2), f'(게임 플레이 시간 : {self.nowtime:.1f})', (0, 0, 0))
 
-        # 스코어 표시
-        game_objects.font.draw(10, 570 - (10 + FONTSIZE // 2), f'전체 점수 : {self.score_nowstage}', (0, 0, 0))
-        game_objects.font.draw(10, 540 - (10 + FONTSIZE // 2), f'현재 스테이지 점수 : {self.score_all}', (0, 0, 0))
+        # 현재 진행 스테이지 표시
+        game_objects.font.draw(10, 570 - (10 + FONTSIZE // 2), f'전체 점수 : {self.score_all}', (0, 0, 0))
+        game_objects.font.draw(10, 540 - (10 + FONTSIZE // 2), f'현재 스테이지 점수 : {self.score_nowstage}', (0, 0, 0))
+
+        # 스테이지 현황 표시
+        game_objects.font.draw(10, 470 - (10 + FONTSIZE // 2), f'<{self.nowStage}스테이지 - {self.nowWave}wave 진행중>', (0, 0, 0))
 
         # 콤보 표시 (1콤보 이상일 때)
         if self.nowcombo >= 1:
@@ -182,14 +191,3 @@ def draw_beattimer(obj):
                 # 큰 박자 이미지 그리기
                 obj.img_beat_big.draw(startx, starty, SIZE_BEAT_BIG_X, SIZE_BEAT_BIG_Y)
     pass
-
-# ----- 스테이지 정보 -----
-
-# 첫 대결 상대 지정
-nowEnemy = 101 # 1-1스테이지
-nowStage = nowEnemy // 100 # 현재 스테이지
-nowWave = nowEnemy % 100   # 현재 웨이브
-
-# 시작 패턴 지정
-nowPatternNum = EPAW.patternNum[0][0]
-nowEnemyPattern = EPAW.totalEnemyPattern[0][0]

@@ -57,7 +57,7 @@ def timeupdate(obj, nowstate):
         pne.enemy.nextPattern()
 
         # 박자표의 박자 목록을 상대의 현재 동작으로 지정
-        game_objects.beattimer.beat_image_list = pne.enemy.pattern[pne.enemy.nowPattern]
+        game_objects.beattimer.beat_image_list = pne.enemy.patternlist[pne.enemy.nowPattern]
 
     # 펀치중이라면
     if gamestate.state_machine.now_action == "punch":

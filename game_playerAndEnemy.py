@@ -184,22 +184,34 @@ class Player_Glove:
 
 class Enemy:
 
-    def __init__(self, beatnum, pattern):
-        self.x, self.y = 400, 300  # 대결 상대 x, y 위치
+    def __init__(self, stage, wave):
+        # 대결 상대 x, y 위치
+        self.x, self.y = 400, 300
 
         # 대결 상대 동작 패턴 지정
-        self.nowPattern = 0
-        self.maxPattern = beatnum
-        self.pattern    = pattern
+
+        self.nowPattern = 0 # 현재 패턴 위치
+
+        self.maxBeat     = EPAW.beatNum[stage - 1][wave - 1]           # 박자 개수
+        self.patternNum  = EPAW.patternNum[stage - 1][wave - 1]        # 패턴 개수
+        self.patternlist = EPAW.totalEnemyPattern[stage - 1][wave - 1] # 현재 패턴 전체
+
+        pass
 
     # 대결 상대 동작 패턴 지정
-    def setPattern(self, beatnum, pattern):
-        self.maxPattern = beatnum
-        self.pattern    = pattern
+    def setPattern(self, stage, wave):
+
+        # 대결 상대 동작 패턴 지정
+
+        self.nowPattern = 0 # 현재 패턴 위치
+
+        self.maxBeat     = EPAW.beatNum[stage - 1][wave - 1]           # 박자 개수
+        self.patternNum  = EPAW.patternNum[stage - 1][wave - 1]        # 패턴 개수
+        self.patternlist = EPAW.totalEnemyPattern[stage - 1][wave - 1] # 현재 패턴 전체
 
     # 대결 상대 다음 동작 패턴
     def nextPattern(self):
-        if self.nowPattern < self.maxPattern:
+        if self.nowPattern < self.patternNum-1:
             self.nowPattern += 1
         else:
             self.nowPattern = 0
@@ -246,4 +258,4 @@ class Enemy:
 player = Player()
 
 # 대결 상대 오브젝트 생성시에 첫 패턴(1-1)을 지정
-enemy = Enemy(gameinfo.nowPatternNum-1, gameinfo.nowEnemyPattern)
+enemy = Enemy(1, 1)
