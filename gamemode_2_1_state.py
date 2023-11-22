@@ -43,10 +43,10 @@ class Ready:
         print("Ready (준비 상태) enter")
 
         # 준비 상태 진입시 게임 정보 기록
-        game_objects.gameinfomation.e_maxhp = enemyhp
-        game_objects.gameinfomation.e_nowhp = enemyhp
-        game_objects.gameinfomation.p_maxlife = playerlife
-        game_objects.gameinfomation.p_nowlife = playerlife
+        gameinfo.gameinfomation.e_maxhp = enemyhp
+        gameinfo.gameinfomation.e_nowhp = enemyhp
+        gameinfo.gameinfomation.p_maxlife = playerlife
+        gameinfo.gameinfomation.p_nowlife = playerlife
 
         pass
 
@@ -267,7 +267,6 @@ def func_temp(e):
 def space_down(e):
     return e[0] == "INPUT" and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
 
-
 # 플레이어 - 펀치 실행
 def punch_activated(e):
     global combochanged # 콤보 바뀜 여부
@@ -317,31 +316,38 @@ def punch_activated(e):
                 # 큰 박자
                 if imglist[hitbeat-1] == "big":
 
+                    # 치명타
                     if (hitbeat * game_objects.beattimer.ticknum - CRITTIMING <= hittime
                          <= hitbeat * game_objects.beattimer.ticknum + CRITTIMING):
                         pne.player.ifpunchsuccess = "crit"
 
                         # 콤보 수 증가
-                        game_objects.gameinfomation.nowcombo += 1
+                        gameinfo.gameinfomation.nowcombo += 1
 
                         print("!!공격 명중!!")
 
+                    # 명중
                     elif (hitbeat * game_objects.beattimer.ticknum - HITTIMING <= hittime
                          <= hitbeat * game_objects.beattimer.ticknum + HITTIMING):
                         pne.player.ifpunchsuccess = "hit"
 
                         # 콤보 수 증가
-                        game_objects.gameinfomation.nowcombo += 1
+                        gameinfo.gameinfomation.nowcombo += 1
 
                         print("공격 맞힘!")
+
+                    # 놓침
+                    else:
+                        pne.player.ifpunchsuccess = "failed"
+                        # 콤보 수 초기화
+                        gameinfo.gameinfomation.nowcombo = 0
+                        print("공격 놓침...")
 
                 # 작은 박자
                 else:
                     pne.player.ifpunchsuccess = "failed"
-
                     # 콤보 수 초기화
-                    game_objects.gameinfomation.nowcombo = 0
-
+                    gameinfo.gameinfomation.nowcombo = 0
                     print("공격 실패...")
 
                 return True
@@ -371,7 +377,7 @@ def punch_activated(e):
                         pne.player.ifpunchsuccess = "crit"
 
                         # 콤보 수 증가
-                        game_objects.gameinfomation.nowcombo += 1
+                        gameinfo.gameinfomation.nowcombo += 1
 
                         print("!!공격 명중!!")
 
@@ -380,18 +386,23 @@ def punch_activated(e):
                         pne.player.ifpunchsuccess = "hit"
 
                         # 콤보 수 증가
-                        game_objects.gameinfomation.nowcombo += 1
+                        gameinfo.gameinfomation.nowcombo += 1
 
                         print("공격 맞힘!")
+
+                    # 놓침
+                    else:
+                        pne.player.ifpunchsuccess = "failed"
+                        # 콤보 수 초기화
+                        gameinfo.gameinfomation.nowcombo = 0
+                        print("공격 놓침...")
 
                 # 작은 박자
                 else:
                     pne.player.ifpunchsuccess = "failed"
-
                     # 콤보 수 초기화
-                    game_objects.gameinfomation.nowcombo = 0
-
-                    print("공격 실패")
+                    gameinfo.gameinfomation.nowcombo = 0
+                    print("공격 실패...")
 
                 return True
 

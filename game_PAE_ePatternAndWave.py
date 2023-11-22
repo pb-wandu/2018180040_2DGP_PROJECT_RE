@@ -37,14 +37,7 @@ patternNum = [
     [0, 0, 0, 0, 0],
 ]
 
-# 첫 대결 상대 지정
-nowEnemy = 101 # 1-1스테이지
-nowStage = nowEnemy // 100 # 현재 스테이지
-nowWave = nowEnemy % 100   # 현재 웨이브
 
-# 시작 패턴 지정
-nowPatternNum = patternNum[0][0]
-nowEnemyPattern = totalEnemyPattern[0][0]
 
 
 

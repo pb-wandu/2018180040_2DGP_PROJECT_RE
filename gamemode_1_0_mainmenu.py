@@ -5,8 +5,9 @@
 from pico2d import *  # pico2d 모듈 import
 import game_framework # 게임 프레임워크
 
-import gamemode_2_0_gamemenu # 게임 모드 gamemenu 모듈 import
-import gamemode_2_1_state as gamestate # 상태 관련 모듈 import
+import gamemode_2_0_gamemenu as gamemenu  # 게임 모드 gamemenu 모듈 import
+import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
+import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 관련 모듈 import
 
 import game_time # 시간 관련 모듈 import
 
@@ -54,6 +55,9 @@ def finish():
     # 상태 머신의 현재 상태를 Ready로 지정
     gamestate.state_machine.cur_state = gamestate.Ready
 
+    # 콤보 개수 초기화
+    gameinfo.gameinfomation.nowcombo = 0
+
     print("### mainmenu에서 나가기")
 
 def update():
@@ -62,7 +66,7 @@ def update():
         # 게임 타이머에 현재 시간을 시작시간으로 지정
         game_time.gametimer.setStartTime()
         # gamemenu로 현재 모드 변경
-        game_framework.change_mode(gamemode_2_0_gamemenu)
+        game_framework.change_mode(gamemenu)
 
 def draw():
     global tempimage

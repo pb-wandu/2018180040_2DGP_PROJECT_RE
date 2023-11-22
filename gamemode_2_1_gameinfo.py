@@ -9,6 +9,7 @@ import game_objects # 오브젝트 모듈 import
 
 import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
 import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 모음 모듈 import
+import game_PAE_ePatternAndWave as EPAW   # 대결 상대 패턴 import
 
 # ----- 게임 정보 클래스 -----
 
@@ -68,8 +69,8 @@ class Gameinfomation:
         game_objects.font.draw(10, 570 - (10 + FONTSIZE // 2), f'전체 점수 : {self.score_nowstage}', (0, 0, 0))
         game_objects.font.draw(10, 540 - (10 + FONTSIZE // 2), f'현재 스테이지 점수 : {self.score_all}', (0, 0, 0))
 
-        # 콤보 표시 (2콤보 이상일 때)
-        if self.nowcombo >= 2:
+        # 콤보 표시 (1콤보 이상일 때)
+        if self.nowcombo >= 1:
             # 이미지 초기 지정
             if self.img_combo == None:
                 self.img_combo = load_image('img_info_combo.png')
@@ -77,6 +78,9 @@ class Gameinfomation:
             # 콤보 이미지 그리고 몇 콤보인지 표시
             self.img_combo.draw(680, 500, 200, 120)
             game_objects.font.draw(645, 500, f'<{self.nowcombo}콤보> !!', (0, 0, 0))
+
+# 게임 정보
+gameinfomation = Gameinfomation()
             
 # ----- 게임 정보 표시 함수 -----
 
@@ -178,3 +182,14 @@ def draw_beattimer(obj):
                 # 큰 박자 이미지 그리기
                 obj.img_beat_big.draw(startx, starty, SIZE_BEAT_BIG_X, SIZE_BEAT_BIG_Y)
     pass
+
+# ----- 스테이지 정보 -----
+
+# 첫 대결 상대 지정
+nowEnemy = 101 # 1-1스테이지
+nowStage = nowEnemy // 100 # 현재 스테이지
+nowWave = nowEnemy % 100   # 현재 웨이브
+
+# 시작 패턴 지정
+nowPatternNum = EPAW.patternNum[0][0]
+nowEnemyPattern = EPAW.totalEnemyPattern[0][0]

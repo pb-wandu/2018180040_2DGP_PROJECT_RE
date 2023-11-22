@@ -5,12 +5,14 @@
 from pico2d import *  # pico2d 모듈 import
 
 # '모드 2 - 게임 메뉴'용 상태 머신 import
-import gamemode_2_1_state as gamestate # 상태 관련 모듈 import
+import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
+import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 모듈 import
 
 # 그 외 import
-import game_world                       # 게임 월드 모듈 import
-from game_objects import *              # 게임 오브젝트 모듈 import
-import game_PAE_ePatternAndWave as EPAW # 대결 상대 패턴 import
+import game_world                         # 게임 월드 모듈 import
+from game_objects import *                # 게임 오브젝트 모듈 import
+import game_PAE_ePatternAndWave as EPAW   # 대결 상대 패턴 import
+
 
 # ----- 플레이어 관련 함수 -----
 
@@ -244,4 +246,4 @@ class Enemy:
 player = Player()
 
 # 대결 상대 오브젝트 생성시에 첫 패턴(1-1)을 지정
-enemy = Enemy(EPAW.nowPatternNum-1, EPAW.nowEnemyPattern)
+enemy = Enemy(gameinfo.nowPatternNum-1, gameinfo.nowEnemyPattern)

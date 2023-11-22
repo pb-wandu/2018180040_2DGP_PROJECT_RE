@@ -7,8 +7,11 @@ from pico2d import *  # pico2d 모듈 import
 import game_objects               # 오브젝트 모듈 import
 import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
 
-import game_time                             # 시간 관련 모듈 import
-import gamemode_2_1_state as gamestate       # 상태 관련 모듈 import
+import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
+import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 모듈 import
+
+import game_time # 시간 관련 모듈 import
+
 import game_collisionCheck as collisionCheck # 게임 충돌 체크 import
 
 # ----- world 전체 관련 코드 -----
@@ -68,7 +71,7 @@ def init_world():
     add_object(pne.player, 1) # 플레이어
 
     # 게임 정보는 depth 2 (가장 앞)에
-    add_object(game_objects.gameinfomation, 2)  # 게임 정보
+    add_object(gameinfo.gameinfomation, 2)  # 게임 정보
 
     # 글러브와 대결 상대 충돌체크 지정
     collisionCheck.add_collision_pair('glove-enemy', pne.player.glove_l, None)
