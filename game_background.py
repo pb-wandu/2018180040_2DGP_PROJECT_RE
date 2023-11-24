@@ -6,43 +6,36 @@ from pico2d import *  # pico2d 모듈 import
 
 import gamemode_2_1_state as gamestate # 상태 관련 모듈 import
 
+import game_playerAndEnemy as PAE # 플레이어 및 대결 상대 모듈 import
+
 # ----- 배경 클래스 -----
 
-# main에서의 배경화면
-class Background_main:
-    image = None
+class Background:
+    def __init__(self):
+        self.image = load_image('img_background.png')
+        self.cw = get_canvas_width()
+        self.ch = get_canvas_height()
+        # self.w = self.image.w
+        # self.h = self.image.h
 
+        self.window_left = 0
+        self.window_bottom = 0
+
+    # 펀치중인 손에 따라 배경 위치 바꾸기
     def update(self):
-        pass
+
+        if PAE.player.nowpunchhand == None:
+            self.window_left = 0
+            self.window_bottom = 0
+
+        elif PAE.player.nowpunchhand == "left":
+            self.window_left = -80
+            self.window_bottom = 0
+
+        elif PAE.player.nowpunchhand == "right":
+            self.window_left = 80
+            self.window_bottom = 0
 
     def draw(self):
-        gamestate.state_machine.cur_state.draw(self)
-
-    pass
-
-# 게임 화면에서의 배경화면
-class Background_game:
-    image = None
-
-    def update(self):
-        pass
-
-    def draw(self):
-        gamestate.state_machine.cur_state.draw(self)
-
-# ----- 배경 그리기 함수 -----
-
-def draw_bg(obj):
-
-    # 게임메뉴 배경
-    if obj.image == None:
-        obj.image = load_image('img_background.png')
-
-    obj.image.draw(400, 300, 800, 600)  # 배경 그리기
-
-# ----- 클래스별 실제 오브젝트 -----
-
-# 배경 오브젝트
-background_main = Background_main() # 메인메뉴 배경
-background_game = Background_game() # 게임메뉴 배경
-
+        # gamestate.state_machine.cur_state.draw(self)
+        self.image.clip_draw_to_origin(self.window_left, self.window_bottom, self.cw, self.ch, 0, 0)

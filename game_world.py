@@ -8,7 +8,6 @@ import game_objects               # 오브젝트 모듈 import
 import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
 import game_background as gamebg  # 게임 배경
 
-
 import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
 import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 모듈 import
 
@@ -43,6 +42,7 @@ def handle_events():
 # world 초기 설정
 def init_world():
     global world # 오브젝트들을 담는 list
+    global background # 배경
 
     # 상태 머신을 실행시킨다 (상태 머신은 gamemenu 모드에 해당)
     gamestate.state_machine.start()
@@ -63,7 +63,8 @@ def init_world():
     ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.
 
     # 배경은 depth 0 (배경)에
-    add_object(gamebg.background_game, 0) # 배경
+    background = gamebg.Background() # 배경 오브젝트 생성
+    add_object(background, 0)  # 배경 오브젝트 world에 추가
 
     # 나머지는 depth 1 (전면)에
     add_object(game_objects.beattimer, 1) # 박자표

@@ -26,7 +26,8 @@ import game_background as gamebg  # 게임 배경
 import gamemode_2_0_gamemenu as gamemenu # 게임 모드 gamemenu 모듈 import
 import gamemode_2_1_gameinfo as gameinfo # 게임 정보 관련 모듈 import
 
-import game_time # 시간 관련 모듈 import
+import game_time  # 시간 관련 모듈 import
+import game_world # 게임 월드 모듈 import
 
 # 적 체력, 플레이어 하트
 playerlife = 3
@@ -80,7 +81,7 @@ class Ready:
         draw_state_info("Ready")
 
         # 배경
-        if obj == gamebg.background_game:
+        if obj == game_world.background:
             gamebg.draw_bg(obj)  # 배경 그리기
             pass
 
@@ -138,7 +139,7 @@ class Standoff:
         draw_state_info("Standoff")
 
         # 배경
-        if obj == gamebg.background_game:
+        if obj == game_world.background:
             gamebg.draw_bg(obj)  # 배경 그리기
             pass
 
@@ -197,7 +198,7 @@ class Action:
     def draw(obj):
 
         # 배경
-        if obj == gamebg.background_game:
+        if obj == game_world.background:
             gamebg.draw_bg(obj)  # 배경 그리기
             pass
 
