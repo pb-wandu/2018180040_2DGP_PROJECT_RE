@@ -65,7 +65,7 @@ class Gameinfomation:
 
             # 체력바 옆에 현재 체력/전체 체력 표시
             FONTSIZE = 20
-            game_objects.font.draw(420, 470 - (10 + FONTSIZE // 2),
+            game_objects.font.draw(420, 480 - (10 + FONTSIZE // 2),
                                 f'{self.e_nowhp} / {self.e_maxhp}', (0, 0, 0))
 
         # 폰트 크기
@@ -112,7 +112,7 @@ def draw_beattimer(obj):
     SIZE_BEAT_BIG_X, SIZE_BEAT_BIG_Y = 70, 70  # 큰 박자 이미지 크기
     SIZE_BEAT_SMALL_X, SIZE_BEAT_SMALL_Y = 40, 40  # 작은 박자 이미지 크기
 
-    CENTERX, CENTERY = 400, 530  # 박자표 중심
+    CENTERX, CENTERY = 400, 540  # 박자표 중심
 
     # 박자표 이미지 list에서 - index는 list에서의 위치, beat는 실제 값
     for index, beatimg in enumerate(obj.beat_image_list):

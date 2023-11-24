@@ -9,10 +9,17 @@ import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
 import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 모듈 import
 
 # 그 외 import
-import game_world                         # 게임 월드 모듈 import
-from game_objects import *                # 게임 오브젝트 모듈 import
-import game_PAE_ePatternAndWave as EPAW   # 대결 상대 패턴 import
 
+import game_background # 게임 배경 모듈 import
+import game_world      # 게임 월드 모듈 import
+
+from game_objects import *              # 게임 오브젝트 모듈 import
+import game_PAE_ePatternAndWave as EPAW # 대결 상대 패턴 import
+
+
+# 적 체력, 플레이어 하트
+enemyhp = 50
+playerlife = 3
 
 # ----- 플레이어 관련 함수 -----
 
@@ -154,19 +161,24 @@ class Player:
 # ----- 플레이어 글러브 클래스 -----
 
 class Player_Glove:
-    image = None  # 이미지
-    glovedir = None  # 글러브 방향
-    x, y = 0, 0  # 글러브 위치
+    image = None    # 이미지
+    glovedir = None # 글러브 방향
+    x, y = 0, 0     # 글러브 위치
 
     def __init__(self, dir, posx, posy):
         # 입력값에 따른 방향 지정
         self.glovedir = dir
+
         # 입력값에 따른 위치 지정
-        self.x, self.y = posx, posy
+        self.x = posx
+        self.y = posy
 
     # 글러브 위치 (재)지정
     def setpos(self, posx, posy):
-        self.x, self.y = posx, posy
+
+        # 입력값에 따른 위치 지정
+        self.x = posx
+        self.y = posy
 
     @staticmethod
     def update():
@@ -179,6 +191,20 @@ class Player_Glove:
     # 바운딩 박스 가져오기
     def get_bb(self):
         return self.x - 90, self.y - 90, self.x + 90, self.y + 90
+
+# ----- 대결 상대 관련 함수 -----
+
+# 펀치 동작에 따른 적 위치설정
+def setenemyspos():
+
+    if player.nowpunchhand == None:
+        enemy.setpos(0, 0)
+
+    elif player.nowpunchhand == "left":
+        enemy.setpos(game_background.BGPUNCHMOVE, 0)
+
+    elif player.nowpunchhand == "right":
+        enemy.setpos(-game_background.BGPUNCHMOVE, 0)
 
 # ----- 대결 상대 클래스 -----
 
@@ -197,6 +223,12 @@ class Enemy:
         self.patternlist = EPAW.totalEnemyPattern[stage - 1][wave - 1] # 현재 패턴 전체
 
         pass
+
+    # 대결 상대 위치 (재)지정
+    def setpos(self, movedirx, movediry):
+        # 입력값에 따른 위치 지정
+        self.x = 400 + movedirx
+        self.y = 300 + movediry
 
     # 대결 상대 동작 패턴 지정
     def setPattern(self, stage, wave):
@@ -272,7 +304,7 @@ def draw_life_hp_info(obj, p_nowlife, p_maxlife, e_nowhp, e_maxhp):
     enemy_hp_left, enemy_hp_total = e_nowhp, e_maxhp # 적 체력
 
     HPBARLENGTH = 150 # 체력바 길이
-    HPBARPOSX, HPBARPOSY = 330, 450 # 체력바 x, y위치
+    HPBARPOSX, HPBARPOSY = 330, 460 # 체력바 x, y위치
     hpnow_drawlength = HPBARLENGTH * (enemy_hp_left / enemy_hp_total) # 남은 체력 길이
     hpnowposx = HPBARPOSX - (HPBARLENGTH - hpnow_drawlength) / 2 # 남은 체력 현재 위치
 

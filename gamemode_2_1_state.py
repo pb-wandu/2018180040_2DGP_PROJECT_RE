@@ -21,18 +21,13 @@ from pico2d import *  # pico2d 모듈 import
 
 import game_objects               # 오브젝트 모듈 import
 import game_playerAndEnemy as PAE # 플레이어 및 대결 상대 모듈 import
-import game_background as gamebg  # 게임 배경
+import game_background as gamebg  # 게임 배경 모듈 import
 
 import gamemode_2_0_gamemenu as gamemenu # 게임 모드 gamemenu 모듈 import
 import gamemode_2_1_gameinfo as gameinfo # 게임 정보 관련 모듈 import
 
 import game_time  # 시간 관련 모듈 import
 import game_world # 게임 월드 모듈 import
-
-# 적 체력, 플레이어 하트
-playerlife = 3
-enemyhp = 100
-
 
 # ----- gamemenu 각 상태별 동작 상세 클래스 -----
 
@@ -45,10 +40,10 @@ class Ready:
         print("Ready (준비 상태) enter")
 
         # 준비 상태 진입시 게임 정보 기록
-        gameinfo.gameinfomation.e_maxhp = enemyhp
-        gameinfo.gameinfomation.e_nowhp = enemyhp
-        gameinfo.gameinfomation.p_maxlife = playerlife
-        gameinfo.gameinfomation.p_nowlife = playerlife
+        gameinfo.gameinfomation.e_maxhp = PAE.enemyhp
+        gameinfo.gameinfomation.e_nowhp = PAE.enemyhp
+        gameinfo.gameinfomation.p_maxlife = PAE.playerlife
+        gameinfo.gameinfomation.p_nowlife = PAE.playerlife
 
         pass
 
@@ -66,6 +61,11 @@ class Ready:
         if obj == PAE.player:
             pass
 
+        # 대결 상대
+        if obj == PAE.enemy:
+            PAE.setenemyspos() # 대결 상대 위치 지정
+            pass
+
         # 박자표
         elif obj == game_objects.beattimer:
             # Ready 상태에서는 박자표 시간 업데이트를 수행하지 않음
@@ -81,7 +81,7 @@ class Ready:
         draw_state_info("Ready")
 
         # 배경
-        if obj == game_world.background:
+        if obj == game_world.background_game:
             gamebg.draw_bg(obj)  # 배경 그리기
             pass
 
@@ -124,6 +124,11 @@ class Standoff:
         if obj == PAE.player:
             pass
 
+        # 대결 상대
+        if obj == PAE.enemy:
+            PAE.setenemyspos() # 대결 상대 위치 지정
+            pass
+
         # 박자표
         elif obj == game_objects.beattimer:
             game_time.timeupdate(obj, "Standoff")  # 박자표 시간 업데이트
@@ -139,7 +144,7 @@ class Standoff:
         draw_state_info("Standoff")
 
         # 배경
-        if obj == game_world.background:
+        if obj == game_world.background_game:
             gamebg.draw_bg(obj)  # 배경 그리기
             pass
 
@@ -179,11 +184,13 @@ class Action:
     @staticmethod
     def do(obj):
 
-        # 상태에 따른 정보 표시
-        draw_state_info("Action")
-
         # 플레이어
         if obj == PAE.player:
+            pass
+
+        # 대결 상대
+        if obj == PAE.enemy:
+            PAE.setenemyspos() # 대결 상대 위치 지정
             pass
 
         # 박자표
@@ -197,8 +204,11 @@ class Action:
     @staticmethod
     def draw(obj):
 
+        # 상태에 따른 정보 표시
+        draw_state_info("Action")
+
         # 배경
-        if obj == game_world.background:
+        if obj == game_world.background_game:
             gamebg.draw_bg(obj)  # 배경 그리기
             pass
 
@@ -304,7 +314,7 @@ def punch_activated(e):
                 state_machine.now_action = "punch"
                 game_objects.beattimer.punch_cooltime = PUNCH_COOLTIME
 
-                PAE.setglovespos()  # 글러브 위치 지정
+                PAE.setglovespos() # 글러브 위치 지정
 
                 ### 테스트용
 

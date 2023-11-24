@@ -42,12 +42,13 @@ def handle_events():
 # world 초기 설정
 def init_world():
     global world # 오브젝트들을 담는 list
-    global background # 배경
+    global background_game # 배경 - 게임 플레이
+
+    global enemyhp, playerlife # 적 체력, 플레이어 하트
 
     # 상태 머신을 실행시킨다 (상태 머신은 gamemenu 모드에 해당)
     gamestate.state_machine.start()
 
-    # gamestate.punch_cooltime = 0     # 펀치 쿨타임을 0으로 초기화
     game_objects.beattimer.nowtick = 0 # 박자표 틱을 0으로 초기화
     game_time.timer_setglovepos = 0    # 펀치위치 표시 타이머를 0으로 초기화
 
@@ -63,8 +64,8 @@ def init_world():
     ### 이어 Ready 상태에 enter시 새 박자표 오브젝트를 objects에 추가해야 한다.
 
     # 배경은 depth 0 (배경)에
-    background = gamebg.Background() # 배경 오브젝트 생성
-    add_object(background, 0)  # 배경 오브젝트 world에 추가
+    background_game = gamebg.Background_game() # 배경 (게임 플레이) 오브젝트 생성
+    add_object(background_game, 0)       # 배경 (게임 플레이) 오브젝트 world에 추가
 
     # 나머지는 depth 1 (전면)에
     add_object(game_objects.beattimer, 1) # 박자표

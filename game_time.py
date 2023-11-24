@@ -5,7 +5,7 @@
 from pico2d import *  # pico2d 모듈 import
 
 import game_objects               # 오브젝트 모듈 import
-import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
+import game_playerAndEnemy as PAE # 플레이어 및 대결 상대 모듈 import
 
 import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
 import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 관련 모듈 import
@@ -36,14 +36,14 @@ gametimer = Gametimer()
 def timeupdate(obj, nowstate):
 
     # 왼손 또는 오른손 펀치를 날리고 있자면
-    if (pne.player.nowpunchhand == "left"
-            or pne.player.nowpunchhand == "right"):
-        pne.player.timer_punch += 1
+    if (PAE.player.nowpunchhand == "left"
+            or PAE.player.nowpunchhand == "right"):
+        PAE.player.timer_punch += 1
         # 펀치를 날린지 일정 시간이 지나면 펀치중인 손과 펀치 타이머를 초기화
-        if pne.player.timer_punch >= 30:
-            pne.player.nowpunchhand = None
-            pne.player.timer_punch = 0
-            pne.setglovespos() # 글러브 위치 설정
+        if PAE.player.timer_punch >= 30:
+            PAE.player.nowpunchhand = None
+            PAE.player.timer_punch = 0
+            PAE.setglovespos() # 글러브 위치 설정
 
     # nowtime 1틱씩 진행
     obj.nowtick += 1
@@ -54,10 +54,10 @@ def timeupdate(obj, nowstate):
         obj.nowtick = 0
 
         # 대결 상대의 다음 동작 패턴 수행
-        pne.enemy.nextPattern()
+        PAE.enemy.nextPattern()
 
         # 박자표의 박자 목록을 상대의 현재 동작으로 지정
-        game_objects.beattimer.beat_image_list = pne.enemy.patternlist[pne.enemy.nowPattern]
+        game_objects.beattimer.beat_image_list = PAE.enemy.patternlist[PAE.enemy.nowPattern]
 
     # 펀치중이라면
     if gamestate.state_machine.now_action == "punch":
@@ -69,7 +69,7 @@ def timeupdate(obj, nowstate):
             # 쿨타임이 0이 되었다면
             if game_objects.beattimer.punch_cooltime <= 0:
                 # 현재 하는 동작 없음
-                gamestate.now_action = None
+                gamestate.state_machine.now_action = None
 
                 ### 테스트용
                 print(f"펀치 쿨타임 초기화 완료")
