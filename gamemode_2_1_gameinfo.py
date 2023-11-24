@@ -12,6 +12,14 @@ import gamemode_2_1_gameinfo    as gameinfo  # 게임 정보 모음 모듈 impor
 import game_PAE_ePatternAndWave as EPAW      # 대결 상대 패턴 import
 import game_playerAndEnemy      as PAE       # 플레이어 및 대결 상대 모듈 import
 
+# 게임 정보 상수들
+
+# (공격) 명중 / 맞힘 / 빗나감 : 각각 20 / 10 / 0 HP 감소 (적)
+POINT_ATKCRIT, POINT_ATKHIT, POINT_ATKMISS = 20, 10, 0
+# (방어) 회피 / 스침 / 맞음  : 각각 0 / 1 / 2 하트 감소 (플레이어)
+POINT_DEFSUCCESS, POINT_DEFHALF, POINT_DEFMISS = 0, 1, 2
+
+
 # ----- 게임 정보 클래스 -----
 
 class Gameinfomation:
@@ -29,6 +37,7 @@ class Gameinfomation:
 
         # 플레이어 하트
         self.img_info_playerlife      = None
+        self.img_info_playerlife_half = None
         self.img_info_playerlife_lost = None
         self.p_nowlife = 0 # 현재 플레이어 하트
         self.p_maxlife = 0 # 최대 플레이어 하트

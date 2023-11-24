@@ -5,7 +5,7 @@
 from pico2d import *  # pico2d 모듈 import
 
 import game_objects               # 오브젝트 모듈 import
-import game_playerAndEnemy as pne # 플레이어 및 대결 상대 모듈 import
+import game_playerAndEnemy as PAE # 플레이어 및 대결 상대 모듈 import
 import game_background as gamebg  # 게임 배경
 
 import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
@@ -54,6 +54,10 @@ def init_world():
 
     gamestate.start_time = 0 # 시작 시간을 0으로 초기화
 
+    # 대결 상태 체력 및 플레이어 체력
+    PAE.enemyhp = 50
+    PAE.playerlife = 6
+
     # 폰트 지정
     FONTSIZE = 20
     game_objects.font = game_objects.load_font('FONT_KOTRA_HOPE_TTF.TTF', FONTSIZE)
@@ -69,21 +73,21 @@ def init_world():
 
     # 나머지는 depth 1 (전면)에
     add_object(game_objects.beattimer, 1) # 박자표
-    add_object(pne.enemy, 1) # 대결 상대
-    add_object(pne.player.glove_l, 1)  # 글러브 왼쪽
-    add_object(pne.player.glove_r, 1)  # 글러브 오른쪽
-    add_object(pne.player, 1) # 플레이어
+    add_object(PAE.enemy, 1) # 대결 상대
+    add_object(PAE.player.glove_l, 1)  # 글러브 왼쪽
+    add_object(PAE.player.glove_r, 1)  # 글러브 오른쪽
+    add_object(PAE.player, 1) # 플레이어
 
     # 게임 정보는 depth 2 (가장 앞)에
     add_object(gameinfo.gameinfomation, 2)  # 게임 정보
 
     # 글러브와 대결 상대 충돌체크 지정
-    collisionCheck.add_collision_pair('glove-enemy', pne.player.glove_l, None)
-    collisionCheck.add_collision_pair('glove-enemy', pne.player.glove_r, None)
-    collisionCheck.add_collision_pair('glove-enemy', None, pne.enemy)
+    collisionCheck.add_collision_pair('glove-enemy', PAE.player.glove_l, None)
+    collisionCheck.add_collision_pair('glove-enemy', PAE.player.glove_r, None)
+    collisionCheck.add_collision_pair('glove-enemy', None, PAE.enemy)
 
     # 플레이어와 대결 상대 충돌체크 지정
-    collisionCheck.add_collision_pair('player-enemy', pne.player, pne.enemy)
+    collisionCheck.add_collision_pair('player-enemy', PAE.player, PAE.enemy)
 
     pass
 

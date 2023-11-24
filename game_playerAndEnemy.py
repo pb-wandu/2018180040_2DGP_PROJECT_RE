@@ -16,10 +16,9 @@ import game_world      # 게임 월드 모듈 import
 from game_objects import *              # 게임 오브젝트 모듈 import
 import game_PAE_ePatternAndWave as EPAW # 대결 상대 패턴 import
 
-
-# 적 체력, 플레이어 하트
+### 적 체력, 플레이어 체력 (임시 위치)
 enemyhp = 50
-playerlife = 3
+playerlife = 5
 
 # ----- 플레이어 관련 함수 -----
 
@@ -294,6 +293,8 @@ def draw_life_hp_info(obj, p_nowlife, p_maxlife, e_nowhp, e_maxhp):
         obj.img_info_hpbar_frame = load_image('img_info_hpbar_frame.png')
     if obj.img_info_playerlife == None:
         obj.img_info_playerlife = load_image('img_info_playerlife.png')
+    if obj.img_info_playerlife_half == None:
+        obj.img_info_playerlife_half = load_image('img_info_playerlife_half.png')
     if obj.img_info_playerlife_lost == None:
         obj.img_info_playerlife_lost = load_image('img_info_playerlife_lost.png')
 
@@ -308,13 +309,23 @@ def draw_life_hp_info(obj, p_nowlife, p_maxlife, e_nowhp, e_maxhp):
     hpnow_drawlength = HPBARLENGTH * (enemy_hp_left / enemy_hp_total) # 남은 체력 길이
     hpnowposx = HPBARPOSX - (HPBARLENGTH - hpnow_drawlength) / 2 # 남은 체력 현재 위치
 
-    # 플레이어 하트 그리기
-    for n in range(player_max_life):
+    full_lifenum = player_now_life // 2 # 꽉 찬 하트 개수
+    half_lifenum = player_now_life % 2  # 반쪽 하트 개수
+
+    # 플레이어 하트(배경) 그리기
+    for n in range(player_max_life // 2):
         obj.img_whitesquare.draw(50, 50 + n * 50, 60, 60)
         obj.img_info_playerlife_lost.draw(50, 50 + n * 50, 30, 30)
-    for n in range(player_now_life):
+
+    # 플레이어 하트 그리기
+    for n in range(full_lifenum):
         obj.img_whitesquare.draw(50, 50 + n * 50, 60, 60)
         obj.img_info_playerlife.draw(50, 50 + n * 50, 30, 30)
+
+    # 플레이어 하트 (반쪽) 그리기
+    for n in range(half_lifenum):
+        obj.img_whitesquare.draw(50, 50 + n * 50 + full_lifenum * 50, 60, 60)
+        obj.img_info_playerlife_half.draw(50, 50 + n * 50 + full_lifenum * 50, 30, 30)
 
     # 적 체력 그리기
     obj.img_info_hpbar_bg.draw   (HPBARPOSX, HPBARPOSY, HPBARLENGTH,      40)
