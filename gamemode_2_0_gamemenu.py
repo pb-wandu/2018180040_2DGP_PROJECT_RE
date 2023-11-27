@@ -6,8 +6,9 @@
 
 from pico2d import * # pico2d 모듈 import
 
-import game_objects               # 오브젝트 모듈 import
-import game_playerAndEnemy as PAE # 플레이어 및 대결 상대 모듈 import
+import game_objects                     # 오브젝트 모듈 import
+import game_playerAndEnemy      as PAE  # 플레이어 및 대결 상대 모듈 import
+import game_PAE_ePatternAndWave as EPAW # 대결 상대 패턴 import
 
 import game_world
 import game_framework
@@ -29,6 +30,14 @@ def handle_events():
         # esc키 누를 경우 메인메뉴로 이동
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_mode(gamemode_1_0_mainmenu)
+            
+        ### (테스트용) F1키 누를 경우 이전 wave로 이동
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_F1:
+            EPAW.move_prevWave()
+            
+        ### (테스트용) F2키 누를 경우 다음 wave로 이동
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_F2:
+            EPAW.move_nextWave()
 
         # 그 외
         else:

@@ -19,7 +19,6 @@ POINT_ATKCRIT, POINT_ATKHIT, POINT_ATKMISS = 20, 10, 0
 # (방어) 회피 / 스침 / 맞음  : 각각 0 / 1 / 2 하트 감소 (플레이어)
 POINT_DEFSUCCESS, POINT_DEFHALF, POINT_DEFMISS = 0, 1, 2
 
-
 # ----- 게임 정보 클래스 -----
 
 class Gameinfomation:
