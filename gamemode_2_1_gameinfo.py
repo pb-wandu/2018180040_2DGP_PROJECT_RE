@@ -9,7 +9,6 @@ import game_objects # 오브젝트 모듈 import
 
 import gamemode_2_1_state       as gamestate # 상태 관련 모듈 import
 import gamemode_2_1_gameinfo    as gameinfo  # 게임 정보 모음 모듈 import
-import game_PAE_ePatternAndWave as EPAW      # 대결 상대 패턴 import
 import game_playerAndEnemy      as PAE       # 플레이어 및 대결 상대 모듈 import
 
 # 게임 정보 상수들

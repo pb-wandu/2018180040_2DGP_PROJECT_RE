@@ -15,6 +15,8 @@ import game_framework
 
 import gamemode_1_0_mainmenu # 게임 모드 mainmenu 모듈 import
 
+import gamemode_2_1_gameinfo as gameinfo # 상태 관련 모듈 import
+
 # ----- 게임 프레임워크 동작 함수들 -----
 
 # 이벤트에 따른 동작 수행
@@ -38,6 +40,25 @@ def handle_events():
         ### (테스트용) F2키 누를 경우 다음 wave로 이동
         elif event.type == SDL_KEYDOWN and event.key == SDLK_F2:
             EPAW.move_nextWave()
+
+        ### (테스트용) F3키 누를 경우 현재 진행중인 스테이지 저장
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_F3:
+
+            game_world.save()  # 진행상황 저장
+
+            ### 테스트용 출력
+            n_stage = gameinfo.gameinfomation.nowStage # 현재 스테이지
+            n_wave = gameinfo.gameinfomation.nowWave   # 현재 wave
+            print(f"저장된 스테이지 : [{n_stage} Stage - {n_wave} Wave]")
+
+        ### (테스트용) F4키 누를 경우 저장한 스테이지 불러오기
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_F4:
+            game_world.load() # 저장한 진행상황 불러오기
+
+            ### 테스트용 출력
+            n_stage = gameinfo.gameinfomation.nowStage # 현재 스테이지
+            n_wave = gameinfo.gameinfomation.nowWave   # 현재 wave
+            print(f"불러온 스테이지 : [{n_stage} Stage - {n_wave} Wave]")
 
         # 그 외
         else:

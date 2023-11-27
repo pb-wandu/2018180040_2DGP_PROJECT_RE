@@ -4,9 +4,11 @@
 
 from pico2d import *  # pico2d 모듈 import
 
-import game_objects               # 오브젝트 모듈 import
-import game_playerAndEnemy as PAE # 플레이어 및 대결 상대 모듈 import
-import game_background as gamebg  # 게임 배경
+import game_objects              # 오브젝트 모듈 import
+import game_background as gamebg # 게임 배경
+
+import game_playerAndEnemy      as PAE  # 플레이어 및 대결 상대 모듈 import
+import game_PAE_ePatternAndWave as EPAW # 대결 상대 패턴 import
 
 import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
 import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 모듈 import
@@ -14,6 +16,8 @@ import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 모듈 import
 import game_time # 시간 관련 모듈 import
 
 import game_collisionCheck as collisionCheck # 게임 충돌 체크 import
+
+import pickle # Pickle 모듈 import
 
 # ----- world 전체 관련 코드 -----
 
@@ -150,3 +154,26 @@ def render_allobject():
 
     # 화면 업데이트
     update_canvas()
+
+# ----- 세이브 파일 저장 및 불러오기 -----
+
+# 세이브 파일 저장
+def save():
+    global nowStage, nowWave
+
+    nowStage = gameinfo.gameinfomation.nowStage # 현재 스테이지
+    nowWave  = gameinfo.gameinfomation.nowWave  # 현재 wave
+
+    nowGameState = {'nowStage': nowStage, 'nowWave': nowWave}
+    with open('HEVI_savedata.sav', 'wb') as f:
+        pickle.dump(nowGameState, f)
+
+# 세이브 파일 불러오기
+def load():
+
+    with open('HEVI_savedata.sav', 'rb') as f:
+        loadedGameState = pickle.load(f)
+
+    gameinfo.gameinfomation.nowStage = loadedGameState['nowStage'] # 현재 스테이지
+    gameinfo.gameinfomation.nowWave  = loadedGameState['nowWave']  # 현재 wave
+
