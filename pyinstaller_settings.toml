@@ -1,0 +1,18 @@
+# ----------<pyinstaller 설정 파일>----------
+
+# 메인 파일 이름
+main_file = 'HEVIMetalBoxer.py'
+
+# 데이타 파일들
+data_files = [
+    # 폰트
+    'FONT_KOTRA_HOPE_TTF.ttf',
+
+    # 사운드
+    # (### 사운드 추가하기)
+]
+
+# 데이타가 들어있는 폴더들
+data_folders = [
+    'image' # 이미지들이 저장된 폴더
+]

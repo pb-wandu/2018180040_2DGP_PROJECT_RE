@@ -440,7 +440,7 @@ def draw_state_info(nowstate):
     # 현재 상태에 따라 표시할 정보들
 
     if nowstate == "Ready":
-        infoimg = load_image('img_ready_info_text.png')
+        infoimg = load_image('./image/img_ready_info_text.png')
 
         x, y = 400, 500  # x, y 위치
         SIZEX, SIZEY = 300, 60  # x, y 크기

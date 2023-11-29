@@ -15,7 +15,7 @@ BGPUNCHMOVE = 100 # 펀치로 배경 스크롤되는 길이
 # 게임중 배경
 class Background_game:
     def __init__(self):
-        self.image = load_image('img_background.png')
+        self.image = load_image('./image/img_background.png')
         self.cw = get_canvas_width()
         self.ch = get_canvas_height()
         # self.w = self.image.w

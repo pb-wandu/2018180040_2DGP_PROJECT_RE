@@ -18,6 +18,10 @@ POINT_ATKCRIT, POINT_ATKHIT, POINT_ATKMISS = 20, 10, 0
 # (방어) 회피 / 스침 / 맞음  : 각각 0 / 1 / 2 하트 감소 (플레이어)
 POINT_DEFSUCCESS, POINT_DEFHALF, POINT_DEFMISS = 0, 1, 2
 
+SCORE_HIT   = 100 # 맞힘 성공시 기본 점수
+SCORE_CRIT  = 250 # 명중 성공시 점수
+SCORE_COMBO = 10  # 콤보당 추가 점수
+
 # ----- 게임 정보 클래스 -----
 
 class Gameinfomation:
@@ -90,7 +94,7 @@ class Gameinfomation:
         if self.nowcombo >= 1:
             # 이미지 초기 지정
             if self.img_combo == None:
-                self.img_combo = load_image('img_info_combo.png')
+                self.img_combo = load_image('./image/img_info_combo.png')
 
             # 콤보 이미지 그리고 몇 콤보인지 표시
             self.img_combo.draw(680, 500, 200, 120)
@@ -104,13 +108,13 @@ gameinfomation = Gameinfomation()
 # 박자표 그리기
 def draw_beattimer(obj):
     if obj.img_beat_bg == None:
-        obj.img_beat_bg = load_image('img_beat_bg.png')  # 박자 배경
+        obj.img_beat_bg = load_image('./image/img_beat_bg.png')  # 박자 배경
     if obj.img_beat_effect == None:
-        obj.img_beat_effect = load_image('img_beat_effect.png')  # 현재 박자 이펙트
+        obj.img_beat_effect = load_image('./image/img_beat_effect.png')  # 현재 박자 이펙트
     if obj.img_beat_small == None:
-        obj.img_beat_small = load_image('img_beat_small.png')  # 작은 박자
+        obj.img_beat_small = load_image('./image/img_beat_small.png')  # 작은 박자
     if obj.img_beat_big == None:
-        obj.img_beat_big = load_image('img_beat_big.png')  # 큰 박자
+        obj.img_beat_big = load_image('./image/img_beat_big.png')  # 큰 박자
 
     beatnum = obj.beatnum  # 박자 수
 
