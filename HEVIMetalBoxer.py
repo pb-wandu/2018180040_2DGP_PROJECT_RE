@@ -10,7 +10,7 @@ import game_framework # 게임 프레임워크
 
 # pico2d가 활용하는 SDL 라이브러리 DLL
 # print("SDL 라이브러리 DLL 받아오기 (경로) : " + str(os.getenv('PYSDL2_DLL_PATH')))
-# > 수정사항 : os.getenv로 했을 때 작동이 안 되어 해당 경로의 파일을 전부 pico2d 안에 넣었습니다
+# <수정사항> os.getenv로 했을 때 작동이 안 되어 해당 경로의 파일을 전부 pico2d 안에 넣었습니다
 
 # 게임 모드
 import gamemode_1_0_mainmenu as startmode # 메인메뉴 모드

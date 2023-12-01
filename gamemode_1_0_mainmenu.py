@@ -33,12 +33,13 @@ def handle_events():
 
 def init():
 
-    global tempimage ### 나중에 수정할 것
-    tempimage = load_image('./image/img_gamewaiting.png')
+    # 대기중 이미지
+    global waitingimage
+    waitingimage = load_image('./resource_image/img_gamewaiting.png')
 
     # 메인메뉴 배경
     global mainmenubg
-    mainmenubg = load_image('./image/img_background_mainmenu.png')
+    mainmenubg = load_image('./resource_image/img_background_mainmenu.png')
 
     # 게임 타이머에 현재 시간을 시작시간으로 지정
     game_time.gametimer.setStartTime()

@@ -39,12 +39,6 @@ class Ready:
     def enter():
         print("Ready (준비 상태) enter")
 
-        # 준비 상태 진입시 게임 정보 기록
-        gameinfo.gameinfomation.e_maxhp = PAE.enemyhp
-        gameinfo.gameinfomation.e_nowhp = PAE.enemyhp
-        gameinfo.gameinfomation.p_maxlife = PAE.playerlife
-        gameinfo.gameinfomation.p_nowlife = PAE.playerlife
-
         pass
 
     # 상태 종료
@@ -440,7 +434,7 @@ def draw_state_info(nowstate):
     # 현재 상태에 따라 표시할 정보들
 
     if nowstate == "Ready":
-        infoimg = load_image('./image/img_ready_info_text.png')
+        infoimg = load_image('./resource_image/img_ready_info_text.png')
 
         x, y = 400, 500  # x, y 위치
         SIZEX, SIZEY = 300, 60  # x, y 크기

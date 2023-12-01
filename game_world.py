@@ -19,6 +19,9 @@ import game_collisionCheck as collisionCheck # 게임 충돌 체크 import
 
 import pickle # Pickle 모듈 import
 
+# 게임 시작시 플레이어 체력
+GAMESTARTLIFE = 6
+
 # ----- world 전체 관련 코드 -----
 
 objects = [ [ ], [ ], [ ] ] # object 전체를 담아두는 list
@@ -59,8 +62,10 @@ def init_world():
     gamestate.start_time = 0 # 시작 시간을 0으로 초기화
 
     # 대결 상태 체력 및 플레이어 체력
-    PAE.enemyhp = 50
-    PAE.playerlife = 6
+    gameinfo.gameinfomation.e_nowhp   = EPAW.stageEnemyHP[0][0]
+    gameinfo.gameinfomation.e_maxhp   = EPAW.stageEnemyHP[0][0]
+    gameinfo.gameinfomation.p_nowlife = GAMESTARTLIFE
+    gameinfo.gameinfomation.p_maxlife = GAMESTARTLIFE
 
     # 폰트 지정
     FONTSIZE = 20

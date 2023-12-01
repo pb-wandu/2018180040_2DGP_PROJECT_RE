@@ -16,10 +16,6 @@ import game_world      # 게임 월드 모듈 import
 from game_objects import *              # 게임 오브젝트 모듈 import
 import game_PAE_ePatternAndWave as EPAW # 대결 상대 패턴 import
 
-### 적 체력, 플레이어 체력 (임시 위치)
-enemyhp = 50
-playerlife = 5
-
 # ----- 플레이어 관련 함수 -----
 
 # 글러브 - 펀치 동작에 따른 위치설정
@@ -43,9 +39,9 @@ def draw_glove(obj):
     if obj.image == None:
         # 글러브 방향에 따라 이미지 표시하기
         if obj.glovedir == "left":
-            obj.image = load_image('./image/img_glove_left.png')  # 왼쪽 글러브
+            obj.image = load_image('./resource_image/img_glove_left.png')  # 왼쪽 글러브
         elif obj.glovedir == "right":
-            obj.image = load_image('./image/img_glove_right.png')  # 오른쪽 글러브
+            obj.image = load_image('./resource_image/img_glove_right.png')  # 오른쪽 글러브
 
     # 글러브 정보
     x, y = obj.x, obj.y  # x, y 위치
@@ -56,12 +52,12 @@ def draw_glove(obj):
 
 # 펀치 이펙트 그리기
 def draw_puncheffect(obj):
-    img_punch_eff_crit = load_image('./image/img_punch_eff_crit.png')  # 명중시 효과
-    img_punch_eff_crit_text = load_image('./image/img_punch_eff_crit_text.png')  # 명중시 텍스트
-    img_punch_eff_hit = load_image('./image/img_punch_eff_hit.png')  # 맞힘시 효과
-    img_punch_eff_hit_text = load_image('./image/img_punch_eff_hit_text.png')  # 맞힘시 텍스트
-    img_punch_eff_miss = load_image('./image/img_punch_eff_miss.png')  # 빗나감시 효과
-    img_punch_eff_miss_text = load_image('./image/img_punch_eff_miss_text.png')  # 빗나감시 텍스트
+    img_punch_eff_crit = load_image('./resource_image/img_punch_eff_crit.png')  # 명중시 효과
+    img_punch_eff_crit_text = load_image('./resource_image/img_punch_eff_crit_text.png')  # 명중시 텍스트
+    img_punch_eff_hit = load_image('./resource_image/img_punch_eff_hit.png')  # 맞힘시 효과
+    img_punch_eff_hit_text = load_image('./resource_image/img_punch_eff_hit_text.png')  # 맞힘시 텍스트
+    img_punch_eff_miss = load_image('./resource_image/img_punch_eff_miss.png')  # 빗나감시 효과
+    img_punch_eff_miss_text = load_image('./resource_image/img_punch_eff_miss_text.png')  # 빗나감시 텍스트
 
     # obj == pne.player
     # 펀치 성공 상황에 따른 이펙트 표시
@@ -108,6 +104,9 @@ class Player:
         self.glove_r = Player_Glove("right", 550, 80)
 
         self.timer_punch = 0 # 펀치 동작중 타이머
+
+        self.life    = 0 # 플레이어 체력
+        self.nowlife = 0 # 플레이어 현재 체력
 
         pass
 
@@ -221,6 +220,10 @@ class Enemy:
         self.patternNum  = EPAW.patternNum[stage - 1][wave - 1]        # 패턴 개수
         self.patternlist = EPAW.totalEnemyPattern[stage - 1][wave - 1] # 현재 패턴 전체
 
+        # 적 체력
+        self.hp    = 0 # 적 체력
+        self.nowhp = 0 # 적 현재 체력
+
         pass
 
     # 대결 상대 위치 (재)지정
@@ -286,20 +289,20 @@ class Enemy:
 # ----- 하트 및 체력바 그리기 함수 -----
 def draw_life_hp_info(obj, p_nowlife, p_maxlife, e_nowhp, e_maxhp):
     if obj.img_info_hpbar_bg == None:
-        obj.img_info_hpbar_bg = load_image('./image/img_info_hpbar_bg.png')
+        obj.img_info_hpbar_bg = load_image('./resource_image/img_info_hpbar_bg.png')
     if obj.img_info_hpbar_hp == None:
-        obj.img_info_hpbar_hp = load_image('./image/img_info_hpbar_hp.png')
+        obj.img_info_hpbar_hp = load_image('./resource_image/img_info_hpbar_hp.png')
     if obj.img_info_hpbar_frame == None:
-        obj.img_info_hpbar_frame = load_image('./image/img_info_hpbar_frame.png')
+        obj.img_info_hpbar_frame = load_image('./resource_image/img_info_hpbar_frame.png')
     if obj.img_info_playerlife == None:
-        obj.img_info_playerlife = load_image('./image/img_info_playerlife.png')
+        obj.img_info_playerlife = load_image('./resource_image/img_info_playerlife.png')
     if obj.img_info_playerlife_half == None:
-        obj.img_info_playerlife_half = load_image('./image/img_info_playerlife_half.png')
+        obj.img_info_playerlife_half = load_image('./resource_image/img_info_playerlife_half.png')
     if obj.img_info_playerlife_lost == None:
-        obj.img_info_playerlife_lost = load_image('./image/img_info_playerlife_lost.png')
+        obj.img_info_playerlife_lost = load_image('./resource_image/img_info_playerlife_lost.png')
 
     if obj.img_whitesquare == None:
-        obj.img_whitesquare = load_image('./image/img_whitesquare.png')
+        obj.img_whitesquare = load_image('./resource_image/img_whitesquare.png')
 
     player_now_life, player_max_life = p_nowlife, p_maxlife # 플레이어 하트
     enemy_hp_left, enemy_hp_total = e_nowhp, e_maxhp # 적 체력
