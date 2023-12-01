@@ -105,9 +105,6 @@ class Player:
 
         self.timer_punch = 0 # 펀치 동작중 타이머
 
-        self.life    = 0 # 플레이어 체력
-        self.nowlife = 0 # 플레이어 현재 체력
-
         pass
 
     @staticmethod
@@ -219,10 +216,6 @@ class Enemy:
         self.maxBeat     = EPAW.beatNum[stage - 1][wave - 1]           # 박자 개수
         self.patternNum  = EPAW.patternNum[stage - 1][wave - 1]        # 패턴 개수
         self.patternlist = EPAW.totalEnemyPattern[stage - 1][wave - 1] # 현재 패턴 전체
-
-        # 적 체력
-        self.hp    = 0 # 적 체력
-        self.nowhp = 0 # 적 현재 체력
 
         pass
 

@@ -61,6 +61,7 @@ class Gameinfomation:
         self.nowStage = 1 # 현재 스테이지
         self.nowWave  = 1 # 현재 웨이브
 
+
     def update(self):
         # 게임 시간 업데이트
         self.nowtime = get_time() - game_time.gametimer.start_time

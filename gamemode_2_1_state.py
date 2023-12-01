@@ -39,6 +39,11 @@ class Ready:
     def enter():
         print("Ready (준비 상태) enter")
 
+        nowStage = gameinfo.gameinfomation.nowStage
+        nowWave  = gameinfo.gameinfomation.nowWave
+
+        PAE.enemy.setPattern(nowStage, nowWave)
+
         pass
 
     # 상태 종료
