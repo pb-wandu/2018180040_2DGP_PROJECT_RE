@@ -47,8 +47,11 @@ def init():
     print("### mainmenu 진입")
 
 def finish():
-    global tempimage
-    del tempimage
+    global waitingimage
+    global mainmenubg
+
+    del waitingimage
+    del mainmenubg
 
     # 게임 타이머에 현재 시간을 시작시간으로 지정
     game_time.gametimer.setStartTime()
@@ -70,12 +73,12 @@ def update():
         game_framework.change_mode(gamemenu)
 
 def draw():
-    global tempimage
+    global waitingimage
     global mainmenubg
 
     clear_canvas()
     mainmenubg.draw(400, 300, 800, 600)  # 배경 그리기
-    tempimage.draw(800 // 2, 600 // 2)
+    waitingimage.draw(800 // 2, 600 // 2)
     update_canvas()
     pass
 

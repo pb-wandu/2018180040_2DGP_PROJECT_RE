@@ -28,6 +28,7 @@ import gamemode_2_1_gameinfo as gameinfo # 게임 정보 관련 모듈 import
 
 import game_time  # 시간 관련 모듈 import
 import game_world # 게임 월드 모듈 import
+import game_sound # 게임 사운드 모듈 import
 
 # ----- gamemenu 각 상태별 동작 상세 클래스 -----
 
@@ -302,8 +303,7 @@ def punch_activated(e):
     HITTIMING  = 12 # 맞힘(일반 히트) 앞뒤 타이밍 범위
 
     # 상태 머신이 Ready 상태가 아니고 펀치 쿨타임이 0인 경우에만
-    if state_machine.cur_state != Ready and\
-        game_objects.beattimer.punch_cooltime == 0:
+    if state_machine.cur_state != Ready and game_objects.beattimer.punch_cooltime == 0:
 
         # 키가 눌렸다면
         if e[0] == "INPUT" and e[1].type == SDL_KEYDOWN:
@@ -335,6 +335,10 @@ def punch_activated(e):
                         # 콤보 수 증가
                         gameinfo.gameinfomation.nowcombo += 1
 
+                        # 공격 사운드 재생
+                        game_world.sound_hit.set_volume(80)
+                        game_world.sound_hit.play()
+
                         print("!!공격 명중!!")
 
                     # 명중
@@ -344,6 +348,10 @@ def punch_activated(e):
 
                         # 콤보 수 증가
                         gameinfo.gameinfomation.nowcombo += 1
+
+                        # 공격 사운드 재생
+                        game_world.sound_hit.set_volume(50)
+                        game_world.sound_hit.play()
 
                         print("공격 맞힘!")
 
@@ -390,6 +398,10 @@ def punch_activated(e):
                         # 콤보 수 증가
                         gameinfo.gameinfomation.nowcombo += 1
 
+                        # 공격 사운드 재생
+                        game_world.sound_hit.set_volume(80)
+                        game_world.sound_hit.play()
+
                         print("!!공격 명중!!")
 
                     elif (hitbeat * game_objects.beattimer.ticknum - HITTIMING <= hittime
@@ -398,6 +410,10 @@ def punch_activated(e):
 
                         # 콤보 수 증가
                         gameinfo.gameinfomation.nowcombo += 1
+
+                        # 공격 사운드 재생
+                        game_world.sound_hit.set_volume(50)
+                        game_world.sound_hit.play()
 
                         print("공격 맞힘!")
 

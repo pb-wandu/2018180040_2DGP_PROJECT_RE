@@ -13,7 +13,8 @@ import game_PAE_ePatternAndWave as EPAW # 대결 상대 패턴 import
 import gamemode_2_1_state    as gamestate # 상태 관련 모듈 import
 import gamemode_2_1_gameinfo as gameinfo  # 게임 정보 모듈 import
 
-import game_time # 시간 관련 모듈 import
+import game_time  # 시간 관련 모듈 import
+import game_sound # 게임 사운드 모듈 import
 
 import game_collisionCheck as collisionCheck # 게임 충돌 체크 import
 
@@ -53,6 +54,8 @@ def init_world():
 
     global enemyhp, playerlife # 적 체력, 플레이어 하트
 
+    global sound_hit, sound_move # 소리 설정
+
     # 상태 머신을 실행시킨다 (상태 머신은 gamemenu 모드에 해당)
     gamestate.state_machine.start()
 
@@ -70,6 +73,10 @@ def init_world():
     # 폰트 지정
     FONTSIZE = 20
     game_objects.font = game_objects.load_font('FONT_KOTRA_HOPE_TTF.TTF', FONTSIZE)
+
+    # 사운드
+    sound_hit = game_sound.Sound_hit()  # 공격(명중)시 음악
+    sound_move = game_sound.Sound_move()  # 이동(회피)시 음악
 
     # world 안에 오브젝트 추가
 
